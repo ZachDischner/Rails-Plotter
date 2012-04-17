@@ -1,0 +1,18 @@
+<%= form_for :plot, :url => "/goplot", :method => "post" do |f| %>
+  # This is not what we want!
+    <div class="field">
+      <%= f.label :x_var %>
+      <br/>
+      <%= f.select(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false) %>
+    </div>
+
+    <div class="field">
+      <%= f.label :y_var %>
+      <br/>
+      <%= f.select(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => true)%>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Plot Baby!" %>
+    </div>
+<% end %>

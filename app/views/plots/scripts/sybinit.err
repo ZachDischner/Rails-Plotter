@@ -1,0 +1,16 @@
+
+
+The context allocation routine failed when it tried to load localization files!!
+One or more following problems may caused the failure
+
+Your sybase home directory is /tools/sybase-client. Check the environment variable SYBASE if it is not the one you want!
+Using locale name "en_US.utf8" defined in environment variable LANG
+Locale name "en_US.utf8" doesn't exist in your /tools/sybase-client/locales/locales.dat file
+
+
+The context allocation routine failed when it tried to load localization files!!
+One or more following problems may caused the failure
+
+Your sybase home directory is /tools/sybase-client. Check the environment variable SYBASE if it is not the one you want!
+Using locale name "en_US.utf8" defined in environment variable LANG
+Locale name "en_US.utf8" doesn't exist in your /tools/sybase-client/locales/locales.dat file

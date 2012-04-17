@@ -1,0 +1,68 @@
+<%= javascript_include_tag "dygraph-combined" %>
+
+<h1>Fully dynamic and iterative plotting setup. FEEL THE POWER!! </h1>
+<div style="text-align:center"><%= image_tag("/LightningSmall.jpg", :mouseover => "/Lightning.jpg", :align => :center) %>  </div>
+
+<%#= render :inline => @plot.first.generate_Dygraph_HTML %>
+
+
+<table cellpadding=20px border=5px>
+  <tr>
+    <td>
+
+      <html>
+
+      <div id="Legend_Div" float=right align=center style="width:150px; position:relative; left:400px;
+              border:3px solid grey; border-radius: 0.4em;
+              font-size:1.2em; padding-top:5px;"></div>
+
+      <div id="graphdiv" float=left style="position:relative;"></div>
+
+      <script type="text/javascript">
+          g = new Dygraph(document.getElementById("graphdiv")
+                  <%# Dynamic Label Maker%>
+                  <%= putc(@plot.first.dygraph_head(@tags)) %>
+                  <%# Dynamic Value Putter%>
+                  <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>
+                  <%# Options for the Dygraph plot %>
+                  <%= render :inline => @plot.first.dygraph_options %>
+          );   // finish the Dygraph  Plot section
+
+
+          <%= render :inline => @plot.first.linear_reg %>  // Can ONLY do one or the other, multiples or linear regressions!
+          ///// Lines to use checkboxes for Plot updating.
+          <%#= puts getCoeffs() %>
+
+
+          setStatus();
+          function setStatus() {
+              document.getElementById("visibility").innerHTML =
+                      g.visibility().toString();
+          }
+
+          function change(el) {
+              g.setVisibility(parseInt(el.id), el.checked);
+              setStatus();
+          }
+
+          <%= render :inline => @plot.first.linear_reg %>
+
+
+      </script>
+      </html>
+    </td>
+
+    <td>
+      <%= render :inline => @plot.first.linear_reg_buttons(params[:y_var]) %>
+    </td>
+
+    <td>
+      <p> Choose which Lines to Plot</p>
+      <%= render :inline => @plot.first.put_checkboxes(params[:y_var]) %>
+    </td>
+
+
+</table>
+
+<%= link_to 'Back to the Plot Home Page', plots_path %>
+</br>

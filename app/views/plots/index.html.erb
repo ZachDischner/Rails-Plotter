@@ -1,0 +1,94 @@
+<h1> Welcome to the Interactive Plotting Engine!</h1>
+<p> Brought to you by Zach Dischner Consulting</p>
+<%= button_to 'Example Plot', :controller => "/plots/example" %>
+<%= button_to 'All DB Plot', :controller => "/plots/all" %>
+<%#= button_to 'All with params', :controller =>"/plots/all" ,:name => "test 1",:y_var =>y2,:y_varname => "y2"%>
+
+
+<br>
+
+<%= form_tag "/goplot", :method => "get" do %>
+    <! Selector for the 'x' variable to be plotted>
+    <h style="text-align:left"> Select Variables to Plot</h>
+
+    <p style="background-color: #C0C0C0; max-width: 500px;
+            border-style:solid; border-radius: 0.5em; box-shadow: 8px 8px 5px #808080;text-align: center">
+      <br>
+      <%= label(:plot, :x_var, "X") %>
+      <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false, :default => "Date") %>
+
+      <%= label(:plot, :y_var, "Y") %>
+      <%= select_tag(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => true)  %>
+      </br>
+    </p>
+
+    <h3 style="text-align:left"> Select Range for Horizontal Axis-Either in terms of "X" or Dates</h3>
+    <!--<div style="background-color:#E0E0E0;max-width: 1000px;height:150px; border-radius:0.5em;box-shadow: 4px 4px 2px 2px #AAAAAA">-->
+
+
+
+    <table style="padding:10px" border="4" cellpadding=10px>
+      <tr>
+        <td>
+          <p style="background-color: #C0C0C0; max-width: 450px;height:50px;
+                  border-style:outset; border-color: #888888; border-radius: 0.5em;
+                  text-align: center">
+            Select "X" Range for Plotting
+            <br>
+            <%= label(:plot, :x_start, "Start") %>
+            <%= number_field_tag(:x_start, params[:x_start]) %>
+
+            <%= label(:plot, :x_end, "End") %>
+            <%= number_field_tag(:x_end, params[:x_end]) %>
+            </br>
+          </p>
+        </td>
+
+
+        <!--Here is a radiobuttion selector, which decides if you want to view the data -->
+        <!--with checkbox line selectors, or a linear regression option. -->
+        <td>
+          <br>
+          <%= radio_button_tag 'feature', 'Both',:true %>
+          <%= label(:plot, :feature, "Both") %>
+          </br>
+          <br>
+          <%= radio_button_tag 'feature', 'Linear Regression' %>
+          <%= label(:plot, :feature, "Linear Regression ") %>
+          </br>
+          <br>
+          <%= radio_button_tag 'feature', 'Checkboxes' %>
+          <%= label(:plot, :feature, "Checkboxes") %>
+          </br>
+        </td>
+
+        <td>
+          <!-- This is the block that creates a selector for  Datetime options-->
+          <!-- It populates a Datetime param that is used in dynamic scope selectors-->
+          <p style="background-color: #C0C0C0; width: 350px;height:100px;
+                  border-style:outset; border-radius: 0.5em; border-color:#888888;
+                  text-align: center">
+            Select DATE Range for Plotting
+            <br>
+            <%= label(:plot, :date_start, "Start") %>
+            <%= date_select(:date_start, params[:date_start], :include_blank => true) %>
+            </br><br>
+            <%= label(:plot, :date_end, "End") %>
+            <%= date_select(:date_end, params[:date_end], :include_blank => true) %>
+            </br>
+          </p>
+
+        </td>
+      </tr>
+    </table>
+
+
+
+    <p style="position: relative; left: 450px">
+      <%= submit_tag("submit!") %>
+    </p>
+<% end %>
+
+
+
+

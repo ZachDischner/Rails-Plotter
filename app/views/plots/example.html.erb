@@ -1,0 +1,28 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+
+<html>
+<%= javascript_include_tag "dygraph-combined" %>
+
+
+  <div id="graphdiv"></div>
+
+  <script type="text/javascript">
+
+
+    g = new Dygraph(document.getElementById("graphdiv"),
+    "Date,Temperature\n" +
+      "2008-05-07,75\n" +
+      "2008-05-08,70\n" +
+      "2008-05-09,80\n");
+  </script>
+
+</html>
+
+<%= "example.html" %>
+<br>
+
+</br>
+<%= button_to 'Plot Home', :controller => "/plots/index" %>
