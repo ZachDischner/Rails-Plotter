@@ -54,7 +54,7 @@ class Plot < ActiveRecord::Base
     #          render :inline =>                                                #
     #                                                                           #
     #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    #
+
     def put_checkboxes(list)
       boxstring = '' #
       for ii in 0..(list.length-1)
@@ -65,8 +65,6 @@ class Plot < ActiveRecord::Base
       return boxstring
 
     end
-
-
 
     #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
@@ -266,17 +264,30 @@ class Plot < ActiveRecord::Base
       return ([mydate["(1i)"].to_s.blank?, mydate["(2i)"].to_s.blank?, mydate["(3i)"].to_s.blank?]).include?(true)
     end
 
+  def reform(rownames,col)
+    x= "{"
+    rownames.each do |name|
+      x+= "'" + name + "'=>"  + name + ".map {|g| [g.send('" + col + "')]}"
+      x+= "," unless name==rownames.last
+    end
+    x += '}'
+    return x
+  end
+
+
+
+
 
     #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Scopes ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
-    #                                                                                                                                #
-    # Scopes to govern the selection of data to be plotted. There are TWO 'classes' of selection methodologies for                   #
-    # basic database operations. More complicated tables will neccesitate more complicated selection schemes. It is                  #
-    # recomended that complicated logic regarding data selection be figured out here. That way the user interfaces with              #
-    # this program the exact same for any level of complication, and logic does not need to be changed throughout the                #
-    # app. The two basic selectors are as follows:                                                                                   #
-    #                                                                                                                                #
-    #   1. Selections based on ROWS in the database.                                                                                 #
-    #       eg: " SELECT * FROM table_name WHERE name='some name' "                                                                  #
+    #
+    # Scopes to govern the selection of data to be plotted. There are TWO 'classes' of selection methodologies for
+    # basic database operations. More complicated tables will neccesitate more complicated selection schemes. It is
+    # recomended that complicated logic regarding data selection be figured out here. That way the user interfaces with
+    # this program the exact same for any level of complication, and logic does not need to be changed throughout the
+    # app. The two basic selectors are as follows:
+    #
+    #   1. Selections based on ROWS in the database.
+    #       eg: " SELECT * FROM table_name WHERE name='some name' "
     scope :between_dates, lambda { |start_date, end_date| where("Date > ? AND Date < ?", "#{start_date}", "#{end_date}") }
     scope :after_date, lambda { |start_date| where("Date > ?", "%#{start_date}") }
 
@@ -285,14 +296,14 @@ class Plot < ActiveRecord::Base
     scope :after_x, lambda { |x1| where("x >= ?", "#{x1}") }
     scope :before_x, lambda { |x2| where("x <=?", "#{x2}") }
     scope :between_x, lambda { |x1, x2| where("x BETWEEN ? and ?", "#{x1}", "#{x2}") }
-    #
-    #   2. Selections based on COLUMNS in the database.                                                                              #
-    #       eg: " SELECT (name,birthday,address) FROM table_name"                                                                    #
+
+    #   2. Selections based on COLUMNS in the database.
+    #       eg: " SELECT (name,birthday,address) FROM table_name"
     scope :select_var, lambda { |varname| select(varname) }
-    #
-    # Together, these two scope classes can be layered to create actual database queries                                             #
-    #       eg:       RoR>> Plot.after_x(4).select_var('z')                                                                          #
-    #       becomes:  SQL>> SELECT (z) FROM Plot where(x>4);                                                                         #
+
+    # Together, these two scope classes can be layered to create actual database queries
+    #       eg:       RoR>> Plot.after_x(4).select_var('z')
+    #       becomes:  SQL>> SELECT (z) FROM Plot where(x>4);
     #
     #
     #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
