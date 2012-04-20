@@ -19,6 +19,11 @@
 
       <%= label(:plot, :y_var, "Y") %>
       <%= select_tag(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => true)  %>
+
+
+      <%= label(:plot, :ticker, "Ticker") %>
+      <%= select_tag(:tickers, options_for_select(@tickers.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => false) %>
+
       </br>
     </p>
 

@@ -88,7 +88,7 @@ class Plot < ActiveRecord::Base
       return labelstring
     end
 
-
+    # Meant to work on ARRAYS of Plot OBJECTS, may want to redo to work for a hash
     def dygraph_body(tags, values)
       valuestring = ''
       values.each do |value|
@@ -263,6 +263,7 @@ class Plot < ActiveRecord::Base
     def date_blank(mydate)
       return ([mydate["(1i)"].to_s.blank?, mydate["(2i)"].to_s.blank?, mydate["(3i)"].to_s.blank?]).include?(true)
     end
+
 
   def reform(rownames,col)
     x= "{"
