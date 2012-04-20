@@ -22,7 +22,7 @@
 
 
       <%= label(:plot, :ticker, "Ticker") %>
-      <%= select_tag(:tickers, options_for_select(@tickers.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => false) %>
+      <%= select_tag(:tickers, options_for_select(@tickers.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => true) %>
 
       </br>
     </p>

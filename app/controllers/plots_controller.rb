@@ -1,14 +1,14 @@
 class PlotsController < ApplicationController
 
   def plotter
-    if [params[:tickers]].length == 1
+    if params[:tickers].length == 1
       if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
         @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
-            select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:tickers])
+            select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:tickers].first)
       elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
-        @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:tickers])
+        @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:tickers].first)
       else
-        @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:tickers])
+        @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:tickers].first)
       end
 
       @tags = @plot.first.list_vars - ["Ticker"] # Don't want to treat "Ticker" as its own plotting variable, since its a string

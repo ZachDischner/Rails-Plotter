@@ -7,8 +7,9 @@
 
 
 <table cellpadding=20px border=5px >
-
+  <% for ii in 0..(@numgraphs-1) %>
   <tr>
+
     <td>
 
       <html>
@@ -18,10 +19,10 @@
               border:3px solid grey; border-radius: 0.4em;
               font-size:1.2em; padding-top:5px;"></div>
 
-      <div id="graphdiv" float=left style="position:relative"></div>
+      <div id= <%="'graphdiv" + ii.to_s + "'"%> float=left style="position:relative"></div>
 
       <script type="text/javascript">
-          g = new Dygraph(document.getElementById("graphdiv")
+          g = new Dygraph(document.getElementById(<%="'graphdiv"  + ii.to_s + "'"%>)
                   <%# Dynamic Label Maker%>
                   <%= putc(@plot.first.dygraph_head(@tags)) %>
                   <%# Dynamic Value Putter%>
@@ -56,7 +57,7 @@
       <%= render :inline => @plot.first.put_checkboxes(params[:y_var]) %>
     </td>
   </tr>
-
+    <% end %>
 </table>
 
 <br>
