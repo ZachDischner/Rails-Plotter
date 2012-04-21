@@ -9,6 +9,8 @@
 <table cellpadding=20px border=5px >
   <%# for ii in 0..(@numgraphs-1) %>
   <% (0..@numgraphs-1).each do |ii|  %>
+      <%eval("@plot = @" + params[:filter][ii])  %>
+      <% @tags = @plot.first.list_vars %>
   <tr>
 
     <td>

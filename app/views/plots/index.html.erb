@@ -22,7 +22,7 @@
 
       <! Important!!! If there is not "filter", you must change selector scopes and logic in the "plots_controller" appropriately !>
       <%= label(:plot, :filter, "Filter") %>
-      <%= select_tag(:filter, options_for_select(@filters.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => true, :include_blank => true) %>
+      <%= select_tag(:filter, options_for_select(@filters.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => true )%>
 
 
       </br>

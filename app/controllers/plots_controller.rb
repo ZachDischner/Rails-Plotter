@@ -23,8 +23,19 @@ class PlotsController < ApplicationController
         end
 
         @tags = @plot.first.list_vars - ["Ticker"] # Don't want to treat "Ticker" as its own plotting variable, since its a string
-
+      else
+        params[:filter].each do |p|
+          if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
+            eval("@" + p.to_s + "= Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
+                select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(p)"   )
+          elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
+            eval("@" + p.to_s + "= Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(p)")
+          else
+            eval("@" + p.to_s + "= Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(p)")
+          end
+        end
       end
+
 
     # If no filter has been applied, just get a single dataset.  NOT WORKING
     else
