@@ -289,6 +289,9 @@ class Plot < ActiveRecord::Base
 
 
 
+
+
+
     #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Scopes ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
     #
     # Scopes to govern the selection of data to be plotted. There are TWO 'classes' of selection methodologies for
