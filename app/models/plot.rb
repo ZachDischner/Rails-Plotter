@@ -5,6 +5,7 @@ class Plot < ActiveRecord::Base
   set_primary_key :id
 
 
+
   # To work, the  /APP/ASSETS MUST BE THE SAME!!!! MUST MUST!!!!!
 
     #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ list_vars ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*#
@@ -28,7 +29,6 @@ class Plot < ActiveRecord::Base
       atts.each { |att| vars.concat([att[0]]) }
       return vars
     end
-
 
     #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
 
@@ -138,21 +138,21 @@ class Plot < ActiveRecord::Base
     end
 
 
-    def linear_reg
+    def linear_reg(graphnum = "")
       return '// coefficients of regression for each series.
       // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
       // only. The regression line is y = 1 + 2 * x.
       var coeffs = [ null, null, null ];
       function regression(series) {
         // Only run the regression over visible points.
-        var range = g.xAxisRange();
+        var range = g' + graphnum.to_s + '.xAxisRange();
 
         var sum_xy = 0.0, sum_x = 0.0, sum_y = 0.0, sum_x2 = 0.0, num = 0;
         for (var i = 0; i < g.numRows(); i++) {
-          var x = g.getValue(i, 0);
+          var x = g' + graphnum.to_s + '.getValue(i, 0);
           if (x < range[0] || x > range[1]) continue;
 
-          var y = g.getValue(i, series);
+          var y = g' + graphnum.to_s + '.getValue(i, series);
           if (y == null) continue;
           if (y.length == 2) {
             // using fractions
@@ -174,7 +174,7 @@ class Plot < ActiveRecord::Base
           console.log("coeffs(" + series + "): [" + b + ", " + a + "]");
         }
 
-        g.updateOptions({});  // forces a redraw.
+        g' + graphnum.to_s + '.updateOptions({});  // forces a redraw.
 
         // Every time the regressions are calculated, call the printing function
         //    that will output the coefficients of the given linear regression to
@@ -197,9 +197,9 @@ class Plot < ActiveRecord::Base
 
 
       function drawLines(ctx, area, layout) {
-        if (typeof(g) == ' + "'" + 'undefined' + "'" + ') return;  // wont be set on the initial draw.
+        if (typeof(g' + graphnum.to_s + ') == ' + "'" + 'undefined' + "'" + ') return;  // wont be set on the initial draw.
 
-        var range = g.xAxisRange();
+        var range = g' + graphnum.to_s + '.xAxisRange();
         for (var i = 0; i < coeffs.length; i++) {
           if (!coeffs[i]) continue;
           var a = coeffs[i][1];
@@ -210,10 +210,10 @@ class Plot < ActiveRecord::Base
           var x2 = range[1];
           var y2 = a * x2 + b;
 
-          var p1 = g.toDomCoords(x1, y1);
-          var p2 = g.toDomCoords(x2, y2);
+          var p1 = g' + graphnum.to_s + '.toDomCoords(x1, y1);
+          var p2 = g' + graphnum.to_s + '.toDomCoords(x2, y2);
 
-          var c = new RGBColor(g.getColors()[i - 1]);
+          var c = new RGBColor(g' + graphnum.to_s + '.getColors()[i - 1]);
           c.r = Math.floor(255 - 0.5 * (255 - c.r));
           c.g = Math.floor(255 - 0.5 * (255 - c.g));
           c.b = Math.floor(255 - 0.5 * (255 - c.b));
@@ -268,11 +268,21 @@ class Plot < ActiveRecord::Base
   def reform(rownames,col)
     x= "{"
     rownames.each do |name|
-      x+= "'" + name + "'=>"  + name + ".map {|g| [g.send('" + col + "')]}"
+      x+= "'" + name + "'=>"  + name + ".map {|g| [ "+ self.hash_var(col) +"]}"
       x+= "," unless name==rownames.last
     end
     x += '}'
     return x
+  end
+
+  def hash_var(var)
+    if var.class == String
+      return "g.send('" + var + "')"
+    end
+  end
+
+  def foo(bar="")
+    return "g = g +" + bar
   end
 
 
@@ -301,6 +311,7 @@ class Plot < ActiveRecord::Base
     #   2. Selections based on COLUMNS in the database.
     #       eg: " SELECT (name,birthday,address) FROM table_name"
     scope :select_var, lambda { |varname| select(varname) }
+    scope :select_filter, lambda {|filter| select("DISTINCT #{filter}")}
 
     # Together, these two scope classes can be layered to create actual database queries
     #       eg:       RoR>> Plot.after_x(4).select_var('z')

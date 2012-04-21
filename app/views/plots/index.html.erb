@@ -21,8 +21,8 @@
       <%= select_tag(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => true)  %>
 
 
-      <%= label(:plot, :ticker, "Ticker") %>
-      <%= select_tag(:tickers, options_for_select(@tickers.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => true) %>
+      <%= label(:plot, :filter, "Filter") %>
+      <%= select_tag(:filter, options_for_select(@filters.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => true) %>
 
       </br>
     </p>
