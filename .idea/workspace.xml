@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/plots_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/index.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/index.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/plotter.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
     </list>
     <ignored path="Stocks.iws" />
@@ -33,7 +35,7 @@
       <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="89" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.0">
+            <state line="319" column="60" selection-start="13648" selection-end="13648" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -64,7 +66,7 @@
       <file leaf-file-name="plotter.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="19" selection-start="316" selection-end="316" vertical-scroll-proportion="-7.5">
+            <state line="12" column="49" selection-start="340" selection-end="340" vertical-scroll-proportion="-7.5">
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
               </folding>
@@ -72,19 +74,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="107" selection-start="1040" selection-end="1040" vertical-scroll-proportion="0.7340425">
+            <state line="8" column="80" selection-start="350" selection-end="350" vertical-scroll-proportion="-5.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plots_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="plots_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="60" selection-start="1106" selection-end="1106" vertical-scroll-proportion="0.0">
+            <state line="28" column="76" selection-start="1604" selection-end="1604" vertical-scroll-proportion="0.24948025">
               <folding />
             </state>
           </provider>
@@ -113,10 +115,10 @@
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
-        <option value="$PROJECT_DIR$/app/models/plot.rb" />
         <option value="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/plot.rb" />
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
       </list>
     </option>
   </component>
@@ -598,7 +600,11 @@
       <created>1334987313273</created>
       <updated>1334987313273</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="updated the database to have a buttload more data in it. Still runs smooth! Also tried making a selector method to be used in the controller, didn't work. &#10;Might need to make it a method and have all the params[] passed as function inputs. Hmm.... Might be good, sectionalize the code, make the controller simpler, and add more robust logic in one place in the function. Problem is that you can't get to it without calling a dummy variable. Need to look in to how to just make a classless function.">
+      <created>1334989175958</created>
+      <updated>1334989175958</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -663,7 +669,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checkboxes for multiple plots fixed. Takes a lot of identification of each plot document id and function names and whatnot" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated the database to have a buttload more data in it. Still runs smooth! Also tried making a selector method to be used in the controller, didn't work. &#10;Might need to make it a method and have all the params[] passed as function inputs. Hmm.... Might be good, sectionalize the code, make the controller simpler, and add more robust logic in one place in the function. Problem is that you can't get to it without calling a dummy variable. Need to look in to how to just make a classless function." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -681,6 +687,7 @@
     <MESSAGE value="Have capabilities to do multi plot. Now need to dynamically form the hash, and dynamically pass it to the views." />
     <MESSAGE value="Forget about the hash. Dynamically reassign @plot to each of the other selections&#10;Progress: Updated dygraphs_regression to use a string to change which graph object it references." />
     <MESSAGE value="Checkboxes for multiple plots fixed. Takes a lot of identification of each plot document id and function names and whatnot" />
+    <MESSAGE value="updated the database to have a buttload more data in it. Still runs smooth! Also tried making a selector method to be used in the controller, didn't work. &#10;Might need to make it a method and have all the params[] passed as function inputs. Hmm.... Might be good, sectionalize the code, make the controller simpler, and add more robust logic in one place in the function. Problem is that you can't get to it without calling a dummy variable. Need to look in to how to just make a classless function." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -760,7 +767,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="19" selection-start="316" selection-end="316" vertical-scroll-proportion="-7.5">
+        <state line="12" column="49" selection-start="340" selection-end="340" vertical-scroll-proportion="-7.5">
           <folding>
             <element signature="e#0#97#0" expanded="true" />
           </folding>
@@ -769,21 +776,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="89" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="60" selection-start="1106" selection-end="1106" vertical-scroll-proportion="0.0">
+        <state line="319" column="60" selection-start="13648" selection-end="13648" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="107" selection-start="1040" selection-end="1040" vertical-scroll-proportion="0.7340425">
+        <state line="8" column="80" selection-start="350" selection-end="350" vertical-scroll-proportion="-5.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="76" selection-start="1604" selection-end="1604" vertical-scroll-proportion="0.24948025">
           <folding />
         </state>
       </provider>

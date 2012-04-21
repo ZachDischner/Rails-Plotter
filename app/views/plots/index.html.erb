@@ -15,14 +15,15 @@
             border-style:solid; border-radius: 0.5em; box-shadow: 8px 8px 5px #808080;text-align: center">
       <br>
       <%= label(:plot, :x_var, "X") %>
-      <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false, :default => "Date") %>
+      <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false) %>
 
       <%= label(:plot, :y_var, "Y") %>
       <%= select_tag(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => true)  %>
 
-
+      <! Important!!! If there is not "filter", you must change selector scopes and logic in the "plots_controller" appropriately !>
       <%= label(:plot, :filter, "Filter") %>
-      <%= select_tag(:filter, options_for_select(@filters.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => true) %>
+      <%= select_tag(:filter, options_for_select(@filters.map {|t| [t.ticker,t.ticker.to_s] }), :multiple => true, :include_blank => true) %>
+
 
       </br>
     </p>

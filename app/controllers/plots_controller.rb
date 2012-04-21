@@ -1,18 +1,41 @@
 class PlotsController < ApplicationController
 
   def plotter
-    if params[:filter].length == 1
-      if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
-        @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
-            select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
-      elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
-        @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
-      else
-        @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
+
+    #   Check if the user has applied the param[:filter] to the plotting data
+    if params[:filter] != nil or params[:filter] != [""]
+
+      # Convert to array if params[:filter] is a string. The rest of the app expects it as an array
+      #   This situation arises when the :filter selection helper does not include a ":multiple => true",
+      #   which turns the :filter param into a string, instead of an array of strings.
+      if params[:filter].class == String
+        params[:filter] = [params[:filter]]
       end
 
-      @tags = @plot.first.list_vars - ["Ticker"] # Don't want to treat "Ticker" as its own plotting variable, since its a string
+      if params[:filter].length == 1
+        if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
+          @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
+              select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
+        elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
+          @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
+        else
+          @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
+        end
 
+        @tags = @plot.first.list_vars - ["Ticker"] # Don't want to treat "Ticker" as its own plotting variable, since its a string
+
+      end
+
+    # If no filter has been applied, just get a single dataset.  NOT WORKING
+    else
+      if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
+        @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
+            select_var(params[:x_var]).select_var(params[:y_var])
+      elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
+        @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var])
+      else
+        @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var])
+      end
     end
 
     # Choose which layout to render based on the "feature" parameter.
@@ -28,7 +51,6 @@ class PlotsController < ApplicationController
     end
 
   end
-
 
 
   def index

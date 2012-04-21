@@ -10,9 +10,9 @@
             border-radius:2em;
             border-style:inset ">
 
- <%  @numgraphs = 8 %>
+ <%  @numgraphs = params[:filter].length %>
 
-# put a @plot = eval(params[:filter][ii])  in the template I guess
+<%# put a @plot = eval(params[:filter][ii])  in the template I guess %>
 
  <%= render :template => @mytemplate %>
 

@@ -296,7 +296,7 @@ class Plot < ActiveRecord::Base
     #
     # Scopes to govern the selection of data to be plotted. There are TWO 'classes' of selection methodologies for
     # basic database operations. More complicated tables will neccesitate more complicated selection schemes. It is
-    # recomended that complicated logic regarding data selection be figured out here. That way the user interfaces with
+    # recommended that complicated logic regarding data selection be figured out here. That way the user interfaces with
     # this program the exact same for any level of complication, and logic does not need to be changed throughout the
     # app. The two basic selectors are as follows:
     #
@@ -314,12 +314,23 @@ class Plot < ActiveRecord::Base
     #   2. Selections based on COLUMNS in the database.
     #       eg: " SELECT (name,birthday,address) FROM table_name"
     scope :select_var, lambda { |varname| select(varname) }
-    scope :select_filter, lambda {|filter| select("DISTINCT #{filter}")}
 
     # Together, these two scope classes can be layered to create actual database queries
     #       eg:       RoR>> Plot.after_x(4).select_var('z')
     #       becomes:  SQL>> SELECT (z) FROM Plot where(x>4);
-    #
-    #
+
+    # (1.5) "Filter" selection. This is the optional scope, which depends heavily on your database schema and how you want to plot.
+    #         -This will get a list of distinct values in the "filter" column, which can be used in the interaction webpage to obtain
+    #           separate datasets.
+    #         -Technically, this is still a ROW based selection. However, in its implementation, the "filter" param will be utilized to create
+    #           completely different datasets, not provide selection criteria.
+    #         -For a stock market database, the user would want to plot stats (in columns) for different stocks.
+    #           The stock names are stored in a "tickers" column. So In order to get a list of all tickers so that the
+    #           user can make their decision, you can populate a drop down with values gathered from tis scope.
+    #             eg:     RoR>> @stocks = Plot.select_filter("ticker")
+    #             yeilds: ['aapl','goog','arwr',...]
+    #          That array can be populated into a dropdown that the user can use to plot stock data based on its ticker.
+    scope :select_filter, lambda {|filter| select("DISTINCT #{filter}")}
+
     #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   end
