@@ -55,10 +55,10 @@ class Plot < ActiveRecord::Base
     #                                                                           #
     #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
-    def put_checkboxes(list)
+    def put_checkboxes(list,graphnum="")
       boxstring = '' #
       for ii in 0..(list.length-1)
-        boxstring += "<input type=checkbox id='" + ii.to_s + "' checked onClick='change(this)'> \n"
+        boxstring += "<input type=checkbox id='" + ii.to_s + "' checked onClick='change"+graphnum.to_s+"(this)'> \n"
         boxstring += "<label for='" + ii.to_s + "'>" + list[ii] + " </label>" + "<br/>" unless (ii == list.length)
       end
       boxstring += '</p>'
@@ -104,7 +104,7 @@ class Plot < ActiveRecord::Base
       return valuestring
     end
 
-    def dygraph_options
+    def dygraph_options(graphnum="")
       options_string =
           ",{
           height: 400,                                           // Specifies the Height of the plot area
@@ -118,7 +118,7 @@ class Plot < ActiveRecord::Base
           underlayCallback: drawLines,                           // MUST enable this  to show linear regression
           xlabel: '<%=params[:x_var]%>',                         // Label for the X axis
           ylabel: '<%=render :inline => params[:y_var].to_s %>', // Labels for the Y axis
-          visibility: <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   //
+          visibility" + graphnum + ": <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   //
         } "
       return options_string
     end

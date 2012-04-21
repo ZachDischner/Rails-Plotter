@@ -23,13 +23,13 @@
       <div id= <%="'graphdiv" + ii.to_s + "'"%> float=left style="position:relative"></div>
 
       <script type="text/javascript">
-          g = new Dygraph(document.getElementById(<%="'graphdiv"  + ii.to_s + "'"%>)
+          g<%=ii.to_s%> = new Dygraph(document.getElementById(<%="'graphdiv"  + ii.to_s + "'"%>)
                   <%# Dynamic Label Maker%>
                   <%= putc(@plot.first.dygraph_head(@tags)) %>
                   <%# Dynamic Value Putter%>
                   <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>
                   <%# Options for the Dygraph plot %>
-                  <%= render :inline => @plot.first.dygraph_options %>
+                  <%= render :inline => @plot.first.dygraph_options(ii.to_s) %>
           );   // finish the Dygraph  Plot section
 
 
@@ -37,14 +37,14 @@
           ///// Lines to use checkboxes for Plot updating.
           <%#= puts getCoeffs() %>
 
-          setStatus();
-          function setStatus() {
-              document.getElementById("visibility").innerHTML =
-                      g.visibility().toString();
+          setStatus<%=ii.to_s%>();
+          function setStatus<%=ii.to_s%>() {
+              document.getElementById("visibility<%=ii.to_s%>").innerHTML =
+                      g<%=ii.to_s%>.visibility<%=ii.to_s%>().toString();
           }
 
-          function change(el) {
-              g.setVisibility(parseInt(el.id), el.checked);
+          function change<%=ii.to_s%>(el) {
+              g<%=ii.to_s%>.setVisibility(parseInt(el.id), el.checked);
               setStatus();
           }
 
@@ -55,7 +55,7 @@
     <td>
 
       <p> Choose which Lines to Plot</p>
-      <%= render :inline => @plot.first.put_checkboxes(params[:y_var]) %>
+      <%= render :inline => @plot.first.put_checkboxes(params[:y_var],ii.to_s) %>
     </td>
   </tr>
     <% end %>
