@@ -1,33 +1,44 @@
 <%= javascript_include_tag "dygraph-combined" %>
 
 <h1>Fully dynamic and iterative plotting setup. FEEL THE POWER!! </h1>
-<div style="text-align:center"><%= image_tag("/LightningSmall.jpg", :mouseover => "/Lightning.jpg", :align => :center) %>  </div>
 
-<%#= render :inline => @plot.first.generate_Dygraph_HTML %>
+<div style="text-align:center"><%= image_tag('/NYSE.jpeg', :align => :left, :size => '1200x150') %>  </div>
+
+
+
 <table cellpadding=20px border=5px>
-  <tr>
-    <td>
+  <%# for ii in 0..(@numgraphs-1) %>
+  <% (0..@numgraphs-1).each do |ii|
+    if @numgraphs > 1
+      eval("@plot = @" + params[:filter][ii])
+      @tags = @plot.first.list_vars
+    end %>
 
-      <html>
+      <tr>
 
-      <div id="Legend_Div" float=right align=center style="width:150px; position:relative; left:400px;
-              border:3px solid grey; border-radius: 0.4em;
-              font-size:1.2em; padding-top:5px;"></div>
+        <td>
 
-      <div id="graphdiv" float=left style="position:relative;"></div>
+          <html>
+          <p align="center" style="font-size:1.5em; font-style:normal;"> <b> <%= params[:filter][ii] %> </b></p>
 
-      <script type="text/javascript">
-          g = new Dygraph(document.getElementById("graphdiv")
-                  <%# Dynamic Label Maker%>
-                  <%= putc(@plot.first.dygraph_head(@tags)) %>
-                  <%# Dynamic Value Putter%>
-                  <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>
-                  <%# Options for the Dygraph plot %>
-                  <%= render :inline => @plot.first.dygraph_options %>
-          );   // finish the Dygraph  Plot section
+          <div id=<%="'Legend_Div" + ii.to_s + "'"%> float=right align=center style="width:150px; position:relative; left:400px;
+                  border:3px solid grey; border-radius: 0.4em;
+                  font-size:1.2em; padding-top:5px;"></div>
+
+          <div id= <%="'graphdiv" + ii.to_s + "'"%> float=left style="position:relative"></div>
+
+          <script type="text/javascript">
+              g<%=ii.to_s%> = new Dygraph(document.getElementById(<%="'graphdiv"  + ii.to_s + "'"%>)
+                      <%# Dynamic Label Maker%>
+                      <%= putc(@plot.first.dygraph_head(@tags)) %>
+                      <%# Dynamic Value Putter%>
+                      <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>
+                      <%# Options for the Dygraph plot %>
+                      <%= render :inline => @plot.first.dygraph_options(ii.to_s) %>
+              );   // finish the Dygraph  Plot section
 
 
-          <%= render :inline => @plot.first.linear_reg %>
+          <%= render :inline => @plot.first.linear_reg(ii.to_s) %>
           ///// Lines to use checkboxes for Plot updating.
           <%#= puts getCoeffs() %>
 
@@ -36,9 +47,10 @@
       </html>
     </td>
     <td>
-      <%= render :inline => @plot.first.linear_reg_buttons(params[:y_var]) %>
+      <%= render :inline => @plot.first.linear_reg_buttons(params[:y_var],ii.to_s) %>
     </td>
   </tr>
+      <% end %>
 </table>
 
 

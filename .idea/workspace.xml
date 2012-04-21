@@ -4,7 +4,6 @@
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
     </list>
     <ignored path="Stocks.iws" />
@@ -31,19 +30,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="plot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="238" column="50" selection-start="11055" selection-end="11055" vertical-scroll-proportion="0.0">
+            <state line="132" column="82" selection-start="7180" selection-end="7180" vertical-scroll-proportion="0.7796258">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plot_checkbox_template.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plot_checkbox_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="76" selection-start="483" selection-end="483" vertical-scroll-proportion="0.60638297">
+            <state line="37" column="72" selection-start="0" selection-end="1481" vertical-scroll-proportion="6.6666665">
               <folding />
             </state>
           </provider>
@@ -52,7 +51,7 @@
       <file leaf-file-name="plot_linear_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="57" selection-start="1225" selection-end="1225" vertical-scroll-proportion="-18.125">
+            <state line="48" column="91" selection-start="1755" selection-end="1755" vertical-scroll-proportion="-13.75">
               <folding />
             </state>
           </provider>
@@ -128,9 +127,9 @@
         <option value="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/models/plot.rb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
       </list>
     </option>
   </component>
@@ -632,7 +631,11 @@
       <created>1335041827235</created>
       <updated>1335041827235</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fixed logic in checkbox template to allow for just single plot. Otherwise it wasn't working.">
+      <created>1335045006702</created>
+      <updated>1335045006702</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -697,7 +700,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed legends so they all relate to their corresponding graphs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed logic in checkbox template to allow for just single plot. Otherwise it wasn't working." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -719,6 +722,7 @@
     <MESSAGE value="Commented, trying to make it dynamic to work with or without a filter. Gotta work on it." />
     <MESSAGE value="YAY!!! Got the filter selection and multi plotting working! for basic stuff. Need to robustify it and test it more." />
     <MESSAGE value="Fixed legends so they all relate to their corresponding graphs" />
+    <MESSAGE value="Fixed logic in checkbox template to allow for just single plot. Otherwise it wasn't working." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -815,13 +819,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="238" column="50" selection-start="11055" selection-end="11055" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="35" column="12" selection-start="2344" selection-end="2344" vertical-scroll-proportion="0.0">
@@ -829,16 +826,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="57" selection-start="1225" selection-end="1225" vertical-scroll-proportion="-18.125">
+        <state line="37" column="72" selection-start="0" selection-end="1481" vertical-scroll-proportion="6.6666665">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="76" selection-start="483" selection-end="483" vertical-scroll-proportion="0.60638297">
+        <state line="48" column="91" selection-start="1755" selection-end="1755" vertical-scroll-proportion="-13.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="82" selection-start="7180" selection-end="7180" vertical-scroll-proportion="0.7796258">
           <folding />
         </state>
       </provider>

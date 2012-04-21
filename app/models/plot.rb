@@ -115,7 +115,7 @@ class Plot < ActiveRecord::Base
           labelsDivWidth: 100,                                                       // Set the
           labelsDiv: document.getElementById('Legend_Div" + graphnum.to_s + "'),     // Specifies External Div to put Legend Labels in
           labelsSeparateLines: true,                                                 // Different lines per label for easier readability
-          underlayCallback: drawLines,                                               // MUST enable this  to show linear regression
+          underlayCallback: drawLines" + graphnum + ",                               // MUST enable this  to show linear regression
           xlabel: '<%=params[:x_var]%>',                                             // Label for the X axis
           ylabel: '<%=render :inline => params[:y_var].to_s %>',                     // Labels for the Y axis
           visibility" + graphnum + ": <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   //
@@ -130,7 +130,7 @@ class Plot < ActiveRecord::Base
       for ii in 0..list.length-1
         button_str += '<input type=button style="color:RGBColor(g' + graphnum.to_s + '.getColors().[' + ii.to_s + ']).toHex;" value="Regression For --> ' + list[ii] + '"
                                     onClick="regression' + graphnum.to_s + '(' + (ii + 1).to_s + '), coeffs_' + (ii+1).to_s + '()" />' + "\n"
-        button_str += '<br/><div style="padding:5px; border:2px solid black" id="Div_' + (ii+1).to_s + '">Coefficients are: </div><br/>' + "\n"
+        button_str += '<br/><div style="padding:5px; border:2px solid black" id="Div_' + graphnum.to_s  + (ii+1).to_s + '">Coefficients are: </div><br/>' + "\n"
       end
       button_str += '<input type=button value="Clear Lines" onClick="clearLines' + graphnum.to_s + '()" />' + "\n"
       #button_str += '</div>'   + "\n"
