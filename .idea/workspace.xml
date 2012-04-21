@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/plots_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/index.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/index.html.erb" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,10 +30,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="plot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="319" column="60" selection-start="13648" selection-end="13648" vertical-scroll-proportion="0.0">
+            <state line="112" column="75" selection-start="5519" selection-end="5519" vertical-scroll-proportion="0.6376518">
               <folding />
             </state>
           </provider>
@@ -53,11 +52,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plot_checkbox_template.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plot_checkbox_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="57" selection-start="440" selection-end="440" vertical-scroll-proportion="0.38297874">
-              <folding />
+            <state line="26" column="75" selection-start="953" selection-end="953" vertical-scroll-proportion="-8.75">
+              <folding>
+                <marker date="1335041013000" expanded="true" signature="267:2292" placeholder="..." />
+                <marker date="1335041013000" expanded="true" signature="335:2281" placeholder="do ... end" />
+                <marker date="1335041013000" expanded="true" signature="446:2269" placeholder="..." />
+                <marker date="1335041013000" expanded="true" signature="456:2118" placeholder="..." />
+                <marker date="1335041013000" expanded="true" signature="470:2108" placeholder="..." />
+                <marker date="1335041013000" expanded="true" signature="952:2094" placeholder="..." />
+                <marker date="1335041013000" expanded="true" signature="1520:1644" placeholder="//..." />
+                <marker date="1335041013000" expanded="true" signature="1759:1921" placeholder="{...}" />
+                <marker date="1335041013000" expanded="true" signature="1965:2077" placeholder="{...}" />
+                <marker date="1335041013000" expanded="true" signature="2127:2261" placeholder="..." />
+                <marker date="1335041013000" expanded="true" signature="2304:2369" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -68,6 +79,7 @@
             <state line="12" column="49" selection-start="340" selection-end="340" vertical-scroll-proportion="-7.5">
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
+                <marker date="1335031233000" expanded="true" signature="294:463" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -77,7 +89,21 @@
         <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="25" column="129" selection-start="1271" selection-end="1271" vertical-scroll-proportion="-15.0">
-              <folding />
+              <folding>
+                <marker date="1335035818000" expanded="true" signature="392:3703" placeholder="do ... end" />
+                <marker date="1335035818000" expanded="true" signature="676:1292" placeholder="..." />
+                <marker date="1335035818000" expanded="true" signature="786:805" placeholder="{ ... }" />
+                <marker date="1335035818000" expanded="true" signature="929:948" placeholder="{ ... }" />
+                <marker date="1335035818000" expanded="true" signature="1215:1246" placeholder="{ ... }" />
+                <marker date="1335035818000" expanded="true" signature="1598:3600" placeholder="..." />
+                <marker date="1335035818000" expanded="true" signature="1609:3587" placeholder="..." />
+                <marker date="1335035818000" expanded="true" signature="1622:2151" placeholder="..." />
+                <marker date="1335035818000" expanded="true" signature="1822:2137" placeholder="..." />
+                <marker date="1335035818000" expanded="true" signature="2335:2787" placeholder="..." />
+                <marker date="1335035818000" expanded="true" signature="2801:3575" placeholder="..." />
+                <marker date="1335035818000" expanded="true" signature="3167:3560" placeholder="..." />
+                <marker date="1335035818000" expanded="true" signature="3651:3695" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -86,7 +112,9 @@
         <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="35" column="12" selection-start="2344" selection-end="2344" vertical-scroll-proportion="0.0">
-              <folding />
+              <folding>
+                <marker date="1335039995000" expanded="true" signature="4079:4090" placeholder=" ... end" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,10 +143,10 @@
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/plot.rb" />
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/plot.rb" />
       </list>
     </option>
   </component>
@@ -284,7 +312,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="settings.github" />
+    <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
     <property name="FullScreen" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
@@ -608,7 +636,11 @@
       <created>1335035403896</created>
       <updated>1335035403896</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="YAY!!! Got the filter selection and multi plotting working! for basic stuff. Need to robustify it and test it more.">
+      <created>1335040064608</created>
+      <updated>1335040064608</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -673,7 +705,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commented, trying to make it dynamic to work with or without a filter. Gotta work on it." />
+    <option name="LAST_COMMIT_MESSAGE" value="YAY!!! Got the filter selection and multi plotting working! for basic stuff. Need to robustify it and test it more." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -693,6 +725,7 @@
     <MESSAGE value="Checkboxes for multiple plots fixed. Takes a lot of identification of each plot document id and function names and whatnot" />
     <MESSAGE value="updated the database to have a buttload more data in it. Still runs smooth! Also tried making a selector method to be used in the controller, didn't work. &#10;Might need to make it a method and have all the params[] passed as function inputs. Hmm.... Might be good, sectionalize the code, make the controller simpler, and add more robust logic in one place in the function. Problem is that you can't get to it without calling a dummy variable. Need to look in to how to just make a classless function." />
     <MESSAGE value="Commented, trying to make it dynamic to work with or without a filter. Gotta work on it." />
+    <MESSAGE value="YAY!!! Got the filter selection and multi plotting working! for basic stuff. Need to robustify it and test it more." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -768,34 +801,63 @@
         <state line="12" column="49" selection-start="340" selection-end="340" vertical-scroll-proportion="-7.5">
           <folding>
             <element signature="e#0#97#0" expanded="true" />
+            <marker date="1335031233000" expanded="true" signature="294:463" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="319" column="60" selection-start="13648" selection-end="13648" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="129" selection-start="1271" selection-end="1271" vertical-scroll-proportion="-15.0">
-          <folding />
+          <folding>
+            <marker date="1335035818000" expanded="true" signature="392:3703" placeholder="do ... end" />
+            <marker date="1335035818000" expanded="true" signature="676:1292" placeholder="..." />
+            <marker date="1335035818000" expanded="true" signature="786:805" placeholder="{ ... }" />
+            <marker date="1335035818000" expanded="true" signature="929:948" placeholder="{ ... }" />
+            <marker date="1335035818000" expanded="true" signature="1215:1246" placeholder="{ ... }" />
+            <marker date="1335035818000" expanded="true" signature="1598:3600" placeholder="..." />
+            <marker date="1335035818000" expanded="true" signature="1609:3587" placeholder="..." />
+            <marker date="1335035818000" expanded="true" signature="1622:2151" placeholder="..." />
+            <marker date="1335035818000" expanded="true" signature="1822:2137" placeholder="..." />
+            <marker date="1335035818000" expanded="true" signature="2335:2787" placeholder="..." />
+            <marker date="1335035818000" expanded="true" signature="2801:3575" placeholder="..." />
+            <marker date="1335035818000" expanded="true" signature="3167:3560" placeholder="..." />
+            <marker date="1335035818000" expanded="true" signature="3651:3695" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="35" column="12" selection-start="2344" selection-end="2344" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <marker date="1335039995000" expanded="true" signature="4079:4090" placeholder=" ... end" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="57" selection-start="440" selection-end="440" vertical-scroll-proportion="0.38297874">
+        <state line="26" column="75" selection-start="953" selection-end="953" vertical-scroll-proportion="-8.75">
+          <folding>
+            <marker date="1335041013000" expanded="true" signature="267:2292" placeholder="..." />
+            <marker date="1335041013000" expanded="true" signature="335:2281" placeholder="do ... end" />
+            <marker date="1335041013000" expanded="true" signature="446:2269" placeholder="..." />
+            <marker date="1335041013000" expanded="true" signature="456:2118" placeholder="..." />
+            <marker date="1335041013000" expanded="true" signature="470:2108" placeholder="..." />
+            <marker date="1335041013000" expanded="true" signature="952:2094" placeholder="..." />
+            <marker date="1335041013000" expanded="true" signature="1520:1644" placeholder="//..." />
+            <marker date="1335041013000" expanded="true" signature="1759:1921" placeholder="{...}" />
+            <marker date="1335041013000" expanded="true" signature="1965:2077" placeholder="{...}" />
+            <marker date="1335041013000" expanded="true" signature="2127:2261" placeholder="..." />
+            <marker date="1335041013000" expanded="true" signature="2304:2369" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="112" column="75" selection-start="5519" selection-end="5519" vertical-scroll-proportion="0.6376518">
           <folding />
         </state>
       </provider>

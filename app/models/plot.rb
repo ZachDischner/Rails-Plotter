@@ -107,17 +107,17 @@ class Plot < ActiveRecord::Base
     def dygraph_options(graphnum="")
       options_string =
           ",{
-          height: 400,                                           // Specifies the Height of the plot area
-          width: 840,                                            // Specifies the Width of the plot area
-          hideOverlayOnMouseOut: false,                          // Keeps the legend visible at all times
-          showRoller: true,                                      // Show a rolling Average box
-          rollPeriod: 1,                                         // Set default average for rolling average (0 means no average...)
-          labelsDivWidth: 100,                                   // Set the
-          labelsDiv: document.getElementById('Legend_Div'),      // Specifies External Div to put Legend Labels in
-          labelsSeparateLines: true,                             // Different lines per label for easier readability
-          underlayCallback: drawLines,                           // MUST enable this  to show linear regression
-          xlabel: '<%=params[:x_var]%>',                         // Label for the X axis
-          ylabel: '<%=render :inline => params[:y_var].to_s %>', // Labels for the Y axis
+          height: 400,                                                               // Specifies the Height of the plot area
+          width: 840,                                                                // Specifies the Width of the plot area
+          hideOverlayOnMouseOut: false,                                              // Keeps the legend visible at all times
+          showRoller: true,                                                          // Show a rolling Average box
+          rollPeriod: 1,                                                             // Set default average for rolling average (0 means no average...)
+          labelsDivWidth: 100,                                                       // Set the
+          labelsDiv: document.getElementById('Legend_Div" + graphnum.to_s + "'),     // Specifies External Div to put Legend Labels in
+          labelsSeparateLines: true,                                                 // Different lines per label for easier readability
+          underlayCallback: drawLines,                                               // MUST enable this  to show linear regression
+          xlabel: '<%=params[:x_var]%>',                                             // Label for the X axis
+          ylabel: '<%=render :inline => params[:y_var].to_s %>',                     // Labels for the Y axis
           visibility" + graphnum + ": <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   //
         } "
       return options_string

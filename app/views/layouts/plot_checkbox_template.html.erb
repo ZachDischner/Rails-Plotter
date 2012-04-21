@@ -16,9 +16,9 @@
     <td>
 
       <html>
-      <p align="center" style="font-size:1.5em; font-style:normal;"> <b> <%= params[:filter] %> </b></p>
+      <p align="center" style="font-size:1.5em; font-style:normal;"> <b> <%= params[:filter][ii] %> </b></p>
 
-      <div id="Legend_Div" float=right align=center style="width:150px; position:relative; left:400px;
+      <div id=<%="'Legend_Div" + ii.to_s + "'"%> float=right align=center style="width:150px; position:relative; left:400px;
               border:3px solid grey; border-radius: 0.4em;
               font-size:1.2em; padding-top:5px;"></div>
 
