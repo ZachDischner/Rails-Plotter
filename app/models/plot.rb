@@ -123,16 +123,16 @@ class Plot < ActiveRecord::Base
       return options_string
     end
 
-    def linear_reg_buttons(list)
+    def linear_reg_buttons(list,graphnum="")
 
       #button_str = '<div style="position: relative; left: 1000px; top: -250px;">' + "\n"
       button_str = ''
       for ii in 0..list.length-1
-        button_str += '<input type=button style="color:RGBColor(g.getColors().[' + ii.to_s + ']).toHex;" value="Regression For --> ' + list[ii] + '"
-                                    onClick="regression(' + (ii + 1).to_s + '), coeffs_' + (ii+1).to_s + '()" />' + "\n"
+        button_str += '<input type=button style="color:RGBColor(g' + graphnum.to_s + '.getColors().[' + ii.to_s + ']).toHex;" value="Regression For --> ' + list[ii] + '"
+                                    onClick="regression' + graphnum.to_s + '(' + (ii + 1).to_s + '), coeffs_' + (ii+1).to_s + '()" />' + "\n"
         button_str += '<br/><div style="padding:5px; border:2px solid black" id="Div_' + (ii+1).to_s + '">Coefficients are: </div><br/>' + "\n"
       end
-      button_str += '<input type=button value="Clear Lines" onClick="clearLines()" />' + "\n"
+      button_str += '<input type=button value="Clear Lines" onClick="clearLines' + graphnum.to_s + '()" />' + "\n"
       #button_str += '</div>'   + "\n"
       return button_str
     end
@@ -143,12 +143,12 @@ class Plot < ActiveRecord::Base
       // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
       // only. The regression line is y = 1 + 2 * x.
       var coeffs = [ null, null, null ];
-      function regression(series) {
+      function regression' + graphnum.to_s + '(series) {
         // Only run the regression over visible points.
         var range = g' + graphnum.to_s + '.xAxisRange();
 
         var sum_xy = 0.0, sum_x = 0.0, sum_y = 0.0, sum_x2 = 0.0, num = 0;
-        for (var i = 0; i < g.numRows(); i++) {
+        for (var i = 0; i < g' + graphnum.to_s + '.numRows(); i++) {
           var x = g' + graphnum.to_s + '.getValue(i, 0);
           if (x < range[0] || x > range[1]) continue;
 
@@ -184,19 +184,19 @@ class Plot < ActiveRecord::Base
 
       }
 
-      function clearLines()
+      function clearLines' + graphnum.to_s + '()
       {
         for (var i = 0; i < coeffs.length; i++)
         {
           coeffs[i] = null;
         }
-        g.updateOptions({});
+        g' + graphnum.to_s + '.updateOptions({});
         clear_Coeffs()
 
       }
 
 
-      function drawLines(ctx, area, layout) {
+      function drawLines' + graphnum.to_s + '(ctx, area, layout) {
         if (typeof(g' + graphnum.to_s + ') == ' + "'" + 'undefined' + "'" + ') return;  // wont be set on the initial draw.
 
         var range = g' + graphnum.to_s + '.xAxisRange();
@@ -248,7 +248,7 @@ class Plot < ActiveRecord::Base
           document.getElementById("Div_" + ii).innerHTML = reg_str;
         }
 
-      function clear_Coeffs(ii)
+      function clear_Coeffs' + graphnum.to_s + '(ii)
         {
           for (var i = 1; i < coeffs.length; i++) document.getElementById("Div_" + i).innerHTML = "Coefficients are:";
         }
