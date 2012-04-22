@@ -4,7 +4,7 @@
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,10 +30,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="plot.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="119" column="66" selection-start="6391" selection-end="6391" vertical-scroll-proportion="-0.18711019">
+            <state line="193" column="41" selection-start="9428" selection-end="9428" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plot_checkbox_linear_template.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="62" selection-start="2285" selection-end="2285" vertical-scroll-proportion="0.4642857">
               <folding />
             </state>
           </provider>
@@ -42,7 +51,7 @@
       <file leaf-file-name="plot_checkbox_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="75" selection-start="1711" selection-end="1711" vertical-scroll-proportion="-11.458333">
+            <state line="0" column="0" selection-start="0" selection-end="2337" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -51,18 +60,8 @@
       <file leaf-file-name="plot_linear_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="59" selection-start="1815" selection-end="1815" vertical-scroll-proportion="-27.5">
-              <folding>
-                <marker date="1335046212000" expanded="true" signature="267:1883" placeholder="..." />
-                <marker date="1335046212000" expanded="true" signature="334:1872" placeholder="do ... end" />
-                <marker date="1335046212000" expanded="true" signature="346:453" placeholder="if ... end" />
-                <marker date="1335046212000" expanded="true" signature="467:1858" placeholder="..." />
-                <marker date="1335046212000" expanded="true" signature="481:1745" placeholder="..." />
-                <marker date="1335046212000" expanded="true" signature="499:1735" placeholder="..." />
-                <marker date="1335046212000" expanded="true" signature="1005:1721" placeholder="..." />
-                <marker date="1335046212000" expanded="true" signature="1754:1850" placeholder="..." />
-                <marker date="1335046212000" expanded="true" signature="1897:1962" placeholder="..." />
-              </folding>
+            <state line="48" column="0" selection-start="1747" selection-end="1851" vertical-scroll-proportion="-10.625">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -138,8 +137,9 @@
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/plot.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/plot.rb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
       </list>
     </option>
   </component>
@@ -665,7 +665,11 @@
       <created>1335046482012</created>
       <updated>1335046482012</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Got it all back to where it was. VERY PICKY app. Miss one attribute of the dygraph object and it all goes to shit.">
+      <created>1335070297156</created>
+      <updated>1335070297156</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -730,7 +734,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Multi plot regression working, not with the coefficient printing though .Fix that" />
+    <option name="LAST_COMMIT_MESSAGE" value="Got it all back to where it was. VERY PICKY app. Miss one attribute of the dygraph object and it all goes to shit." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -754,6 +758,7 @@
     <MESSAGE value="Fixed legends so they all relate to their corresponding graphs" />
     <MESSAGE value="Fixed logic in checkbox template to allow for just single plot. Otherwise it wasn't working." />
     <MESSAGE value="Multi plot regression working, not with the coefficient printing though .Fix that" />
+    <MESSAGE value="Got it all back to where it was. VERY PICKY app. Miss one attribute of the dygraph object and it all goes to shit." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -772,11 +777,6 @@
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="21.333334" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/plots.js.coffee">
@@ -836,23 +836,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="59" selection-start="1815" selection-end="1815" vertical-scroll-proportion="-27.5">
-          <folding>
-            <marker date="1335046212000" expanded="true" signature="267:1883" placeholder="..." />
-            <marker date="1335046212000" expanded="true" signature="334:1872" placeholder="do ... end" />
-            <marker date="1335046212000" expanded="true" signature="346:453" placeholder="if ... end" />
-            <marker date="1335046212000" expanded="true" signature="467:1858" placeholder="..." />
-            <marker date="1335046212000" expanded="true" signature="481:1745" placeholder="..." />
-            <marker date="1335046212000" expanded="true" signature="499:1735" placeholder="..." />
-            <marker date="1335046212000" expanded="true" signature="1005:1721" placeholder="..." />
-            <marker date="1335046212000" expanded="true" signature="1754:1850" placeholder="..." />
-            <marker date="1335046212000" expanded="true" signature="1897:1962" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="129" selection-start="1271" selection-end="1271" vertical-scroll-proportion="-15.0">
@@ -874,16 +857,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="75" selection-start="1711" selection-end="1711" vertical-scroll-proportion="-11.458333">
+        <state line="193" column="41" selection-start="9428" selection-end="9428" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="66" selection-start="6391" selection-end="6391" vertical-scroll-proportion="-0.18711019">
+        <state line="0" column="0" selection-start="0" selection-end="2337" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="0" selection-start="1747" selection-end="1851" vertical-scroll-proportion="-10.625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="62" selection-start="2285" selection-end="2285" vertical-scroll-proportion="0.4642857">
           <folding />
         </state>
       </provider>

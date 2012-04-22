@@ -180,7 +180,7 @@ class Plot < ActiveRecord::Base
         //    that will output the coefficients of the given linear regression to
         //    the HTML page. This function is tied to existing <div> spaces in the
         //    HTML page.
-        print_Coeffs(series);
+        print_Coeffs' + graphnum.to_s + '(series);
 
       }
 
@@ -191,7 +191,7 @@ class Plot < ActiveRecord::Base
           coeffs[i] = null;
         }
         g' + graphnum.to_s + '.updateOptions({});
-        clear_Coeffs()
+        clear_Coeffs' + graphnum.to_s + '()
 
       }
 
@@ -240,17 +240,17 @@ class Plot < ActiveRecord::Base
       //    clear the appropriate coefficient strings when the linear regressions
       //    themselves are cleared.
 
-     function print_Coeffs(ii)
+     function print_Coeffs' + graphnum.to_s + '(ii)
         {
           var reg = coeffs[ii];
           var reg_str = "Coefficients are : <br>"
           reg_str += "y =  [" + Math.round(reg[0]*1000)/1000 + "] x  + [" + Math.round(reg[1]*1000)/1000 + "] </br>"
-          document.getElementById("Div_" + ii).innerHTML = reg_str;
+          document.getElementById("Div_' + graphnum.to_s + '" + ii).innerHTML = reg_str;
         }
 
       function clear_Coeffs' + graphnum.to_s + '(ii)
         {
-          for (var i = 1; i < coeffs.length; i++) document.getElementById("Div_" + i).innerHTML = "Coefficients are:";
+          for (var i = 1; i < coeffs.length; i++) document.getElementById("Div_' + graphnum.to_s + '" + i).innerHTML = "Coefficients are:";
         }
 
     '
