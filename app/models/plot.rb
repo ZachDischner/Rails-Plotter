@@ -115,10 +115,10 @@ class Plot < ActiveRecord::Base
           labelsDivWidth: 100,                                                       // Set the
           labelsDiv: document.getElementById('Legend_Div" + graphnum.to_s + "'),     // Specifies External Div to put Legend Labels in
           labelsSeparateLines: true,                                                 // Different lines per label for easier readability
-          underlayCallback: drawLines" + graphnum + ",                               // MUST enable this  to show linear regression
+          underlayCallback: drawLines" + graphnum.to_s + ",                               // MUST enable this  to show linear regression
           xlabel: '<%=params[:x_var]%>',                                             // Label for the X axis
           ylabel: '<%=render :inline => params[:y_var].to_s %>',                     // Labels for the Y axis
-          visibility" + graphnum + ": <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   //
+          visibility: <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   //
         } "
       return options_string
     end
@@ -265,25 +265,25 @@ class Plot < ActiveRecord::Base
     end
 
 
-  def reform(rownames,col)
-    x= "{"
-    rownames.each do |name|
-      x+= "'" + name + "'=>"  + name + ".map {|g| [ "+ self.hash_var(col) +"]}"
-      x+= "," unless name==rownames.last
-    end
-    x += '}'
-    return x
-  end
-
-  def hash_var(var)
-    if var.class == String
-      return "g.send('" + var + "')"
-    end
-  end
-
-  def foo(bar="")
-    return "g = g +" + bar
-  end
+  #def reform(rownames,col)
+  #  x= "{"
+  #  rownames.each do |name|
+  #    x+= "'" + name + "'=>"  + name + ".map {|g| [ "+ self.hash_var(col) +"]}"
+  #    x+= "," unless name==rownames.last
+  #  end
+  #  x += '}'
+  #  return x
+  #end
+  #
+  #def hash_var(var)
+  #  if var.class == String
+  #    return "g.send('" + var + "')"
+  #  end
+  #end
+  #
+  #def foo(bar="")
+  #  return "g = g +" + bar
+  #end
 
 
 

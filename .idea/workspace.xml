@@ -4,7 +4,7 @@
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,7 +33,7 @@
       <file leaf-file-name="plot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="132" column="82" selection-start="7180" selection-end="7180" vertical-scroll-proportion="0.7796258">
+            <state line="119" column="66" selection-start="6391" selection-end="6391" vertical-scroll-proportion="-0.18711019">
               <folding />
             </state>
           </provider>
@@ -42,7 +42,7 @@
       <file leaf-file-name="plot_checkbox_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="72" selection-start="0" selection-end="1481" vertical-scroll-proportion="6.6666665">
+            <state line="42" column="75" selection-start="1711" selection-end="1711" vertical-scroll-proportion="-11.458333">
               <folding />
             </state>
           </provider>
@@ -51,8 +51,18 @@
       <file leaf-file-name="plot_linear_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="91" selection-start="1755" selection-end="1755" vertical-scroll-proportion="-13.75">
-              <folding />
+            <state line="49" column="59" selection-start="1815" selection-end="1815" vertical-scroll-proportion="-27.5">
+              <folding>
+                <marker date="1335046212000" expanded="true" signature="267:1883" placeholder="..." />
+                <marker date="1335046212000" expanded="true" signature="334:1872" placeholder="do ... end" />
+                <marker date="1335046212000" expanded="true" signature="346:453" placeholder="if ... end" />
+                <marker date="1335046212000" expanded="true" signature="467:1858" placeholder="..." />
+                <marker date="1335046212000" expanded="true" signature="481:1745" placeholder="..." />
+                <marker date="1335046212000" expanded="true" signature="499:1735" placeholder="..." />
+                <marker date="1335046212000" expanded="true" signature="1005:1721" placeholder="..." />
+                <marker date="1335046212000" expanded="true" signature="1754:1850" placeholder="..." />
+                <marker date="1335046212000" expanded="true" signature="1897:1962" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -127,9 +137,9 @@
         <option value="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/models/plot.rb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
       </list>
     </option>
   </component>
@@ -296,14 +306,30 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="44" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="49" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="48" />
     <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
+    <property name="recentsLimit" value="5" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="51" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="488" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="492" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="51" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="49" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="FullScreen" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -635,7 +661,11 @@
       <created>1335045006702</created>
       <updated>1335045006702</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Multi plot regression working, not with the coefficient printing though .Fix that">
+      <created>1335046482012</created>
+      <updated>1335046482012</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -650,9 +680,9 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15350877" sideWeight="0.6705277" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32947233" sideWeight="0.08845029" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32947233" sideWeight="0.90643275" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32947233" sideWeight="0.49780703" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.90643275" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991013" sideWeight="0.78801167" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -700,7 +730,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed logic in checkbox template to allow for just single plot. Otherwise it wasn't working." />
+    <option name="LAST_COMMIT_MESSAGE" value="Multi plot regression working, not with the coefficient printing though .Fix that" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -723,6 +753,7 @@
     <MESSAGE value="YAY!!! Got the filter selection and multi plotting working! for basic stuff. Need to robustify it and test it more." />
     <MESSAGE value="Fixed legends so they all relate to their corresponding graphs" />
     <MESSAGE value="Fixed logic in checkbox template to allow for just single plot. Otherwise it wasn't working." />
+    <MESSAGE value="Multi plot regression working, not with the coefficient printing though .Fix that" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -798,6 +829,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="12" selection-start="2344" selection-end="2344" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="59" selection-start="1815" selection-end="1815" vertical-scroll-proportion="-27.5">
+          <folding>
+            <marker date="1335046212000" expanded="true" signature="267:1883" placeholder="..." />
+            <marker date="1335046212000" expanded="true" signature="334:1872" placeholder="do ... end" />
+            <marker date="1335046212000" expanded="true" signature="346:453" placeholder="if ... end" />
+            <marker date="1335046212000" expanded="true" signature="467:1858" placeholder="..." />
+            <marker date="1335046212000" expanded="true" signature="481:1745" placeholder="..." />
+            <marker date="1335046212000" expanded="true" signature="499:1735" placeholder="..." />
+            <marker date="1335046212000" expanded="true" signature="1005:1721" placeholder="..." />
+            <marker date="1335046212000" expanded="true" signature="1754:1850" placeholder="..." />
+            <marker date="1335046212000" expanded="true" signature="1897:1962" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="129" selection-start="1271" selection-end="1271" vertical-scroll-proportion="-15.0">
@@ -819,30 +874,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="12" selection-start="2344" selection-end="2344" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="72" selection-start="0" selection-end="1481" vertical-scroll-proportion="6.6666665">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="91" selection-start="1755" selection-end="1755" vertical-scroll-proportion="-13.75">
+        <state line="42" column="75" selection-start="1711" selection-end="1711" vertical-scroll-proportion="-11.458333">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="82" selection-start="7180" selection-end="7180" vertical-scroll-proportion="0.7796258">
+        <state line="119" column="66" selection-start="6391" selection-end="6391" vertical-scroll-proportion="-0.18711019">
           <folding />
         </state>
       </provider>

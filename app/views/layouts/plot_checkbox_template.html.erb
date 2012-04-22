@@ -38,7 +38,7 @@
           );   // finish the Dygraph  Plot section
 
 
-          <%= render :inline => @plot.first.linear_reg() %>  // Can ONLY do one or the other, multiples or linear regressions!
+          <%= render :inline => @plot.first.linear_reg(ii.to_s) %>  // Can ONLY do one or the other, multiples or linear regressions!
           ///// Lines to use checkboxes for Plot updating.
           <%#= puts getCoeffs() %>
 
@@ -50,7 +50,7 @@
 
           function change<%=ii.to_s%>(el) {
               g<%=ii.to_s%>.setVisibility(parseInt(el.id), el.checked);
-              setStatus();
+              setStatus<%=ii.to_s%>();
           }
 
 
