@@ -3,7 +3,7 @@ class PlotsController < ApplicationController
   def plotter
 
     #   Check if the user has applied the param[:filter] to the plotting data
-    if params[:filter] != nil or params[:filter] != [""]
+    if !params[:filter].include?("No Filter")
 
       # Convert to array if params[:filter] is a string. The rest of the app expects it as an array
       #   This situation arises when the :filter selection helper does not include a ":multiple => true",
