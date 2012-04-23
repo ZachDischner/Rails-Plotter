@@ -1,9 +1,12 @@
 class PlotsController < ApplicationController
 
   def plotter
+    if params[:filter] == [""]
+      params[:filter] = ["No Filter"]
+    end
 
     #   Check if the user has applied the param[:filter] to the plotting data
-    if !params[:filter].include?("No Filter")
+    if params[:filter].first != "No Filter"
 
       # Convert to array if params[:filter] is a string. The rest of the app expects it as an array
       #   This situation arises when the :filter selection helper does not include a ":multiple => true",
@@ -37,7 +40,7 @@ class PlotsController < ApplicationController
       end
 
 
-    # If no filter has been applied, just get a single dataset.  NOT WORKING
+
     else
       if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
         @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
@@ -47,6 +50,8 @@ class PlotsController < ApplicationController
       else
         @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var])
       end
+      @tags = @plot.first.list_vars
+      params[:filter] -= ["No Filter"]
     end
 
     # Choose which layout to render based on the "feature" parameter.
@@ -75,7 +80,7 @@ class PlotsController < ApplicationController
     @tags = @plots.list_vars - exclude_tags
 
     # Get tickers
-    @filters = Plot.select_filter("ticker")
+    @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker}
   end
 
   def create
