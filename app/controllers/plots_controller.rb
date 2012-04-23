@@ -1,12 +1,12 @@
 class PlotsController < ApplicationController
 
   def plotter
-    if params[:filter] == [""]
-      params[:filter] = ["No Filter"]
-    end
+    #if params[:filter] == [""]
+    #  params[:filter] = ["No Filter"]
+    #end
 
     #   Check if the user has applied the param[:filter] to the plotting data
-    if params[:filter].first != "No Filter"
+    if params[:filter].exclude? ["No Filter"]
 
       # Convert to array if params[:filter] is a string. The rest of the app expects it as an array
       #   This situation arises when the :filter selection helper does not include a ":multiple => true",
@@ -51,7 +51,7 @@ class PlotsController < ApplicationController
         @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var])
       end
       @tags = @plot.first.list_vars
-      params[:filter] -= ["No Filter"]
+      #params[:filter] -= ["No Filter"]
     end
 
     # Choose which layout to render based on the "feature" parameter.
@@ -79,12 +79,10 @@ class PlotsController < ApplicationController
     # Get an array of the collected data as an array of strings. This will be used throughout plotting
     @tags = @plots.list_vars - exclude_tags
 
-    # Get tickers
+    # Get Filters, add a "No Filter" option for fast implementation of databases without need for filtering.
+    # Ideally, this is all taken out later for such applications.
     @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker}
   end
 
-  def create
-    
-  end
 
 end

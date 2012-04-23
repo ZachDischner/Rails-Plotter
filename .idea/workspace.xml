@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Stocks.iml" afterPath="$PROJECT_DIR$/.idea/Stocks.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/plots_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/index.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/plotter.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,7 +38,7 @@
       <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="193" column="41" selection-start="9428" selection-end="9428" vertical-scroll-proportion="0.0">
+            <state line="3" column="3" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -52,7 +57,19 @@
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="8" column="0" selection-start="233" selection-end="334" vertical-scroll-proportion="-1.875">
-              <folding />
+              <folding>
+                <marker date="1335123044000" expanded="true" signature="333:2402" placeholder="..." />
+                <marker date="1335123044000" expanded="true" signature="412:519" placeholder="if ... end" />
+                <marker date="1335123044000" expanded="true" signature="533:2379" placeholder="..." />
+                <marker date="1335123044000" expanded="true" signature="547:2228" placeholder="..." />
+                <marker date="1335123044000" expanded="true" signature="561:2218" placeholder="..." />
+                <marker date="1335123044000" expanded="true" signature="1043:2204" placeholder="..." />
+                <marker date="1335123044000" expanded="true" signature="1618:1742" placeholder="//..." />
+                <marker date="1335123044000" expanded="true" signature="1857:2019" placeholder="{...}" />
+                <marker date="1335123044000" expanded="true" signature="2063:2187" placeholder="{...}" />
+                <marker date="1335123044000" expanded="true" signature="2237:2371" placeholder="..." />
+                <marker date="1335123044000" expanded="true" signature="2414:2479" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -61,15 +78,24 @@
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="8" column="101" selection-start="334" selection-end="334" vertical-scroll-proportion="-5.0">
-              <folding />
+              <folding>
+                <marker date="1335123178000" expanded="true" signature="333:1949" placeholder="..." />
+                <marker date="1335123178000" expanded="true" signature="412:519" placeholder="if ... end" />
+                <marker date="1335123178000" expanded="true" signature="533:1924" placeholder="..." />
+                <marker date="1335123178000" expanded="true" signature="547:1811" placeholder="..." />
+                <marker date="1335123178000" expanded="true" signature="565:1801" placeholder="..." />
+                <marker date="1335123178000" expanded="true" signature="1071:1787" placeholder="..." />
+                <marker date="1335123178000" expanded="true" signature="1820:1916" placeholder="..." />
+                <marker date="1335123178000" expanded="true" signature="1963:2028" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plotter.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="plotter.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="36" selection-start="262" selection-end="262" vertical-scroll-proportion="-5.625">
+            <state line="13" column="46" selection-start="341" selection-end="341" vertical-scroll-proportion="0.43526787">
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
               </folding>
@@ -80,16 +106,25 @@
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="123" selection-start="870" selection-end="870" vertical-scroll-proportion="-11.875">
+            <state line="91" column="93" selection-start="4078" selection-end="4078" vertical-scroll-proportion="-8.125">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plots_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Gemfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="18" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plots_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="0" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.7944915">
+            <state line="8" column="7" selection-start="227" selection-end="227" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -118,13 +153,14 @@
         <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/plot.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/plot.rb" />
+        <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
       </list>
     </option>
   </component>
@@ -203,15 +239,15 @@
               <option name="myItemId" value="Stocks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Stocks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -590,7 +626,11 @@
       <created>1335123382189</created>
       <updated>1335123382189</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Think its all mostly working now. Even a filter for &quot;No Filter&quot;&#10;Doesn't seem to work with that and other filter selections">
+      <created>1335166090762</created>
+      <updated>1335166090762</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -655,7 +695,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated tables to be prettier sorta" />
+    <option name="LAST_COMMIT_MESSAGE" value="Think its all mostly working now. Even a filter for &quot;No Filter&quot;&#10;Doesn't seem to work with that and other filter selections" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -682,16 +722,12 @@
     <MESSAGE value="Got it all back to where it was. VERY PICKY app. Miss one attribute of the dygraph object and it all goes to shit." />
     <MESSAGE value="ITS ALL WORKING!!! &#10;Dynamic checkboxes, dynamic regression lines, and dynamic dynamicness of both. All working." />
     <MESSAGE value="Updated tables to be prettier sorta" />
+    <MESSAGE value="Think its all mostly working now. Even a filter for &quot;No Filter&quot;&#10;Doesn't seem to work with that and other filter selections" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/script/dygraph-combined.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="63" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -703,11 +739,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/plots.js.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
@@ -742,9 +773,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="101" selection-start="334" selection-end="334" vertical-scroll-proportion="-5.0">
+          <folding>
+            <marker date="1335123178000" expanded="true" signature="333:1949" placeholder="..." />
+            <marker date="1335123178000" expanded="true" signature="412:519" placeholder="if ... end" />
+            <marker date="1335123178000" expanded="true" signature="533:1924" placeholder="..." />
+            <marker date="1335123178000" expanded="true" signature="547:1811" placeholder="..." />
+            <marker date="1335123178000" expanded="true" signature="565:1801" placeholder="..." />
+            <marker date="1335123178000" expanded="true" signature="1071:1787" placeholder="..." />
+            <marker date="1335123178000" expanded="true" signature="1820:1916" placeholder="..." />
+            <marker date="1335123178000" expanded="true" signature="1963:2028" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="233" selection-end="334" vertical-scroll-proportion="-1.875">
+          <folding>
+            <marker date="1335123044000" expanded="true" signature="333:2402" placeholder="..." />
+            <marker date="1335123044000" expanded="true" signature="412:519" placeholder="if ... end" />
+            <marker date="1335123044000" expanded="true" signature="533:2379" placeholder="..." />
+            <marker date="1335123044000" expanded="true" signature="547:2228" placeholder="..." />
+            <marker date="1335123044000" expanded="true" signature="561:2218" placeholder="..." />
+            <marker date="1335123044000" expanded="true" signature="1043:2204" placeholder="..." />
+            <marker date="1335123044000" expanded="true" signature="1618:1742" placeholder="//..." />
+            <marker date="1335123044000" expanded="true" signature="1857:2019" placeholder="{...}" />
+            <marker date="1335123044000" expanded="true" signature="2063:2187" placeholder="{...}" />
+            <marker date="1335123044000" expanded="true" signature="2237:2371" placeholder="..." />
+            <marker date="1335123044000" expanded="true" signature="2414:2479" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="193" column="41" selection-start="9428" selection-end="9428" vertical-scroll-proportion="0.0">
+        <state line="3" column="3" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile.lock">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="18" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -756,40 +836,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="101" selection-start="334" selection-end="334" vertical-scroll-proportion="-5.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="36" selection-start="262" selection-end="262" vertical-scroll-proportion="-5.625">
-          <folding>
-            <element signature="e#0#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="233" selection-end="334" vertical-scroll-proportion="-1.875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="123" selection-start="870" selection-end="870" vertical-scroll-proportion="-11.875">
+        <state line="91" column="93" selection-start="4078" selection-end="4078" vertical-scroll-proportion="-8.125">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.7944915">
+        <state line="8" column="7" selection-start="227" selection-end="227" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="46" selection-start="341" selection-end="341" vertical-scroll-proportion="0.43526787">
+          <folding>
+            <element signature="e#0#97#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

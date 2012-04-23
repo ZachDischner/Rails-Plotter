@@ -6,6 +6,10 @@ gem 'rails', '3.2.2'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
+gem 'sqlite3'
+gem 'calendar_date_select'   # Doesn't Work
+#gem 'calendar'
+
 
 
 # Gems used only for assets and not required
