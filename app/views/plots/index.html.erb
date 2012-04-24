@@ -1,21 +1,25 @@
 <h1> Welcome to the Interactive Plotting Engine!</h1>
-<p> Brought to you by Zach Dischner Consulting</p>
+
 <%#= button_to 'Example Plot', :controller => "/plots/example" %>
 <%#= button_to 'All DB Plot', :controller => "/plots/all" %>
 <%#= button_to 'All with params', :controller =>"/plots/all" ,:name => "test 1",:y_var =>y2,:y_varname => "y2"%>
-
+<br>
+<div style="text-align:center"><%= image_tag('/ZD_Consulting.jpg', :align => :center) %>  </div>
+<p style="text-align:center"> University of Colorado, Aerospace Engineering Sciences</p>
+<p style="text-align:center"> zach.dischner@colorado.edu</p>
+</br>
 
 
 <br>
-<table style="padding:10px" align="center" border="4" cellpadding=40px>
+<table style="padding:10px; border-width:10px; border-color:green; position:relative; top:50px" align="center" border="4" cellpadding=40px>
   <tr>
-    <td>
+    <td colspan=3 text-align=center style="text-align:center; align:center">
       <%= form_tag "/goplot", :method => "get" do %>
           <! Selector for the 'x' variable to be plotted>
           <h style="text-align:left"> Select Variables to Plot</h>
 
-          <p style="background-color: #C0C0C0; width: 500px;
-                  border-style:solid; border-radius: 0.5em; box-shadow: 8px 8px 5px #808080;text-align: center">
+          <p style="background-color: #C0C0C0;
+                  border-style:solid; border-radius: 0.5em; box-shadow: 8px 8px 5px #808080;text-align:center">
             <br>
             <%= label(:plot, :x_var, "X") %>
             <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false) %>
@@ -37,12 +41,11 @@
           </p>
           </td>
           </tr>
+
+          <td colspan=3 height=10px style="height:10px">
+            <p font=bolder style="text-align:center; font:bold"> Select Range for Horizontal Axis-Either in terms of "X" or Dates</p>
+          </td>
           <tr>
-            <h3 style="text-align:left"> Select Range for Horizontal Axis-Either in terms of "X" or Dates</h3>
-            <!--<div style="background-color:#E0E0E0;max-width: 1000px;height:150px; border-radius:0.5em;box-shadow: 4px 4px 2px 2px #AAAAAA">-->
-
-
-            <!--<table style="padding:10px" border="4" cellpadding=10px>-->
           <tr>
             <td>
               <p style="background-color: #C0C0C0; max-width: 450px;height:50px;
@@ -99,11 +102,8 @@
           </tr>
 
           <tr>
-            <td>
-              <p style="position: relative; left: 450px">
-                <%= submit_tag("submit!") %>
-
-              </p>
+            <td colspan=3 style="align:center; text-align:center">
+              <%= submit_tag("submit!") %>
             </td>
           </tr>
           </table>
