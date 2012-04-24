@@ -2,24 +2,17 @@
 
 
 <style type="text/css">
+
     body {
-        background: url('/arrow.jpeg');
-        opacity: 0.95;
-
-
-    }
-
-    table {
-        background: ghostwhite;
-        text-align: center;
-        border-radius:20em;
-    }
+         }
 </style>
 
-<h1 style="font:bolder; font-size:1.9em; text-align:center">∞∞∞∞∞∞∞   Here is your data. Explore away!   ∞∞∞∞∞∞∞</h1>
+<h1 position="relative" bottom="20px" style="font:bolder; font-family:monaco; font-size:1.9em; text-align:center; border: 10px outset #2290FF; border-radius:4px">∞∞∞∞∞∞∞ Here is your data. Explore
+  away! ∞∞∞∞∞∞∞</h1>
 
 
-<table align="center" cellpadding=10px border=5px style="border-width:9px; border-color:#FFAA00; border-radius:2px">
+<table bgcolor="white" align="center" cellpadding=10px border=5px style="margin-top:12%; border-width:9px; border-color:#FFAA00;
+        border-radius:2px;box-shadow: 1em 1em 6em   #1df">
   <% (0..@numgraphs-1).each do |ii|
     if @numgraphs > 1
       eval("@plot = @" + params[:filter][ii])

@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/BlackHole.jpeg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/index.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/index.html.erb" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,7 +44,7 @@
       <file leaf-file-name="plot_checkbox_linear_template.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="65" selection-start="169" selection-end="169" vertical-scroll-proportion="0.36830357">
+            <state line="14" column="58" selection-start="515" selection-end="515" vertical-scroll-proportion="0.4827586">
               <folding />
             </state>
           </provider>
@@ -53,7 +53,7 @@
       <file leaf-file-name="plot_checkbox_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="104" selection-start="378" selection-end="378" vertical-scroll-proportion="-11.25">
+            <state line="14" column="0" selection-start="457" selection-end="515" vertical-scroll-proportion="-8.75">
               <folding />
             </state>
           </provider>
@@ -62,7 +62,7 @@
       <file leaf-file-name="plot_linear_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="104" selection-start="378" selection-end="378" vertical-scroll-proportion="-11.25">
+            <state line="14" column="58" selection-start="515" selection-end="515" vertical-scroll-proportion="-8.75">
               <folding />
             </state>
           </provider>
@@ -82,7 +82,7 @@
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="114" selection-end="228" vertical-scroll-proportion="-1.25">
+            <state line="12" column="46" selection-start="398" selection-end="398" vertical-scroll-proportion="-7.5">
               <folding />
             </state>
           </provider>
@@ -131,11 +131,11 @@
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
         <option value="$PROJECT_DIR$/app/models/plot.rb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
       </list>
     </option>
@@ -694,7 +694,11 @@
       <created>1335295805859</created>
       <updated>1335295805859</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="More formatting. Not sure if I like the background setup I have now.">
+      <created>1335297756933</created>
+      <updated>1335297756933</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -759,7 +763,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aligned and formatted table stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="More formatting. Not sure if I like the background setup I have now." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -792,6 +796,7 @@
     <MESSAGE value="Formatted Index page." />
     <MESSAGE value="Added epic background stuff" />
     <MESSAGE value="Aligned and formatted table stuff" />
+    <MESSAGE value="More formatting. Not sure if I like the background setup I have now." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -877,28 +882,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="114" selection-end="228" vertical-scroll-proportion="-1.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="104" selection-start="378" selection-end="378" vertical-scroll-proportion="-11.25">
+        <state line="12" column="46" selection-start="398" selection-end="398" vertical-scroll-proportion="-7.5">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="104" selection-start="378" selection-end="378" vertical-scroll-proportion="-11.25">
+        <state line="14" column="0" selection-start="457" selection-end="515" vertical-scroll-proportion="-8.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="58" selection-start="515" selection-end="515" vertical-scroll-proportion="-8.75">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="65" selection-start="169" selection-end="169" vertical-scroll-proportion="0.36830357">
+        <state line="14" column="58" selection-start="515" selection-end="515" vertical-scroll-proportion="0.4827586">
           <folding />
         </state>
       </provider>
