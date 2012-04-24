@@ -1,4 +1,11 @@
 <h1> Welcome to the Interactive Plotting Engine!</h1>
+<!--<body background="/Stats.jpeg" style="opacity:20em">-->
+<style type="text/css">
+    body {
+        background:url('/Stats.jpeg');
+        opacity:0.9;
+         }
+</style>
 
 <%#= button_to 'Example Plot', :controller => "/plots/example" %>
 <%#= button_to 'All DB Plot', :controller => "/plots/all" %>
@@ -11,7 +18,7 @@
 
 
 <br>
-<table style="padding:10px; border-width:10px; border-color:green; position:relative; top:50px" align="center" border="4" cellpadding=40px>
+<table bgcolor=white style="padding:10px; border-width:10px; border-color:green; position:relative" align="center" border="4" cellpadding=10px>
   <tr>
     <td colspan=3 text-align=center style="text-align:center; align:center">
       <%= form_tag "/goplot", :method => "get" do %>
@@ -19,7 +26,7 @@
           <h style="text-align:left"> Select Variables to Plot</h>
 
           <p style="background-color: #C0C0C0;
-                  border-style:solid; border-radius: 0.5em; box-shadow: 8px 8px 5px #808080;text-align:center">
+                  border-style:solid; border-radius: 0.5em; box-shadow: 8px 8px 5px #808080;text-align:center; padding:10px">
             <br>
             <%= label(:plot, :x_var, "X") %>
             <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false) %>
@@ -50,7 +57,8 @@
             <td>
               <p style="background-color: #C0C0C0; max-width: 450px;height:50px;
                       border-style:outset; border-color: #888888; border-radius: 0.5em;
-                      text-align: center">
+                      text-align: center;
+                      padding:10px ">
                 Select "X" Range for Plotting
                 <br>
                 <%= label(:plot, :x_start, "Start") %>
@@ -85,7 +93,8 @@
               <!-- It populates a Datetime param that is used in dynamic scope selectors-->
               <p style="background-color: #C0C0C0; width: 350px;height:100px;
                       border-style:outset; border-radius: 0.5em; border-color:#888888;
-                      text-align: center">
+                      text-align: center;
+                      padding:10px">
                 Select DATE Range for Plotting
                 <br>
                 <%= label(:plot, :date_start, "Start") %>
@@ -108,7 +117,7 @@
           </tr>
           </table>
       <% end %>
-
+     </body>
 
 
 
