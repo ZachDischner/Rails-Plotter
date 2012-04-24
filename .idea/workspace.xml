@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Stocks.iml" afterPath="$PROJECT_DIR$/.idea/Stocks.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/plots_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/index.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/index.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/plotter.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
     </list>
     <ignored path="Stocks.iws" />
@@ -47,7 +42,7 @@
       <file leaf-file-name="plot_checkbox_linear_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="101" selection-start="334" selection-end="334" vertical-scroll-proportion="-5.0">
+            <state line="12" column="45" selection-start="475" selection-end="475" vertical-scroll-proportion="-7.5">
               <folding />
             </state>
           </provider>
@@ -95,7 +90,7 @@
       <file leaf-file-name="plotter.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="46" selection-start="341" selection-end="341" vertical-scroll-proportion="0.43526787">
+            <state line="10" column="33" selection-start="296" selection-end="296" vertical-scroll-proportion="0.33482143">
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
               </folding>
@@ -112,19 +107,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Gemfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="18" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="plots_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="7" selection-start="227" selection-end="227" vertical-scroll-proportion="0.0">
+            <state line="53" column="43" selection-start="3146" selection-end="3146" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -154,11 +140,11 @@
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/models/plot.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/plots/plotter.html.erb" />
       </list>
@@ -630,7 +616,11 @@
       <created>1335166090762</created>
       <updated>1335166090762</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="got a new super cool database with even more datas!!!!">
+      <created>1335220493304</created>
+      <updated>1335220493304</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -695,7 +685,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Think its all mostly working now. Even a filter for &quot;No Filter&quot;&#10;Doesn't seem to work with that and other filter selections" />
+    <option name="LAST_COMMIT_MESSAGE" value="got a new super cool database with even more datas!!!!" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -723,6 +713,7 @@
     <MESSAGE value="ITS ALL WORKING!!! &#10;Dynamic checkboxes, dynamic regression lines, and dynamic dynamicness of both. All working." />
     <MESSAGE value="Updated tables to be prettier sorta" />
     <MESSAGE value="Think its all mostly working now. Even a filter for &quot;No Filter&quot;&#10;Doesn't seem to work with that and other filter selections" />
+    <MESSAGE value="got a new super cool database with even more datas!!!!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -808,13 +799,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="3" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile.lock">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -829,13 +813,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="101" selection-start="334" selection-end="334" vertical-scroll-proportion="-5.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="91" column="93" selection-start="4078" selection-end="4078" vertical-scroll-proportion="-8.125">
@@ -843,16 +820,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="3" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="45" selection-start="475" selection-end="475" vertical-scroll-proportion="-7.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="7" selection-start="227" selection-end="227" vertical-scroll-proportion="0.0">
+        <state line="53" column="43" selection-start="3146" selection-end="3146" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="46" selection-start="341" selection-end="341" vertical-scroll-proportion="0.43526787">
+        <state line="10" column="33" selection-start="296" selection-end="296" vertical-scroll-proportion="0.33482143">
           <folding>
             <element signature="e#0#97#0" expanded="true" />
           </folding>

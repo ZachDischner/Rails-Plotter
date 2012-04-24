@@ -6,7 +6,7 @@ class PlotsController < ApplicationController
     #end
 
     #   Check if the user has applied the param[:filter] to the plotting data
-    if params[:filter].exclude? ["No Filter"]
+    if params[:filter].exclude? "No Filter"
 
       # Convert to array if params[:filter] is a string. The rest of the app expects it as an array
       #   This situation arises when the :filter selection helper does not include a ":multiple => true",
@@ -51,7 +51,7 @@ class PlotsController < ApplicationController
         @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var])
       end
       @tags = @plot.first.list_vars
-      #params[:filter] -= ["No Filter"]
+      params[:filter] = ["No Filter Applied"]
     end
 
     # Choose which layout to render based on the "feature" parameter.
