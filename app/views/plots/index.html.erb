@@ -7,9 +7,7 @@
          }
 </style>
 
-<%#= button_to 'Example Plot', :controller => "/plots/example" %>
-<%#= button_to 'All DB Plot', :controller => "/plots/all" %>
-<%#= button_to 'All with params', :controller =>"/plots/all" ,:name => "test 1",:y_var =>y2,:y_varname => "y2"%>
+
 <br>
 <div style="text-align:center"><%= image_tag('/ZD_Consulting.jpg', :align => :center) %>  </div>
 <p style="text-align:center"> University of Colorado, Aerospace Engineering Sciences</p>
@@ -38,10 +36,6 @@
             params[:filter] = ["No Filter"] !>
             <%= label(:plot, :filter, "Filter") %>
             <%= select_tag(:filter, options_for_select(@filters.map { |t| [t, t.to_s] }), :multiple => true) %>
-
-            <%#= calendar_date_select_tag "e_date", nil, :embedded => true, :year_range => 10.years.ago..0.years.ago %>
-
-
 
 
             </br>

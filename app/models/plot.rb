@@ -161,8 +161,8 @@ class Plot < ActiveRecord::Base
     def dygraph_options(graphnum="")
       options_string =
           ",{
-          height: 400,                                                               // Specifies the Height of the plot area
-          width: 840,                                                                // Specifies the Width of the plot area
+          height: 375,                                                               // Specifies the Height of the plot area
+          width: 700,                                                                // Specifies the Width of the plot area
           hideOverlayOnMouseOut: false,                                              // Keeps the legend visible at all times
           showRoller: true,                                                          // Show a rolling Average box
           rollPeriod: 1,                                                             // Set default average for rolling average (0 means no average...)
