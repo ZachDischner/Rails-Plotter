@@ -1,13 +1,25 @@
 <%= javascript_include_tag "dygraph-combined" %>
 
-<h1>Fully dynamic and iterative plotting setup. FEEL THE POWER!! </h1>
 
-<div style="text-align:center"><%= image_tag('/NYSE.jpeg', :align => :left, :size => '1200x150') %>  </div>
+<style type="text/css">
+    body {
+        background: url('/arrow.jpeg');
+        opacity: 0.95;
 
 
+    }
 
-<table align="center" padding=10px cellpadding=10px border=5px style=" padding:10px; border-width:9px; border-color:#FFAA00; border-radius:2px">
-  <%# for ii in 0..(@numgraphs-1) %>
+    table {
+        background: white;
+        text-align: center;
+        border-radius:20em;
+    }
+</style>
+
+<h1 style="font:bolder; font-size:1.9em; text-align:center; border: 5px solid black">∞∞∞∞∞∞∞   Here is your data. Explore away!   ∞∞∞∞∞∞∞</h1>
+
+
+<table align="center" cellpadding=10px border=5px  style="border-width:9px; border-color:#FFAA00; border-radius:2px">
   <% (0..@numgraphs-1).each do |ii|
     if @numgraphs > 1
       eval("@plot = @" + params[:filter][ii])
@@ -19,14 +31,9 @@
           <html>
           <p align="center" style="font-size:1.5em; font-style:normal;"><b> <%= params[:filter][ii] %> </b></p>
 
-          <div id=<%= "'Legend_Div" + ii.to_s + "'" %>  style=
-          "width:150px;;
-          border:3px solid grey; border-radius: 0.4em;
-          font-size:1.2em; padding-top:5px;"></div>
-        </td>
-        <td>
-
-
+          <div style="border:3px solid grey; border-radius: 0.4em;font-size:0.95em; padding-top:5px;"
+               id=<%= "'Legend_Div" + ii.to_s + "'" %>></div>
+          <td>
           <div id=<%= "'graphdiv" + ii.to_s + "'" %> float=left style="position:relative"></div>
 
           <script type="text/javascript">
