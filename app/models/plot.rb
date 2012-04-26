@@ -13,8 +13,15 @@ class Plot < ActiveRecord::Base
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
   # Change table info and scopes below to match your database.
-  set_table_name "stock_test"
-  set_primary_key :id
+  # MYSQL development database
+  #establish_connection :development
+  #set_table_name "stock_test"
+  #set_primary_key :id
+
+  #SQLITE test development environment
+  establish_connection :sqlite_test
+  set_table_name "plots"
+
 
   #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Scopes ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
   #
