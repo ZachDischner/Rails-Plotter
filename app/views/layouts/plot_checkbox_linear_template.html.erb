@@ -1,22 +1,28 @@
-<%= javascript_include_tag "dygraph-combined" %>
+<%#= javascript_include_tag "dygraph-combined" %>
 
 
 <style type="text/css">
 
-    body {
+    tbody {
+        background: white;
+        }
 
-          }
+    body {
+        background: white;
+         }
+
 </style>
 
 
-<h1 position="relative" bottom="20px" style="font:bolder; font-family:monaco; font-size:1.9em; text-align:center; border: 10px outset #2290FF;
+<h1 position="relative" bottom="20px" style="font:bolder; font-family:monaco;
+        font-size:1.9em; text-align:center; border: 10px outset #2290FF;
         border-radius:4px">
   ∞∞∞∞∞∞∞ Here is your data. Explore away! ∞∞∞∞∞∞∞
 </h1>
 
 
-<table bgcolor="white" align="center" cellpadding=10px border=5px style="margin-top:12%; border-width:9px; border-color:#FFAA00;
-        border-radius:2px;box-shadow: 1em 1em 6em   #08a">
+<table bgcolor="white" align="center" cellpadding=10px border=5px style="margin-top:12%; border-width:9px; border-color:#FFAA44;
+        border-radius:2px;box-shadow: 1em 1em 6em   #444">
 
   <% (0..@numgraphs-1).each do |ii|
     if @numgraphs > 1
@@ -79,4 +85,6 @@
 
 <%= link_to 'Back to the Plot Home Page', plots_path %>
 </br>
+
+
 

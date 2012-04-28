@@ -1,10 +1,10 @@
 class PlotsController < ApplicationController
 
   def plotter
-    #if params[:filter] == [""]
-    #  params[:filter] = ["No Filter"]
-    #end
 
+    if !params[:filter]
+      params[:filter] = "No Filter"
+    end
     #   Check if the user has applied the param[:filter] to the plotting data
     if params[:filter].exclude? "No Filter"
 

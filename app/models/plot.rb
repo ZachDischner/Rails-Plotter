@@ -19,8 +19,11 @@ class Plot < ActiveRecord::Base
   #set_primary_key :id
 
   #SQLITE test development environment
-  establish_connection :sqlite_test
+  #establish_connection :sqlite_test
+  establish_connection(:adapter => "sqlite3", :database => "db/sqlite_test.sqlite3", :pool => 5 )
   set_table_name "plots"
+
+
 
 
   #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Scopes ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
