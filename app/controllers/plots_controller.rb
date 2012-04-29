@@ -2,19 +2,27 @@ class PlotsController < ApplicationController
 
   def plotter
 
+    # If there is no :filter applied to the data, set this param to "No Filter"
+    #   The   params[:filter]   will be used throughout the RoR plotting app, so if there
+    #   is no need for a filter, setting   params[:filter] = "No Filter"   will allow the
+    #   app to function appropriately.
+
     if !params[:filter]
       params[:filter] = "No Filter"
     end
-    #   Check if the user has applied the param[:filter] to the plotting data
+
+    #   Check if the user has applied the param[:filter] to the plotting data.
     if params[:filter].exclude? "No Filter"
 
       # Convert to array if params[:filter] is a string. The rest of the app expects it as an array
-      #   This situation arises when the :filter selection helper does not include a ":multiple => true",
+      #   This situation arises when the :filter selection HELPER does NOT include a ":multiple => true",
       #   which turns the :filter param into a string, instead of an array of strings.
       if params[:filter].class == String
         params[:filter] = [params[:filter]]
       end
 
+      # If only one filter, only one query needs to be executed. The results of that query can be placed
+      #   directly into the    @plot    variable.
       if params[:filter].length == 1
         if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
           @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
@@ -26,7 +34,12 @@ class PlotsController < ApplicationController
         end
 
         @tags = @plot.first.list_vars - ["Ticker"] # Don't want to treat "Ticker" as its own plotting variable, since its a string
-      else
+
+      else  # Indicates that MULTIPLE     params[:filters]     have been applied
+
+        # Each    params[:filter]    member corresponds to a unique query of the database. Each query is evaluated into
+        #   an instance variable, named after that corresponding :filter member. Later, this app will iterate over all
+        #   members to plot its data.
         params[:filter].each do |p|
           if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
             eval("@" + p.to_s + "= Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).

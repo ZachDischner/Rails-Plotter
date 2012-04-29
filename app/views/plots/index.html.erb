@@ -35,10 +35,10 @@
 
             <! If there is no filter (database columns are unique), just get rid of this section, hardcode
             params[:filter] = ["No Filter"] !>
-
+            <% if @filters %>
             <%= label(:plot, :filter, "Filter") %>
             <%= select_tag(:filter, options_for_select(@filters.map { |t| [t, t.to_s] }), :multiple => true) %>
-
+            <% end %>
 
             </br>
           </p>

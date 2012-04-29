@@ -60,7 +60,7 @@ class Plot < ActiveRecord::Base
   #           completely different datasets, not provide selection criteria.
   #         -For a stock market database, the user would want to plot stats (in columns) for different stocks.
   #           The stock names are stored in a "tickers" column. So In order to get a list of all tickers so that the
-  #           user can make their decision, you can populate a drop down with values gathered from tis scope.
+  #           user can make their selection, you can populate a drop down with values gathered from this scope.
   #             eg:     RoR>> @stocks = Plot.select_filter("ticker")
   #             yeilds: ['aapl','goog','arwr',...]
   #          That array can be populated into a dropdown that the user can use to plot stock data based on its ticker.
@@ -68,7 +68,12 @@ class Plot < ActiveRecord::Base
 
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
+
+
  #>>>>>>>>>>>>>>>>>>>>>>>>>> Everything Below this line shouldn't be changed unless you REALLY want to  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+
+
+
 
   # To work, the  /APP/ASSETS MUST BE THE SAME!!!! MUST MUST!!!!!
 
@@ -139,6 +144,8 @@ class Plot < ActiveRecord::Base
     def all_checkboxes_false(list)
       return (["false"]*(list.length-1)).to_s
     end
+
+
 
 
     def dygraph_head(tags)
@@ -328,25 +335,5 @@ class Plot < ActiveRecord::Base
       return ([mydate["(1i)"].to_s.blank?, mydate["(2i)"].to_s.blank?, mydate["(3i)"].to_s.blank?]).include?(true)
     end
 
-
-  #def reform(rownames,col)
-  #  x= "{"
-  #  rownames.each do |name|
-  #    x+= "'" + name + "'=>"  + name + ".map {|g| [ "+ self.hash_var(col) +"]}"
-  #    x+= "," unless name==rownames.last
-  #  end
-  #  x += '}'
-  #  return x
-  #end
-  #
-  #def hash_var(var)
-  #  if var.class == String
-  #    return "g.send('" + var + "')"
-  #  end
-  #end
-  #
-  #def foo(bar="")
-  #  return "g = g +" + bar
-  #end
 
   end
