@@ -14,14 +14,14 @@ class Plot < ActiveRecord::Base
 
   # Change table info and scopes below to match your database.
   # MYSQL development database
-  #establish_connection :development
-  #set_table_name "stock_test"
-  #set_primary_key :id
+  establish_connection :development
+  set_table_name "stock_test"
+  set_primary_key :id
 
   #SQLITE test development environment
   #establish_connection :sqlite_test
-  establish_connection(:adapter => "sqlite3", :database => "db/sqlite_test.sqlite3", :pool => 5 )
-  set_table_name "plots"
+  #establish_connection(:adapter => "sqlite3", :database => "db/sqlite_test.sqlite3", :pool => 5 )
+  #set_table_name "plots"
 
 
 

@@ -3,6 +3,7 @@
 # and open the template in the editor.
 %>
 
+<%= "Environment: #{Rails.env}" %>
 <div style="background-color:white;
             align:center;
             text-align:center;
@@ -13,8 +14,6 @@
 
 
  <%  @numgraphs =params[:filter].length %>
-
-<%# put a @plot = eval(params[:filter][ii])  in the template I guess %>
 
  <%= render :template => @mytemplate %>
  <%  %>
