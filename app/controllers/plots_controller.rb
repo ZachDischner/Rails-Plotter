@@ -1,5 +1,13 @@
 class PlotsController < ApplicationController
 
+  #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Plot Controller ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
+  #
+  # This controller handles the fetching and organization of data from the database, and then routing that data
+  #   into the correct VIEW pages.
+  #
+  #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+
+
   def plotter
 
     # If there is no :filter applied to the data, set this param to "No Filter"

@@ -1,0 +1,6 @@
+Sun, 29 Apr 2012 22:48:59 -0600
+doc/README_FOR_APP	Sun, 29 Apr 2012 22:47:31 -0600
+app/controllers/application_controller.rb	Sun, 29 Apr 2012 22:09:37 -0600
+app/controllers/plots_controller.rb	Sun, 29 Apr 2012 22:35:00 -0600
+app/helpers/application_helper.rb	Mon, 02 Apr 2012 23:52:47 -0600
+app/models/plot.rb	Sun, 29 Apr 2012 21:50:14 -0600
