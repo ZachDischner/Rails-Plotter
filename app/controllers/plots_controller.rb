@@ -102,7 +102,7 @@ class PlotsController < ApplicationController
 
     # Get Filters, add a "No Filter" option for fast implementation of databases without need for filtering.
     # Ideally, this is all taken out later for such applications.
-    @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker}
+    @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker} unless !@plots.filter_table
   end
 
 

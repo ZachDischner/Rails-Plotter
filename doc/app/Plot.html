@@ -132,6 +132,66 @@
 
   <div id="description" class="description">
     
+<p>*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ <a
+href="Plot.html">Plot</a> Class
+^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#</p>
+
+<pre class="ruby"> <span class="ruby-constant">Written</span> <span class="ruby-identifier">by</span><span class="ruby-operator">:</span>
+            <span class="ruby-constant">Zach</span> <span class="ruby-constant">Dischner</span> <span class="ruby-keyword">for</span> <span class="ruby-constant">LASP</span> <span class="ruby-identifier">scientific</span> <span class="ruby-identifier">uses</span>
+ <span class="ruby-constant">Updated</span><span class="ruby-operator">:</span>
+            <span class="ruby-constant">May</span> <span class="ruby-value">1</span>, <span class="ruby-value">2012</span>
+ <span class="ruby-constant">Contact</span><span class="ruby-operator">:</span>
+            <span class="ruby-identifier">zach</span>.<span class="ruby-identifier">dischner</span><span class="ruby-ivar">@lasp</span>.<span class="ruby-identifier">colorado</span>.<span class="ruby-identifier">edu</span>
+            <span class="ruby-identifier">zach</span>.<span class="ruby-identifier">dischner</span><span class="ruby-ivar">@gmail</span>.<span class="ruby-identifier">com</span>
+<span class="ruby-constant">Purpose</span><span class="ruby-operator">:</span>
+ <span class="ruby-constant">The</span> <span class="ruby-constant">Plot</span> <span class="ruby-constant">Class</span> <span class="ruby-identifier">has</span> <span class="ruby-identifier">two</span> <span class="ruby-identifier">main</span> <span class="ruby-identifier">tasks</span><span class="ruby-operator">:</span>
+     <span class="ruby-value">1</span>. <span class="ruby-constant">Define</span> <span class="ruby-identifier">methods</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">query</span> <span class="ruby-identifier">your</span> <span class="ruby-identifier">database</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">select</span> <span class="ruby-identifier">appropriate</span> <span class="ruby-identifier">data</span>
+     <span class="ruby-value">2</span>. <span class="ruby-constant">Take</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">data</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">dynamically</span> <span class="ruby-identifier">generate</span> <span class="ruby-constant">HTML</span><span class="ruby-operator">/</span><span class="ruby-identifier">dygraphs</span> <span class="ruby-identifier">logic</span>.
+
+ <span class="ruby-constant">Plot</span> <span class="ruby-constant">HTML</span> <span class="ruby-identifier">templates</span> <span class="ruby-identifier">can</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">found</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">the</span>   <span class="ruby-operator">&gt;&gt;</span><span class="ruby-regexp">%rapp/</span><span class="ruby-identifier">views</span><span class="ruby-operator">/</span><span class="ruby-identifier">layouts</span><span class="ruby-operator">/</span><span class="ruby-identifier">plot_</span>*
+ <span class="ruby-constant">These</span> <span class="ruby-identifier">templates</span> <span class="ruby-identifier">define</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">proper</span> <span class="ruby-identifier">methodology</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">use</span> <span class="ruby-constant">Plot</span> <span class="ruby-identifier">methods</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">generate</span> <span class="ruby-identifier">relevant</span> <span class="ruby-identifier">dygraphs</span> <span class="ruby-constant">HTML</span>.
+
+ <span class="ruby-constant">The</span> <span class="ruby-identifier">general</span> <span class="ruby-identifier">procedure</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">generating</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">single</span> <span class="ruby-identifier">dygraphs</span> <span class="ruby-identifier">plot</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">an</span> <span class="ruby-constant">HTML</span> <span class="ruby-identifier">page</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">as</span> <span class="ruby-identifier">follows</span><span class="ruby-operator">:</span>
+         <span class="ruby-value">1</span>. <span class="ruby-constant">Appropriate</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">div</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">plot</span> (<span class="ruby-node">&quot;graphdiv#&quot;</span>)
+         <span class="ruby-value">2</span>. <span class="ruby-constant">Create</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">new</span> <span class="ruby-identifier">dygraphs</span> <span class="ruby-identifier">element</span> (<span class="ruby-node">&quot;g#&quot;</span> )
+         <span class="ruby-value">3</span>. <span class="ruby-constant">Generate</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">header</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">graph</span>. <span class="ruby-constant">This</span> <span class="ruby-identifier">allows</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">legend</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">correlate</span> <span class="ruby-identifier">values</span> <span class="ruby-identifier">with</span> <span class="ruby-identifier">variable</span> <span class="ruby-identifier">names</span>
+         <span class="ruby-value">4</span>. <span class="ruby-constant">Generate</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">graph</span> <span class="ruby-identifier">content</span>, <span class="ruby-keyword">or</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">body</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">graph</span>. <span class="ruby-constant">This</span> <span class="ruby-identifier">parses</span> <span class="ruby-identifier">database</span> <span class="ruby-identifier">values</span> <span class="ruby-identifier">into</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">string</span>
+            <span class="ruby-identifier">recognizable</span> <span class="ruby-identifier">by</span> <span class="ruby-identifier">dygraphs</span> <span class="ruby-identifier">functions</span>.
+         <span class="ruby-value">5</span>. <span class="ruby-constant">Generate</span> <span class="ruby-identifier">dygraphs</span> <span class="ruby-identifier">option</span> <span class="ruby-identifier">specifications</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">each</span> <span class="ruby-identifier">graph</span>.
+         <span class="ruby-value">6</span>. <span class="ruby-constant">Generate</span> <span class="ruby-identifier">linear</span> <span class="ruby-identifier">regression</span> <span class="ruby-identifier">logic</span> <span class="ruby-keyword">and</span> <span class="ruby-constant">HTML</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">wanted</span>.
+         <span class="ruby-value">7</span>. <span class="ruby-constant">Generate</span> <span class="ruby-identifier">checkbox</span> <span class="ruby-identifier">logic</span> <span class="ruby-keyword">and</span> <span class="ruby-constant">HTML</span> <span class="ruby-identifier">elements</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">wanted</span>.
+
+ <span class="ruby-constant">Each</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">these</span> <span class="ruby-identifier">tasks</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">made</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">dynamic</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">iterative</span>, <span class="ruby-identifier">so</span> <span class="ruby-identifier">as</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">provide</span> <span class="ruby-identifier">means</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">plot</span> <span class="ruby-identifier">any</span> <span class="ruby-identifier">generic</span> <span class="ruby-identifier">dataset</span>.
+ <span class="ruby-constant">Also</span> <span class="ruby-identifier">note</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">each</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">these</span> <span class="ruby-identifier">tasks</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">closely</span> <span class="ruby-identifier">related</span> <span class="ruby-identifier">with</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">other</span>. <span class="ruby-constant">Changing</span> <span class="ruby-identifier">one</span> <span class="ruby-identifier">will</span> <span class="ruby-identifier">have</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">high</span> <span class="ruby-identifier">probability</span>
+    <span class="ruby-identifier">changing</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">others</span>. <span class="ruby-constant">BEWARE!</span><span class="ruby-operator">!</span><span class="ruby-operator">!</span>
+
+ <span class="ruby-constant">On</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">note</span>, <span class="ruby-identifier">this</span> <span class="ruby-constant">IS</span> <span class="ruby-identifier">designed</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">extremely</span> <span class="ruby-identifier">generic</span>. <span class="ruby-constant">Changing</span> <span class="ruby-identifier">functionality</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">fit</span> <span class="ruby-identifier">your</span> <span class="ruby-identifier">specific</span> <span class="ruby-identifier">application</span> <span class="ruby-identifier">will</span>
+    <span class="ruby-identifier">likely</span> <span class="ruby-identifier">make</span> <span class="ruby-identifier">more</span> <span class="ruby-identifier">sense</span> <span class="ruby-identifier">eventually</span>.
+
+ <span class="ruby-constant">Case</span><span class="ruby-operator">-</span><span class="ruby-constant">In</span><span class="ruby-operator">-</span><span class="ruby-constant">Point</span><span class="ruby-operator">:</span> <span class="ruby-constant">I</span><span class="ruby-string">'m not a rails master. In fact, this is my first rails app, my first experience with HTML, web design,
+    ruby, and my first attempt at Object-Oriented programming in general. As such, I'</span><span class="ruby-identifier">m</span> <span class="ruby-identifier">probably</span> <span class="ruby-identifier">pretty</span> <span class="ruby-identifier">bad</span> <span class="ruby-identifier">at</span> <span class="ruby-identifier">it</span>, <span class="ruby-keyword">and</span>
+    <span class="ruby-identifier">the</span> <span class="ruby-identifier">design</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">application</span> <span class="ruby-identifier">seems</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">violate</span> <span class="ruby-identifier">many</span> <span class="ruby-identifier">hard</span><span class="ruby-operator">-</span><span class="ruby-keyword">and</span><span class="ruby-operator">-</span><span class="ruby-identifier">fast</span> <span class="ruby-identifier">practices</span> <span class="ruby-identifier">of</span> <span class="ruby-constant">OO</span> <span class="ruby-identifier">programming</span>.
+ <span class="ruby-constant">All</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">methods</span> <span class="ruby-identifier">below</span> <span class="ruby-identifier">act</span> <span class="ruby-identifier">more</span> <span class="ruby-identifier">like</span> <span class="ruby-identifier">functions</span>. <span class="ruby-constant">In</span> <span class="ruby-identifier">fact</span>, <span class="ruby-identifier">nothing</span> <span class="ruby-identifier">about</span> <span class="ruby-identifier">this</span> <span class="ruby-string">'class'</span> <span class="ruby-identifier">resembles</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">object</span>. <span class="ruby-constant">The</span> <span class="ruby-identifier">reason</span>
+    <span class="ruby-keyword">for</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">application</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">meant</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">work</span> <span class="ruby-identifier">generically</span> <span class="ruby-identifier">on</span> <span class="ruby-identifier">any</span> <span class="ruby-constant">DATASET</span>. <span class="ruby-constant">This</span> <span class="ruby-identifier">brings</span> <span class="ruby-identifier">about</span> <span class="ruby-identifier">problems</span><span class="ruby-operator">:</span>
+    <span class="ruby-value">1</span>. <span class="ruby-constant">Since</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">app</span> <span class="ruby-identifier">is</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">designed</span> <span class="ruby-identifier">around</span> <span class="ruby-identifier">any</span> <span class="ruby-identifier">specific</span> <span class="ruby-identifier">database</span> <span class="ruby-identifier">model</span>, <span class="ruby-identifier">its</span> <span class="ruby-identifier">logic</span> <span class="ruby-identifier">can</span><span class="ruby-string">'t be aware of the database
+       schema or elements. Methods and operations must perform their tasks without being consious of what they are
+       operating on.
+    2. By working with just raw random data, returns from the database are really more of data STRUCTURES, rather
+       than specific data OBJECTS. It makes no sense to try and think about these returns as objects. Without knowing
+       anything about the data, its useless to try and form it all into objects. Its like calling it a &quot;Thing&quot;, and
+       saying that &quot;Thing&quot; has other &quot;things&quot;, and can do &quot;stuff&quot;.
+    3. Even if we knew what kind of data we are fetching, we really aren'</span><span class="ruby-identifier">t</span> <span class="ruby-identifier">fetching</span> <span class="ruby-identifier">objects</span>. <span class="ruby-constant">We</span><span class="ruby-string">'re fetching a big hunk
+       of (mainly) numeric data.
+    Both of these reasons point towards treating data as structures, and performing procedural operations on that data.
+       So this app is designed around that notion. But hey, I'</span><span class="ruby-identifier">m</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">noob</span>. <span class="ruby-constant">I</span> <span class="ruby-identifier">could</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">totally</span> <span class="ruby-identifier">wrong</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">its</span> <span class="ruby-identifier">just</span> <span class="ruby-identifier">my</span> <span class="ruby-identifier">desire</span>
+       <span class="ruby-identifier">to</span> <span class="ruby-identifier">default</span> <span class="ruby-identifier">back</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">a</span> <span class="ruby-constant">MATLAB</span> <span class="ruby-identifier">mindset!</span>
+    <span class="ruby-constant">Either</span> <span class="ruby-identifier">way</span>, <span class="ruby-constant">I</span> <span class="ruby-identifier">designed</span> <span class="ruby-identifier">all</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">these</span> <span class="ruby-identifier">methods</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">work</span> <span class="ruby-identifier">on</span> <span class="ruby-identifier">arbitrary</span> <span class="ruby-identifier">datasets</span>. <span class="ruby-constant">I</span> <span class="ruby-identifier">did</span> <span class="ruby-identifier">it</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">way</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">flexibility</span>,
+       <span class="ruby-identifier">modularity</span>, <span class="ruby-keyword">and</span> <span class="ruby-identifier">ease</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">comprehension</span>. <span class="ruby-constant">They</span> <span class="ruby-identifier">could</span> <span class="ruby-identifier">easily</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">modified</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">have</span> <span class="ruby-identifier">more</span> <span class="ruby-constant">Object</span><span class="ruby-operator">-</span><span class="ruby-identifier">like</span> <span class="ruby-identifier">behavior</span>,
+       <span class="ruby-identifier">so</span> <span class="ruby-identifier">feel</span> <span class="ruby-identifier">free</span> <span class="ruby-identifier">to</span> <span class="ruby-keyword">do</span> <span class="ruby-identifier">so</span>.
+</pre>
+
+<h1 id="label-%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%23">*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</h1>
+
   </div><!-- description -->
 
   
@@ -163,12 +223,19 @@
 
         <div class="method-description">
           
-          
+          <p>*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ <a
+href="Plot.html#method-i-all_checkboxes_false">#all_checkboxes_false</a> 
+*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#</p>
+
+<pre>Same as &gt;&gt;all_checkbox_true() except that using this function turns all plots
+off initially</pre>
+
+<p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
           
 
           
           <div class="method-source-code" id="all_checkboxes_false-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 144</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 230</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all_checkboxes_false</span>(<span class="ruby-identifier">list</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-string">&quot;false&quot;</span>]*(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -193,12 +260,31 @@
 
         <div class="method-description">
           
-          <h1 id="method-i-all_checkboxes_true-label-%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%23">*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</h1>
+          <p>*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ <a
+href="Plot.html#method-i-all_checkboxes_true">#all_checkboxes_true</a> 
+*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*#</p>
+
+<pre>Purpose:                                                                              #
+    Generate list of true/false strings. Not complicated, just replicates             #
+    'true' or 'false' for placement in dygraphs options                               #
+Calling:                                                                              #
+        &gt;&gt; @plot.first.all_checkboxes_true(params[:y_var])                            #
+    Makes a list of 'true' for each member of params[:y_var]                          #
+Example:                                                                              #
+    If the Y variables of a plot are contained within an array as:                    #
+        &gt;&gt;params[:y_var] = ['y1','y2']                                                #
+    Then inside the method &gt;&gt;dygraph_options() (or if relocated directly to a view)   #
+        visibility: &lt;%=                                                               #
+                render :inline =&gt; @plot.first.all_checkboxes_true(params[:y_var])     #
+                     %&gt;                                                               #
+    When used in conjunction with checkboxes, this marks which plot lines are         #
+    visibly when the plot shows up, and which are not.                                #
+                                                                                      #</pre>
           
 
           
           <div class="method-source-code" id="all_checkboxes_true-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 140</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 220</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all_checkboxes_true</span>(<span class="ruby-identifier">list</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-string">&quot;true&quot;</span>]*(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -228,7 +314,7 @@
 
           
           <div class="method-source-code" id="convert_date-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 330</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 416</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">convert_date</span>(<span class="ruby-identifier">obj</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">obj</span>[<span class="ruby-string">'(1i)'</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">obj</span>[<span class="ruby-string">'(2i)'</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">obj</span>[<span class="ruby-string">'(3i)'</span>].<span class="ruby-identifier">to_i</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -258,7 +344,7 @@
 
           
           <div class="method-source-code" id="date_blank-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 334</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 420</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">date_blank</span>(<span class="ruby-identifier">mydate</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-identifier">mydate</span>[<span class="ruby-string">&quot;(1i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>, <span class="ruby-identifier">mydate</span>[<span class="ruby-string">&quot;(2i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>, <span class="ruby-identifier">mydate</span>[<span class="ruby-string">&quot;(3i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>]).<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -289,7 +375,7 @@ to redo to work for a hash</p>
 
           
           <div class="method-source-code" id="dygraph_body-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 163</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 249</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_body</span>(<span class="ruby-identifier">tags</span>, <span class="ruby-identifier">values</span>)
   <span class="ruby-identifier">valuestring</span> = <span class="ruby-string">''</span>
   <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
@@ -325,12 +411,12 @@ to redo to work for a hash</p>
 
         <div class="method-description">
           
-          
+          <h1 id="method-i-dygraph_head-label-%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%23">*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#</h1>
           
 
           
           <div class="method-source-code" id="dygraph_head-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 151</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 237</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_head</span>(<span class="ruby-identifier">tags</span>)
   <span class="ruby-identifier">labelstring</span> = <span class="ruby-string">&quot;,'&quot;</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">tags</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
@@ -367,10 +453,10 @@ to redo to work for a hash</p>
 
           
           <div class="method-source-code" id="dygraph_options-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 178</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 264</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_options</span>(<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">options_string</span> =
-      <span class="ruby-string">&quot;,{
+ <span class="ruby-string">&quot;,{
       height: 375,                                                               // Specifies the Height of the plot area
       width: 700,                                                                // Specifies the Width of the plot area
       hideOverlayOnMouseOut: false,                                              // Keeps the legend visible at all times
@@ -379,7 +465,7 @@ to redo to work for a hash</p>
       labelsDivWidth: 100,                                                       // Set the
       labelsDiv: document.getElementById('Legend_Div&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'),     // Specifies External Div to put Legend Labels in
       labelsSeparateLines: true,                                                 // Different lines per label for easier readability
-      underlayCallback: drawLines&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;,                               // MUST enable this  to show linear regression
+      underlayCallback: drawLines&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;,                          // MUST enable this  to show linear regression
       xlabel: '&lt;%=params[:x_var]%&gt;',                                             // Label for the X axis
       ylabel: '&lt;%=render :inline =&gt; params[:y_var].to_s %&gt;',                     // Labels for the Y axis
       visibility: &lt;%= render :inline =&gt; @plot.first.all_checkboxes_true(params[:y_var]) %&gt;   //
@@ -412,7 +498,7 @@ to redo to work for a hash</p>
 
           
           <div class="method-source-code" id="linear_reg-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 212</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 298</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg</span>(<span class="ruby-identifier">graphnum</span> = <span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-string">'// coefficients of regression for each series.
   // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
@@ -556,7 +642,7 @@ to redo to work for a hash</p>
 
           
           <div class="method-source-code" id="linear_reg_buttons-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 197</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 283</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg_buttons</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
 
   <span class="ruby-comment">#button_str = '&lt;div style=&quot;position: relative; left: 1000px; top: -250px;&quot;&gt;' + &quot;\n&quot;</span>
@@ -614,7 +700,7 @@ href="Plot.html#method-i-list_vars">#list_vars</a>
 
           
           <div class="method-source-code" id="list_vars-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 95</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 156</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">list_vars</span>
   <span class="ruby-identifier">atts</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>
   <span class="ruby-identifier">vars</span> = []
@@ -671,7 +757,7 @@ Example:                                                                  #
 
           
           <div class="method-source-code" id="put_checkboxes-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 127</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 188</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">put_checkboxes</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">boxstring</span> = <span class="ruby-string">''</span> <span class="ruby-comment">#</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)

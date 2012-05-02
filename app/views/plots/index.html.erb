@@ -1,5 +1,22 @@
+<!--
+Beneath all the messy and probably poorly written HTML, this page is pretty simple.
+The application logic is as follows:
+
+______________________________________________________________________
+|                    |                     |                         |   These selections are required to get data. All
+|   Pick X axis var  |   Pick Y axis var   | (optional) Pick Filter  |   plots need an x and a y variable right?
+|                    |                     |                         |   Filter is optional, and depends on your db schema.
+|____________________|_____________________|_________________________|
+|                    |                     |                         |   "Index" and "Date" assume your db has either some
+| Pick Index Range   |    Pick Feature     |     Pick Date Range     |   sequential index, a date based index, or both for its
+|     (optional)     |                     |       (optional)        |   typical X variable. If left unselected, no truncation
+|____________________|_____________________|_________________________|   occurs. "Feature" chooses an extra plot feature
+|                                                                    |
+|                           [Submit]                                 |   Submit selection data for handling in controller,
+|____________________________________________________________________|   plotting in view
+-->
+
 <h1> Welcome to the Interactive Plotting Engine!</h1>
-<!--<body background="/Stats.jpeg" style="opacity:20em">-->
 <style type="text/css">
     body {
         background:url('/Stats.jpeg');
@@ -12,7 +29,7 @@
 <div style="text-align:center;border-radius:2px;"><%= image_tag('/ZD_Consulting.jpg', :align => :center) %>  </div>
 <p style="text-align:center"> University of Colorado, Aerospace Engineering Sciences</p>
 <p style="text-align:center"> zach.dischner@colorado.edu</p>
-</br>
+
 
 
 <br>
@@ -40,7 +57,7 @@
             <%= select_tag(:filter, options_for_select(@filters.map { |t| [t, t.to_s] }), :multiple => true) %>
             <% end %>
 
-            </br>
+
           </p>
           </td>
           </tr>
@@ -62,31 +79,38 @@
 
                 <%= label(:plot, :x_end, "End") %>
                 <%= number_field_tag(:x_end, params[:x_end]) %>
-                </br>
+
               </p>
             </td>
 
 
-            <!--Here is a radiobuttion selector, which decides if you want to view the data -->
-            <!--with checkbox line selectors, or a linear regression option. -->
+            <!--
+                Here is a radiobuttion selector, which decides if you want to view the data
+                with checkbox line selectors, or a linear regression option.
+            -->
             <td>
               <br>
               <%= radio_button_tag 'feature', 'Both', :true %>
               <%= label(:plot, :feature, "Both") %>
-              </br>
+              <br>
+
               <br>
               <%= radio_button_tag 'feature', 'Linear Regression' %>
               <%= label(:plot, :feature, "Linear Regression ") %>
-              </br>
+              <br>
+
               <br>
               <%= radio_button_tag 'feature', 'Checkboxes' %>
               <%= label(:plot, :feature, "Checkboxes") %>
-              </br>
+              <br>
+
             </td>
 
             <td>
-              <!-- This is the block that creates a selector for  Datetime options-->
-              <!-- It populates a Datetime param that is used in dynamic scope selectors-->
+              <!--
+                This is the block that creates a selector for  Datetime options
+                It populates a Datetime param that is used in dynamic scope selectors
+              -->
               <p style="background-color: #C0C0C0; width: 350px;height:100px;
                       border-style:outset; border-radius: 0.5em; border-color:#888888;
                       text-align: center;
@@ -95,17 +119,23 @@
                 <br>
                 <%= label(:plot, :date_start, "Start") %>
                 <%= date_select(:date_start, params[:date_start], :include_blank => true) %>
-                </br><br>
+                <br>
+
+                <br>
                 <%= label(:plot, :date_end, "End") %>
                 <%= date_select(:date_end, params[:date_end], :include_blank => true) %>
-                </br>
+                <br>
+
               </p>
 
             </td>
           </tr>
-          <!--</table>-->
-          </tr>
 
+
+
+         <!--
+            Submit the page data to be handled by   /app/controllers/plots_controller
+         -->
           <tr>
             <td colspan=3 style="align:center; text-align:center">
               <%= submit_tag("submit!") %>
@@ -113,7 +143,7 @@
           </tr>
           </table>
       <% end %>
-     </body>
+
 
 
 

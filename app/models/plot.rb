@@ -1,28 +1,84 @@
+#*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Plot Class ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
+#
+#  Written by:
+#             Zach Dischner for LASP scientific uses
+#  Updated:
+#             May 1, 2012
+#  Contact:
+#             zach.dischner@lasp.colorado.edu
+#             zach.dischner@gmail.com
+# Purpose:
+#  The Plot Class has two main tasks:
+#      1. Define methods to query your database to select appropriate data
+#      2. Take that data and dynamically generate HTML/dygraphs logic.
+#
+#  Plot HTML templates can be found in the   >>/app/views/layouts/plot_*
+#  These templates define the proper methodology to use Plot methods to generate relevant dygraphs HTML.
+#
+#  The general procedure for generating a single dygraphs plot in an HTML page is as follows:
+#          1. Appropriate a div for the plot ("graphdiv#")
+#          2. Create a new dygraphs element ("g#" )
+#          3. Generate the header for the graph. This allows a legend to correlate values with variable names
+#          4. Generate the graph content, or the body of the graph. This parses database values into a string
+#             recognizable by dygraphs functions.
+#          5. Generate dygraphs option specifications for each graph.
+#          6. Generate linear regression logic and HTML if wanted.
+#          7. Generate checkbox logic and HTML elements if wanted.
+#
+#  Each of these tasks is made to be dynamic and iterative, so as to provide means to plot any generic dataset.
+#  Also note that each of these tasks is closely related with the other. Changing one will have a high probability
+#     changing the others. BEWARE!!!
+#
+#  On that note, this IS designed to be extremely generic. Changing functionality to fit your specific application will
+#     likely make more sense eventually.
+#
+#  Case-In-Point: I'm not a rails master. In fact, this is my first rails app, my first experience with HTML, web design,
+#     ruby, and my first attempt at Object-Oriented programming in general. As such, I'm probably pretty bad at it, and
+#     the design of this application seems to violate many hard-and-fast practices of OO programming.
+#  All of the methods below act more like functions. In fact, nothing about this 'class' resembles an object. The reason
+#     for this is that this application is meant to work generically on any DATASET. This brings about problems:
+#     1. Since the app is not designed around any specific database model, its logic can't be aware of the database
+#        schema or elements. Methods and operations must perform their tasks without being consious of what they are
+#        operating on.
+#     2. By working with just raw random data, returns from the database are really more of data STRUCTURES, rather
+#        than specific data OBJECTS. It makes no sense to try and think about these returns as objects. Without knowing
+#        anything about the data, its useless to try and form it all into objects. Its like calling it a "Thing", and
+#        saying that "Thing" has other "things", and can do "stuff".
+#     3. Even if we knew what kind of data we are fetching, we really aren't fetching objects. We're fetching a big hunk
+#        of (mainly) numeric data.
+#     Both of these reasons point towards treating data as structures, and performing procedural operations on that data.
+#        So this app is designed around that notion. But hey, I'm a noob. I could be totally wrong and its just my desire
+#        to default back to a MATLAB mindset!
+#     Either way, I designed all of these methods to work on arbitrary datasets. I did it this way for flexibility,
+#        modularity, and ease of comprehension. They could easily be modified to have more Object-like behavior,
+#        so feel free to do so.
+#
+#
+#
+#=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+
 class Plot < ActiveRecord::Base
 
-  #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Plot Class ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
-  #
-  #
-  #
-  #
-  #
-  #
-  #
-  #
-  #
-  #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+
+
 
   # Change table info and scopes below to match your database.
   # MYSQL development database
   establish_connection :development
   set_table_name "stock_test"
   set_primary_key :id
+  @@find_filter = true
+
 
   #SQLITE test development environment
-  #establish_connection :sqlite_test
   #establish_connection(:adapter => "sqlite3", :database => "db/sqlite_test.sqlite3", :pool => 5 )
+  #establish_connection :sqlite_test
   #set_table_name "plots"
+  #@@find_filter = false
 
+  def filter_table
+    return  @@find_filter
+  end
 
 
 
@@ -36,22 +92,26 @@ class Plot < ActiveRecord::Base
   #
   #   1. Selections based on ROWS in the database.
   #       eg: " SELECT * FROM table_name WHERE name='some name' "
+  #
+  #     1.1 DATE SCOPES: Change the "Date" in the following sql parser argument. "Date" should be changed to the name of
+  #                      the column in your database that corresponds to a DATETIME field.
   scope :between_dates, lambda { |start_date, end_date| where("Date > ? AND Date < ?", "#{start_date}", "#{end_date}") }
   scope :after_date, lambda { |start_date| where("Date > ?", "%#{start_date}") }
 
-  scope :select_ticker, lambda {|tickername| where("ticker in (?)","#{tickername}")}
+  #     1.2 STRING SCOPES: Change the "ticker" string in the following sql parser argument. This is for selection of rows
+  #                        containing certain strings in your database, based on a column full of strings.
+  #                     EG. if you have a column called "Names" in your database, you want to change "ticker" --> "Names"
+  #                        and pass a single name ("Joe", "Sally") to the selector as an argument.
+  scope :select_ticker, lambda { |tickername| where("ticker in (?)", "#{tickername}") }
 
+
+  #     1.3 NUMERIC SCOPES: Change "x" to whichever numeric column you want to filter by.
+  #                     EG. "x" can be 'laps','orbits', or just some index you would want to truncate your dataset by.
+  #                         If you have y(x), but don't want to plot y for ALL values of x, use these scopes to truncate
+  #                         your dataset.
   scope :after_x, lambda { |x1| where("x >= ?", "#{x1}") }
   scope :before_x, lambda { |x2| where("x <=?", "#{x2}") }
   scope :between_x, lambda { |x1, x2| where("x BETWEEN ? and ?", "#{x1}", "#{x2}") }
-
-  #   2. Selections based on COLUMNS in the database.
-  #       eg: " SELECT (name,birthday,address) FROM table_name"
-  scope :select_var, lambda { |varname| select(varname) }
-
-  # Together, these two scope classes can be layered to create actual database queries
-  #       eg:       RoR>> Plot.after_x(4).select_var('z')
-  #       becomes:  SQL>> SELECT (z) FROM Plot where(x>4);
 
   # (1.5) "Filter" selection. This is the optional scope, which depends heavily on your database schema and how you want to plot.
   #         -This will get a list of distinct values in the "filter" column, which can be used in the interaction webpage to obtain
@@ -63,19 +123,27 @@ class Plot < ActiveRecord::Base
   #           user can make their selection, you can populate a drop down with values gathered from this scope.
   #             eg:     RoR>> @stocks = Plot.select_filter("ticker")
   #             yeilds: ['aapl','goog','arwr',...]
-  #          That array can be populated into a dropdown that the user can use to plot stock data based on its ticker.
+  #          That array can be populated into a drop-down that the user can use to plot stock data based on its ticker.
   scope :select_filter, lambda {|filter| select("DISTINCT #{filter}")}
 
+  #   2. Selections based on COLUMNS in the database.
+  #       eg: " SELECT (name,birthday,address) FROM table_name"
+  scope :select_var, lambda { |varname| select(varname) }
+
+  # Together, these two scope classes can be layered to create actual database queries
+  #       eg:       RoR>> Plot.after_x(4).select_var('z')
+  #       becomes:  SQL>> SELECT ('z') FROM Plot where(x>4);
+  #
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
 
 
- #>>>>>>>>>>>>>>>>>>>>>>>>>> Everything Below this line shouldn't be changed unless you REALLY want to  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+ #>>>>>>>>>>>> Everything Below this line shouldn't be changed unless you REALLY want to  <<<<<<<<<<<<<<#
 
 
 
 
-  # To work, the  /APP/ASSETS MUST BE THE SAME!!!! MUST MUST!!!!!
+  # To work, the  /APP/ASSETS MUST have the "dygraph-combined.js"
 
     #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ list_vars ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*#
     # Purpose:                                                                  #
@@ -137,14 +205,39 @@ class Plot < ActiveRecord::Base
 
     #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
+
+    #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ all_checkboxes_true  *^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*#
+    # Purpose:                                                                              #
+    #     Generate list of true/false strings. Not complicated, just replicates             #
+    #     'true' or 'false' for placement in dygraphs options                               #
+    # Calling:                                                                              #
+    #         >> @plot.first.all_checkboxes_true(params[:y_var])                            #
+    #     Makes a list of 'true' for each member of params[:y_var]                          #
+    # Example:                                                                              #
+    #     If the Y variables of a plot are contained within an array as:                    #
+    #         >>params[:y_var] = ['y1','y2']                                                #
+    #     Then inside the method >>dygraph_options() (or if relocated directly to a view)   #
+    #         visibility: <%=                                                               #
+    #                 render :inline => @plot.first.all_checkboxes_true(params[:y_var])     #
+    #                      %>                                                               #
+    #     When used in conjunction with checkboxes, this marks which plot lines are         #
+    #     visibly when the plot shows up, and which are not.                                #
+    #                                                                                       #
+
     def all_checkboxes_true(list)
       return (["true"]*(list.length-1)).to_s
     end
+    #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
 
+
+    #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ all_checkboxes_false  *^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
+    #  Same as >>all_checkbox_true() except that using this function turns all plots
+    #  off initially
+    #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
     def all_checkboxes_false(list)
       return (["false"]*(list.length-1)).to_s
     end
-
+    #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
 
 
 
@@ -177,7 +270,7 @@ class Plot < ActiveRecord::Base
 
     def dygraph_options(graphnum="")
       options_string =
-          ",{
+     ",{
           height: 375,                                                               // Specifies the Height of the plot area
           width: 700,                                                                // Specifies the Width of the plot area
           hideOverlayOnMouseOut: false,                                              // Keeps the legend visible at all times
@@ -186,7 +279,7 @@ class Plot < ActiveRecord::Base
           labelsDivWidth: 100,                                                       // Set the
           labelsDiv: document.getElementById('Legend_Div" + graphnum.to_s + "'),     // Specifies External Div to put Legend Labels in
           labelsSeparateLines: true,                                                 // Different lines per label for easier readability
-          underlayCallback: drawLines" + graphnum.to_s + ",                               // MUST enable this  to show linear regression
+          underlayCallback: drawLines" + graphnum.to_s + ",                          // MUST enable this  to show linear regression
           xlabel: '<%=params[:x_var]%>',                                             // Label for the X axis
           ylabel: '<%=render :inline => params[:y_var].to_s %>',                     // Labels for the Y axis
           visibility: <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   //
