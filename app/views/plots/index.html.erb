@@ -1,6 +1,6 @@
 <!--
 Beneath all the messy and probably poorly written HTML, this page is pretty simple.
-The application logic is as follows:
+The application logic is laid out as follows:
 
 ______________________________________________________________________
 |                    |                     |                         |   These selections are required to get data. All
@@ -16,6 +16,8 @@ ______________________________________________________________________
 |____________________________________________________________________|   plotting in view
 -->
 
+
+
 <h1> Welcome to the Interactive Plotting Engine!</h1>
 <style type="text/css">
     body {
@@ -30,10 +32,10 @@ ______________________________________________________________________
 <p style="text-align:center"> University of Colorado, Aerospace Engineering Sciences</p>
 <p style="text-align:center"> zach.dischner@colorado.edu</p>
 
-
+ <div id="status" align="center" style="align:center;"> </div>
 
 <br>
-<table bgcolor=white style="padding:10px; border-width:10px; border-color:green; position:relative;
+<table id="mytable" bgcolor=white style="padding:10px; border-width:10px; border-color:green; position:relative;
         border-radius:2px;box-shadow: 5em 5em 10em #FFF" align="center" border="4" cellpadding=10px >
   <tr>
     <td colspan=3 text-align=center style="text-align:center; align:center">
@@ -138,12 +140,33 @@ ______________________________________________________________________
          -->
           <tr>
             <td colspan=3 style="align:center; text-align:center">
-              <%= submit_tag("submit!") %>
+              <%= submit_tag "submit!", :onclick => "showloading()" %>
+
+
+
+              <!--<input name="commit"  value="submit!" onclick="showloading()">-->
+
+              <script language="javascript" type="text/javascript">
+                  function showloading()
+                  {
+                      var img = document.createElement("IMG");
+                      img.src = "/ajax-loader.gif";
+//                      document.write(img);
+                      document.getElementById('status').innerHTML="<p> Your page is loading </p>" +
+                              "                                     <img src='/ajax-loader.gif'>";
+                  }
+              </script>
+
+
+
             </td>
           </tr>
           </table>
+
+
+
+
       <% end %>
 
-
-
+<div id="StatusDiv"> <p> You are currently just selecting stuff</p></div>
 
