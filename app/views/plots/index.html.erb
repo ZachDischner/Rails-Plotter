@@ -32,7 +32,15 @@ ______________________________________________________________________
 <p style="text-align:center"> University of Colorado, Aerospace Engineering Sciences</p>
 <p style="text-align:center"> zach.dischner@colorado.edu</p>
 
- <div id="status" align="center" style="align:center;"> </div>
+
+
+ <div id="status" align="center" style="align:center; display:block;">
+   <p id="SelectString" style="display:block"> You are Now Selecting Data</p>
+   <p id="LoadingString" style="display:none"> Hold yer horses, the data is being fetched</p>
+   <img id="LoadingIMG" style="display:none" src="/ajax-loader.gif">
+ </div>
+
+
 
 <br>
 <table id="mytable" bgcolor=white style="padding:10px; border-width:10px; border-color:green; position:relative;
@@ -149,11 +157,15 @@ ______________________________________________________________________
               <script language="javascript" type="text/javascript">
                   function showloading()
                   {
-                      var img = document.createElement("IMG");
-                      img.src = "/ajax-loader.gif";
-//                      document.write(img);
-                      document.getElementById('status').innerHTML="<p> Your page is loading </p>" +
-                              "                                     <img src='/ajax-loader.gif'>";
+                      var img2 = document.createElement("IMG");
+                      img2.src = "/ajax-loader.gif";
+//                      document.append(img);
+
+                      document.getElementById("SelectString").style.display="none"
+                      document.getElementById("LoadingString").style.display="block"
+                      document.getElementById("LoadingIMG").style.display="block"
+//                      document.getElementById("status").append('Your Plot is being fetched');
+
                   }
               </script>
 
