@@ -3,6 +3,10 @@ Beneath all the messy and probably poorly written HTML, this page is pretty simp
 The application logic is laid out as follows:
 
 ______________________________________________________________________
+|                                                                    |
+|                      Status of the selection state                 |
+|                      [ progress gif upon submit ]                  |
+|____________________________________________________________________|
 |                    |                     |                         |   These selections are required to get data. All
 |   Pick X axis var  |   Pick Y axis var   | (optional) Pick Filter  |   plots need an x and a y variable right?
 |                    |                     |                         |   Filter is optional, and depends on your db schema.
@@ -14,42 +18,56 @@ ______________________________________________________________________
 |                                                                    |
 |                           [Submit]                                 |   Submit selection data for handling in controller,
 |____________________________________________________________________|   plotting in view
+
+In addition, there is a "helper" div that floats along the left side of the page.
+    I have made it so that upon hovering over a particular form/page element, a javascript
+    function will be triggered that will popup a little helping statement, explaining what
+    you are hovering over. See the "switch" statement in the "page_info" javascript
+    function at the bottom of the page
 -->
 
-
-
-<h1> Welcome to the Interactive Plotting Engine!</h1>
 <style type="text/css">
     body {
-        background:url('/Stats.jpeg');
-        opacity:0.9;
-         }
+        background: url('/Stats.jpeg');
+        opacity: 0.9;
+        font-family:Tahoma;
+    }
 </style>
 
-
 <br>
+<p style="text-align:center;font:bold"> Brought to you by</p>
 <div style="text-align:center;border-radius:2px;"><%= image_tag('/ZD_Consulting.jpg', :align => :center) %>  </div>
 <p style="text-align:center"> University of Colorado, Aerospace Engineering Sciences</p>
 <p style="text-align:center"> zach.dischner@colorado.edu</p>
 
-
-
- <div id="status" align="center" style="align:center; display:block;">
-   <p id="SelectString" style="display:block"> You are Now Selecting Data</p>
-   <p id="LoadingString" style="display:none"> Hold yer horses, the data is being fetched</p>
-   <img id="LoadingIMG" style="display:none" src="/ajax-loader.gif">
- </div>
-
-
-
 <br>
 <table id="mytable" bgcolor=white style="padding:10px; border-width:10px; border-color:green; position:relative;
         border-radius:2px;box-shadow: 5em 5em 10em #FFF" align="center" border="4" cellpadding=10px >
+
+  <!--
+    Status row. Has a string that indicates status of the current statement.
+    Then has a 'loading' gif that gets toggled once everything gets submitted
+  -->
+  <tr>
+    <td colspan=3 style="height:100px; border:8px outset #000040; border-radius:3px; box-shadow:2em 2em 5em #222; padding-bottom:10px">
+      <div id="status" align="center" style="align:center; display:block;">
+        <p id="StatusString" style="display:block"> You are Now Selecting Data</p>
+        <img id="LoadingIMG" style="display:none; height:75px; width:600px" src="singif.gif">
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan=3 style="border:0px; padding-bottom:50px">
+
+    </td>
+  </tr>
+
   <tr>
     <td colspan=3 text-align=center style="text-align:center; align:center">
       <%= form_tag "/goplot", :method => "get" do %>
           <! Selector for the 'x' variable to be plotted>
-          <h style="text-align:left"> Select Variables to Plot</h>
+          <h style="text-align:center"> Select Variables to Plot</h>
 
           <p style="background-color: #C0C0C0;
                   border-style:solid; border-radius: 0.5em; box-shadow: 8px 8px 5px #808080;text-align:center; padding:10px">
@@ -115,8 +133,8 @@ ______________________________________________________________________
               <br>
 
             </td>
-
             <td>
+
               <!--
                 This is the block that creates a selector for  Datetime options
                 It populates a Datetime param that is used in dynamic scope selectors
@@ -148,37 +166,74 @@ ______________________________________________________________________
          -->
           <tr>
             <td colspan=3 style="align:center; text-align:center">
-              <%= submit_tag "submit!", :onclick => "showloading()" %>
+              <%= submit_tag "submit!",:onmouseover => "page_info('submit')",
+                                       :onmouseout => "page_info()",
+                                       :onclick => "showloading()" %>
 
 
 
               <!--<input name="commit"  value="submit!" onclick="showloading()">-->
-
-              <script language="javascript" type="text/javascript">
-                  function showloading()
-                  {
-                      var img2 = document.createElement("IMG");
-                      img2.src = "/ajax-loader.gif";
-//                      document.append(img);
-
-                      document.getElementById("SelectString").style.display="none"
-                      document.getElementById("LoadingString").style.display="block"
-                      document.getElementById("LoadingIMG").style.display="block"
-//                      document.getElementById("status").append('Your Plot is being fetched');
-
-                  }
-              </script>
-
 
 
             </td>
           </tr>
           </table>
 
-
-
-
       <% end %>
 
-<div id="StatusDiv"> <p> You are currently just selecting stuff</p></div>
+      <div id="helperDIV" style="background-color:#87cefa;border:3px outset gray; border-radius:10px; width:auto;
+              padding-left:8px; padding-right:8px; display:block; top:25%; left:20px; position:fixed">
+        <table>
+          <tr>
+            <td>
+              <img src="question.gif" onclick="toggle_visibility('helper'), page_info()">
+            </td>
+            <td>
+              <p id="helper" style="font-weight:bold; font-family:tahoma; visibility:hidden; width:auto">
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div>
 
+
+
+      <script language="javascript" type="text/javascript">
+          function showloading()
+          {
+//                      var img2 = document.createElement("IMG");
+//                      img2.src = "/ajax-loader.gif";
+//                      document.append(img);
+
+              document.getElementById("StatusString").innerHTML = "Hold yer horses! The Data is being fetched"
+              document.getElementById("LoadingIMG").style.display = "block"
+          }
+          function page_info(x) {
+              if (document.getElementById("helper").style.visibility == 'visible')
+              {
+                  switch (x) {
+                      case 'submit':
+                          document.getElementById("helper").innerHTML = "Click to begin the plotting experience!"
+                          break
+                      default:
+                          document.getElementById("helper").innerHTML = "Hover Over a form area for help"
+                  }
+              }
+
+          }
+
+          function toggle_visibility(id) {
+              var e = document.getElementById(id);
+              if (e.style.visibility == 'hidden')
+                  e.style.visibility = 'visible';
+              else
+                  e.style.visibility = 'hidden';
+
+              if (id == "helper");
+              {
+                  // Simple cheating way to resize the area once "helper" is turned off
+                  e.innerHTML=""
+              }
+
+          }
+      </script>
