@@ -11,9 +11,11 @@
 #  The Plot Class has two main tasks:
 #      1. Define methods to query your database to select appropriate data
 #      2. Take that data and dynamically generate HTML/dygraphs logic.
+#      3. Generate Javascript utils for interacting with graphs. This showcases the app's
+#           Dynamic ability to generate javascript functions and capabilities.
 #
 #  Plot HTML templates can be found in the   >>/app/views/layouts/plot_*
-#  These templates define the proper methodology to use Plot methods to generate relevant dygraphs HTML.
+#  These templates define the proper methodology to implement Plot methods to generate relevant dygraphs HTML.
 #
 #  The general procedure for generating a single dygraphs plot in an HTML page is as follows:
 #          1. Appropriate a div for the plot ("graphdiv#")
@@ -22,7 +24,7 @@
 #          4. Generate the graph content, or the body of the graph. This parses database values into a string
 #             recognizable by dygraphs functions.
 #          5. Generate dygraphs option specifications for each graph.
-#          6. Generate linear regression logic and HTML if wanted.
+#          6. Generate linear regression Javascript logic and HTML if wanted.
 #          7. Generate checkbox logic and HTML elements if wanted.
 #
 #  Each of these tasks is made to be dynamic and iterative, so as to provide means to plot any generic dataset.
@@ -30,12 +32,14 @@
 #     changing the others. BEWARE!!!
 #
 #  On that note, this IS designed to be extremely generic. Changing functionality to fit your specific application will
-#     likely make more sense eventually.
+#     likely make more sense eventually. Instead of the current procedure of looping through the @plot object, and
+#     "send"ing the variable names, you'll know exactly what you want your @plot variable will look like, and what
+#     from it you'll want to plot.
 #
 #  Case-In-Point: I'm not a rails master. In fact, this is my first rails app, my first experience with HTML, web design,
 #     ruby, and my first attempt at Object-Oriented programming in general. As such, I'm probably pretty bad at it, and
 #     the design of this application seems to violate many hard-and-fast practices of OO programming.
-#  All of the methods below act more like functions. In fact, nothing about this 'class' resembles an object. The reason
+#  All of the methods below act more like FUNCTIONS. In fact, nothing about this 'class' resembles an object. The reason
 #     for this is that this application is meant to work generically on any DATASET. This brings about problems:
 #     1. Since the app is not designed around any specific database model, its logic can't be aware of the database
 #        schema or elements. Methods and operations must perform their tasks without being consious of what they are
@@ -50,8 +54,8 @@
 #        So this app is designed around that notion. But hey, I'm a noob. I could be totally wrong and its just my desire
 #        to default back to a MATLAB mindset!
 #     Either way, I designed all of these methods to work on arbitrary datasets. I did it this way for flexibility,
-#        modularity, and ease of comprehension. They could easily be modified to have more Object-like behavior,
-#        so feel free to do so.
+#        modularity, and ease of comprehension. They could (and should) easily be modified to have more Object-like
+#        behavior once you implement yourself.
 #
 #
 #

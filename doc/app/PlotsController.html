@@ -99,6 +99,8 @@
   
     <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
   
+    <li><a href="./DocController.html">DocController</a>
+  
     <li><a href="./Plot.html">Plot</a>
   
     <li><a href="./PlotsController.html">PlotsController</a>
@@ -163,7 +165,7 @@
 
   <span class="ruby-comment"># Get Filters, add a &quot;No Filter&quot; option for fast implementation of databases without need for filtering.</span>
   <span class="ruby-comment"># Ideally, this is all taken out later for such applications.</span>
-  <span class="ruby-ivar">@filters</span> = [<span class="ruby-string">&quot;No Filter&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Plot</span>.<span class="ruby-identifier">select_filter</span>(<span class="ruby-string">&quot;ticker&quot;</span>).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">dd</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dd</span>.<span class="ruby-identifier">ticker</span>}
+  <span class="ruby-ivar">@filters</span> = [<span class="ruby-string">&quot;No Filter&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Plot</span>.<span class="ruby-identifier">select_filter</span>(<span class="ruby-string">&quot;ticker&quot;</span>).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">dd</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dd</span>.<span class="ruby-identifier">ticker</span>} <span class="ruby-keyword">unless</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@plots</span>.<span class="ruby-identifier">filter_table</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- index-source -->
           

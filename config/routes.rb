@@ -1,10 +1,13 @@
 Stocks::Application.routes.draw do
-    root :to => "plots#index"
+    #root :to => "plots#index"\
+
     get "plots/all"
 
     resources :plots
 
     match "/goplot", :to => "plots#plotter"
+
+    match "/doc", :to => "doc#show"
 
     #map.resources :articles
 

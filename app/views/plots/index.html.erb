@@ -166,20 +166,27 @@ In addition, there is a "helper" div that floats along the left side of the page
          -->
           <tr>
             <td colspan=3 style="align:center; text-align:center">
-              <%= submit_tag "submit!",:onmouseover => "page_info('submit')",
-                                       :onmouseout => "page_info()",
-                                       :onclick => "showloading()" %>
-
-
-
-              <!--<input name="commit"  value="submit!" onclick="showloading()">-->
-
+              <%= submit_tag "submit!", :onmouseover => "page_info('submit')",
+                                        :onmouseout => "page_info()",
+                                        :onclick => "showloading()" %>
 
             </td>
           </tr>
           </table>
 
-      <% end %>
+
+      <% end %>    <!-- ends the form for selecting data -->
+
+
+
+      <div style="padding-top:120px">
+        <%= link_to 'Want some more help?',"doc#show" %>
+      </div>
+
+
+
+
+
 
       <div id="helperDIV" style="background-color:#87cefa;border:3px outset gray; border-radius:10px; width:auto;
               padding-left:8px; padding-right:8px; display:block; top:25%; left:20px; position:fixed">
@@ -189,7 +196,7 @@ In addition, there is a "helper" div that floats along the left side of the page
               <img src="question.gif" onclick="toggle_visibility('helper'), page_info()">
             </td>
             <td>
-              <p id="helper" style="font-weight:bold; font-family:tahoma; visibility:hidden; width:auto">
+              <p id="helper" style="font-weight:bold; visibility:hidden; width:auto">
               </p>
             </td>
           </tr>
@@ -213,7 +220,7 @@ In addition, there is a "helper" div that floats along the left side of the page
               {
                   switch (x) {
                       case 'submit':
-                          document.getElementById("helper").innerHTML = "Click to begin the plotting experience!"
+                          document.getElementById("helper").innerHTML = "Click to begin the plotting experience!" + "<%=params.to_s %>"
                           break
                       default:
                           document.getElementById("helper").innerHTML = "Hover Over a form area for help"
@@ -235,5 +242,8 @@ In addition, there is a "helper" div that floats along the left side of the page
                   e.innerHTML=""
               }
 
+
           }
+
+
       </script>
