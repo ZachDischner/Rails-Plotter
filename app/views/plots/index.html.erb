@@ -28,7 +28,7 @@ In addition, there is a "helper" div that floats along the left side of the page
 
 <style type="text/css">
     body {
-        background: url('/Stats.jpeg');
+        background: url("images/Stats.jpeg");
         opacity: 0.9;
         font-family:Tahoma;
     }
@@ -36,7 +36,7 @@ In addition, there is a "helper" div that floats along the left side of the page
 
 <br>
 <p style="text-align:center;font:bold"> Brought to you by</p>
-<div style="text-align:center;border-radius:2px;"><%= image_tag('/ZD_Consulting.jpg', :align => :center) %>  </div>
+<div style="text-align:center;border-radius:2px;"><img src='images/ZD_Consulting.jpg' >  </div>
 <p style="text-align:center"> University of Colorado, Aerospace Engineering Sciences</p>
 <p style="text-align:center"> zach.dischner@colorado.edu</p>
 
@@ -52,7 +52,7 @@ In addition, there is a "helper" div that floats along the left side of the page
     <td colspan=3 style="height:100px; border:8px outset #000040; border-radius:3px; box-shadow:2em 2em 5em #222; padding-bottom:10px">
       <div id="status" align="center" style="align:center; display:block;">
         <p id="StatusString" style="display:block"> You are Now Selecting Data</p>
-        <img id="LoadingIMG" style="display:none; height:75px; width:600px" src="singif.gif">
+        <img id="LoadingIMG" style="display:none; height:75px; width:600px" src="images/singif.gif">
       </div>
     </td>
   </tr>
@@ -193,7 +193,7 @@ In addition, there is a "helper" div that floats along the left side of the page
         <table>
           <tr>
             <td>
-              <img src="question.gif" onclick="toggle_visibility('helper'), page_info()">
+              <img src="images/question.gif" onclick="toggle_visibility('helper'), page_info()">
             </td>
             <td>
               <p id="helper" style="font-weight:bold; visibility:hidden; width:auto">

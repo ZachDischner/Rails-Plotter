@@ -412,7 +412,7 @@ class Plot < ActiveRecord::Base
         {
           var reg = coeffs[ii];
           var reg_str = "Coefficients are : <br>"
-          reg_str += "y =  [" + Math.round(reg[0]*1000)/1000 + "] x  + [" + Math.round(reg[1]*1000)/1000 + "] </br>"
+          reg_str += "y =  [" + Math.round(reg[0]*1000)/-1000 + "] x  + [" + Math.round(reg[1]*1000)/-1000 + "] </br>"
           document.getElementById("Div_' + graphnum.to_s + '" + ii).innerHTML = reg_str;
         }
 

@@ -43,6 +43,7 @@ class PlotsController < ApplicationController
 
         @tags = @plot.first.list_vars - ["Ticker"] # Don't want to treat "Ticker" as its own plotting variable, since its a string
 
+
       else  # Indicates that MULTIPLE     params[:filters]     have been applied
 
         # Each    params[:filter]    member corresponds to a unique query of the database. Each query is evaluated into
@@ -92,7 +93,7 @@ class PlotsController < ApplicationController
 
   def index
     # These tags are to be excluded from any interactions, as they are database utilities
-    exclude_tags = ["id","created_at","updated_at","ticker"]
+    exclude_tags = ["created_at","updated_at","ticker"]
 
     # Get a single row of info from the database around which to build the user interface
     @plots=Plot.first

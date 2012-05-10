@@ -5,9 +5,13 @@ Stocks::Application.routes.draw do
 
     resources :plots
 
+    resources :doc
+
     match "/goplot", :to => "plots#plotter"
 
     match "/doc", :to => "doc#show"
+
+
 
     #map.resources :articles
 
