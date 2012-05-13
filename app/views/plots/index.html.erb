@@ -2,22 +2,22 @@
 Beneath all the messy and probably poorly written HTML, this page is pretty simple.
 The application logic is laid out as follows:
 
-______________________________________________________________________
-|                                                                    |
-|                      Status of the selection state                 |
-|                      [ progress gif upon submit ]                  |
-|____________________________________________________________________|
-|                    |                     |                         |   These selections are required to get data. All
-|   Pick X axis var  |   Pick Y axis var   | (optional) Pick Filter  |   plots need an x and a y variable right?
-|                    |                     |                         |   Filter is optional, and depends on your db schema.
-|____________________|_____________________|_________________________|
-|                    |                     |                         |   "Index" and "Date" assume your db has either some
-| Pick Index Range   |    Pick Feature     |     Pick Date Range     |   sequential index, a date based index, or both for its
-|     (optional)     |                     |       (optional)        |   typical X variable. If left unselected, no truncation
-|____________________|_____________________|_________________________|   occurs. "Feature" chooses an extra plot feature
-|                                                                    |
-|                           [Submit]                                 |   Submit selection data for handling in controller,
-|____________________________________________________________________|   plotting in view
+            ______________________________________________________________________
+            |                                                                    |
+            |                      Status of the selection state                 |
+            |                      [ progress gif upon submit ]                  |
+            |____________________________________________________________________|
+            |                    |                     |                         |   These selections are required to get data. All
+            |   Pick X axis var  |   Pick Y axis var   | (optional) Pick Filter  |   plots need an x and a y variable right?
+            |                    |                     |                         |   Filter is optional, and depends on your db schema.
+            |____________________|_____________________|_________________________|
+            |                    |                     |                         |   "Index" and "Date" assume your db has either some
+            | Pick Index Range   |    Pick Feature     |     Pick Date Range     |   sequential index, a date based index, or both for its
+            |     (optional)     |                     |       (optional)        |   typical X variable. If left unselected, no truncation
+            |____________________|_____________________|_________________________|   occurs. "Feature" chooses an extra plot feature
+            |                                                                    |
+            |                           [Submit]                                 |   Submit selection data for handling in controller,
+            |____________________________________________________________________|   plotting in view
 
 In addition, there is a "helper" div that floats along the left side of the page.
     I have made it so that upon hovering over a particular form/page element, a javascript
@@ -26,7 +26,7 @@ In addition, there is a "helper" div that floats along the left side of the page
     function at the bottom of the page
 -->
 
-<style type="text/css">
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
     body {
         background: url("images/Stats.jpeg");
         opacity: 0.9;
@@ -35,13 +35,13 @@ In addition, there is a "helper" div that floats along the left side of the page
 </style>
 
 <br>
-<p style="text-align:center;font:bold"> Brought to you by</p>
+<p style="text-align:center;font:bold"> Brought to you by </p>
 <div style="text-align:center;border-radius:2px;"><img src='images/ZD_Consulting.jpg' >  </div>
 <p style="text-align:center"> University of Colorado, Aerospace Engineering Sciences</p>
 <p style="text-align:center"> zach.dischner@colorado.edu</p>
 
 <br>
-<table id="mytable" bgcolor=white style="padding:10px; border-width:10px; border-color:green; position:relative;
+<table id="mytable" bgcolor=white style="padding:10px; border-width:10px; border-color:#0033aa; position:relative;
         border-radius:2px;box-shadow: 5em 5em 10em #FFF" align="center" border="4" cellpadding=10px >
 
   <!--
@@ -73,16 +73,19 @@ In addition, there is a "helper" div that floats along the left side of the page
                   border-style:solid; border-radius: 0.5em; box-shadow: 8px 8px 5px #808080;text-align:center; padding:10px">
             <br>
             <%= label(:plot, :x_var, "X") %>
-            <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false) %>
+            <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false,
+                           :onchange => "params_info('x_var')") %>
 
             <%= label(:plot, :y_var, "Y") %>
-            <%= select_tag(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => true) %>
+            <%= select_tag(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => true,
+                           :onchange => "params_info('y_var')") %>
 
             <! If there is no filter (database columns are unique), just get rid of this section, hardcode
             params[:filter] = ["No Filter"] !>
             <% if @filters %>
             <%= label(:plot, :filter, "Filter") %>
-            <%= select_tag(:filter, options_for_select(@filters.map { |t| [t, t.to_s] }), :multiple => true) %>
+            <%= select_tag(:filter, options_for_select(@filters.map { |t| [t, t.to_s] }), :multiple => true,
+                :onchange => "params_info('filter')")  %>
             <% end %>
 
 
@@ -186,10 +189,13 @@ In addition, there is a "helper" div that floats along the left side of the page
 
 
 
+      // Section of helper HTML elements and Javascript functions.
+      // Not necessary for operation, but helpful (hopefully) in tweiking and insight.
+
 
 
       <div id="helperDIV" style="background-color:#87cefa;border:3px outset gray; border-radius:10px; width:auto;
-              padding-left:8px; padding-right:8px; display:block; top:25%; left:20px; position:fixed">
+              padding-left:8px; padding-right:8px; display:block; top:25%; left:10px; position:fixed">
         <table>
           <tr>
             <td>
@@ -204,8 +210,36 @@ In addition, there is a "helper" div that floats along the left side of the page
       </div>
 
 
+      <div align=center style="background-color:#87cefa;border:3px outset gray; border-radius:10px; width:auto;
+              padding-left:8px; padding-right:8px; display:block; top:10%; right:10px; position:fixed">
+        <img src="images/rails.jpeg" width=80px align=center onclick='toggle_visibility("ParamsDIV")'>
+
+        <div id="ParamsDIV" >
+          <p style="font-size:9pt"> Must Select Parameters L-->R for This to Work</p>
+          <table id='ParamTable' style="max-width:100px">
+            <!--<tr>-->
+            <!--<td>-->
+            <!--<p>x variable:</p>-->
+            <!--</td>-->
+            <!--<td>-->
+            <!--<p id="Param_x_var" style="font-weight:bold; visibility:visible; width:auto"></p>-->
+            <!--</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+            <!--<td>-->
+            <!--<p>y variable:</p>-->
+            <!--</td>-->
+            <!--<td>-->
+            <!--<p id="Param_y_var" style="font-weight:bold; visibility:visible; width:auto"></p>-->
+            <!--</td>-->
+            <!--</tr>-->
+          </table>
+        </div>
+      </div>
 
       <script language="javascript" type="text/javascript">
+//        window.onload=params_info("x_var")          //Run this on page load to show default x_var variable
+
           function showloading()
           {
 //                      var img2 = document.createElement("IMG");
@@ -215,19 +249,62 @@ In addition, there is a "helper" div that floats along the left side of the page
               document.getElementById("StatusString").innerHTML = "Hold yer horses! The Data is being fetched"
               document.getElementById("LoadingIMG").style.display = "block"
           }
+
           function page_info(x) {
               if (document.getElementById("helper").style.visibility == 'visible')
               {
                   switch (x) {
                       case 'submit':
-                          document.getElementById("helper").innerHTML = "Click to begin the plotting experience!" + "<%=params.to_s %>"
+                          document.getElementById("helper").innerHTML = "Click to begin the plotting experience!"
                           break
                       default:
-                          document.getElementById("helper").innerHTML = "Hover Over a form area for help"
+                          document.getElementById("helper").innerHTML = "Hover over a form area for help"
                   }
               }
 
+
           }
+
+          function params_info(param) {
+              var mytable =document.getElementById("ParamTable");
+              var rownum;
+              switch (param) {
+                  case 'x_var':
+                      rownum=0;
+                      break
+                  case 'y_var':
+                      rownum=1;
+                      break
+                  case 'filter':
+                      rownum=2;
+                      break;
+                  default:
+                      rownum=mytable.getElementsByTagName("TR").length;
+              }
+
+              var row = mytable.insertRow(rownum);
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+
+              cell1.innerHTML = param + "=";
+              cell2.innerHTML = getSelectedOptions(param);
+
+               mytable.deleteRow(rownum + 1)
+          }
+
+        function getSelectedOptions(oList)
+        {
+            var list=document.getElementById(oList)
+            var sdValues = [];
+            for(var i = 1; i < list.options.length; i++)
+            {
+                if(list.options[i].selected == true)
+                {
+                    sdValues.push(list.options[i].value);
+                }
+            }
+            return sdValues;
+        }
 
           function toggle_visibility(id) {
               var e = document.getElementById(id);
@@ -241,9 +318,6 @@ In addition, there is a "helper" div that floats along the left side of the page
                   // Simple cheating way to resize the area once "helper" is turned off
                   e.innerHTML=""
               }
-
-
           }
-
-
       </script>
+
