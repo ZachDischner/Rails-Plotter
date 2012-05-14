@@ -65,7 +65,7 @@ In addition, there is a "helper" div that floats along the left side of the page
 
   <tr>
     <td colspan=3 text-align=center style="text-align:center; align:center">
-      <%= form_tag "/goplot", :method => "get" do %>
+      <%= form_tag "/goplot", :name => "myform", :method => "get" do %>
           <! Selector for the 'x' variable to be plotted>
           <h style="text-align:center"> Select Variables to Plot</h>
 
@@ -85,7 +85,7 @@ In addition, there is a "helper" div that floats along the left side of the page
             <% if @filters %>
             <%= label(:plot, :filter, "Filter") %>
             <%= select_tag(:filter, options_for_select(@filters.map { |t| [t, t.to_s] }), :multiple => true,
-                :onchange => "params_info('filter')")  %>
+                           :onchange => "params_info('filter')")  %>
             <% end %>
 
 
@@ -106,10 +106,12 @@ In addition, there is a "helper" div that floats along the left side of the page
                 Select "X" Range for Plotting
                 <br>
                 <%= label(:plot, :x_start, "Start") %>
-                <%= number_field_tag(:x_start, params[:x_start]) %>
+                <%= number_field_tag(:x_start, params[:x_start],
+                    :onchange => "params_info('x_start')") %>
 
                 <%= label(:plot, :x_end, "End") %>
-                <%= number_field_tag(:x_end, params[:x_end]) %>
+                <%= number_field_tag(:x_end, params[:x_end],{
+                    :onchange => "params_info('x_end')"}) %>
 
               </p>
             </td>
@@ -121,17 +123,20 @@ In addition, there is a "helper" div that floats along the left side of the page
             -->
             <td>
               <br>
-              <%= radio_button_tag 'feature', 'Both', :true %>
+              <%= radio_button_tag 'feature', 'Both', :true,
+                                   {:onchange => "params_info('feature')"} %>
               <%= label(:plot, :feature, "Both") %>
               <br>
 
               <br>
-              <%= radio_button_tag 'feature', 'Linear Regression' %>
+              <%= radio_button_tag 'feature', 'Linear Regression',
+                                   {:onchange => "params_info('feature')" }%>
               <%= label(:plot, :feature, "Linear Regression ") %>
               <br>
 
               <br>
-              <%= radio_button_tag 'feature', 'Checkboxes' %>
+              <%= radio_button_tag 'feature', 'Checkboxes',
+                                   {:onchange => "params_info('feature')"} %>
               <%= label(:plot, :feature, "Checkboxes") %>
               <br>
 
@@ -149,12 +154,14 @@ In addition, there is a "helper" div that floats along the left side of the page
                 Select DATE Range for Plotting
                 <br>
                 <%= label(:plot, :date_start, "Start") %>
-                <%= date_select(:date_start, params[:date_start], :include_blank => true) %>
+                <%= date_select(:date_start, params[:date_start], {:include_blank => true},
+                                :onchange => "params_info('date_start')")  %>
                 <br>
 
                 <br>
                 <%= label(:plot, :date_end, "End") %>
-                <%= date_select(:date_end, params[:date_end], :include_blank => true) %>
+                <%= date_select(:date_end, params[:date_end], {:include_blank => true},
+                                :onchange => "params_info('date_end')") %>
                 <br>
 
               </p>
@@ -191,6 +198,7 @@ In addition, there is a "helper" div that floats along the left side of the page
 
       // Section of helper HTML elements and Javascript functions.
       // Not necessary for operation, but helpful (hopefully) in tweiking and insight.
+      // More useful for development of future apps and stuff
 
 
 
@@ -202,7 +210,7 @@ In addition, there is a "helper" div that floats along the left side of the page
               <img src="images/question.gif" onclick="toggle_visibility('helper'), page_info()">
             </td>
             <td>
-              <p id="helper" style="font-weight:bold; visibility:hidden; width:auto">
+              <p id="helper" style="font-weight:bold; font-size:10pt; visibility:hidden; width:auto">
               </p>
             </td>
           </tr>
@@ -211,28 +219,13 @@ In addition, there is a "helper" div that floats along the left side of the page
 
 
       <div align=center style="background-color:#87cefa;border:3px outset gray; border-radius:10px; width:auto;
-              padding-left:8px; padding-right:8px; display:block; top:10%; right:10px; position:fixed">
+              padding-left:8px; padding-right:8px; display:block; top:10%; right:10px; position:fixed; max-width:200px">
         <img src="images/rails.jpeg" width=80px align=center onclick='toggle_visibility("ParamsDIV")'>
 
         <div id="ParamsDIV" >
-          <p style="font-size:9pt"> Must Select Parameters L-->R for This to Work</p>
-          <table id='ParamTable' style="max-width:100px">
-            <!--<tr>-->
-            <!--<td>-->
-            <!--<p>x variable:</p>-->
-            <!--</td>-->
-            <!--<td>-->
-            <!--<p id="Param_x_var" style="font-weight:bold; visibility:visible; width:auto"></p>-->
-            <!--</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-            <!--<td>-->
-            <!--<p>y variable:</p>-->
-            <!--</td>-->
-            <!--<td>-->
-            <!--<p id="Param_y_var" style="font-weight:bold; visibility:visible; width:auto"></p>-->
-            <!--</td>-->
-            <!--</tr>-->
+          <p id="ParamsStatement" style="font-size:9pt">Click to Hide</p>
+          <table id='ParamTable' style="max-width:100px; font-size:8pt; font-weight:bold; table-layout:fixed">
+            <!--Table gets built with Javascript stuff and things-->
           </table>
         </div>
       </div>
@@ -265,59 +258,204 @@ In addition, there is a "helper" div that floats along the left side of the page
 
           }
 
-          function params_info(param) {
-              var mytable =document.getElementById("ParamTable");
-              var rownum;
-              switch (param) {
-                  case 'x_var':
-                      rownum=0;
-                      break
-                  case 'y_var':
-                      rownum=1;
-                      break
-                  case 'filter':
-                      rownum=2;
-                      break;
-                  default:
-                      rownum=mytable.getElementsByTagName("TR").length;
-              }
+// Much of this function is database/setup dependant. Not as dynamic or generic as the rest of the app.
+// But unnecessary for proper functionality. Modify accordingly.
 
-              var row = mytable.insertRow(rownum);
-              var cell1 = row.insertCell(0);
-              var cell2 = row.insertCell(1);
-
-              cell1.innerHTML = param + "=";
-              cell2.innerHTML = getSelectedOptions(param);
-
-               mytable.deleteRow(rownum + 1)
-          }
-
-        function getSelectedOptions(oList)
+function params_info(param)
+{
+    document.getElementById("ParamsStatement").innerHTML = "These are the Params you are sending"
+    var mytable = document.getElementById("ParamTable");
+    for (var i = 0; i < document.myform.elements.length; i++) {     // Might not be the best way to build the table initially
+        if (mytable.getElementsByTagName('tr').length < document.myform.elements.length )
         {
-            var list=document.getElementById(oList)
-            var sdValues = [];
-            for(var i = 1; i < list.options.length; i++)
-            {
-                if(list.options[i].selected == true)
-                {
-                    sdValues.push(list.options[i].value);
-                }
-            }
-            return sdValues;
+
+            var row = mytable.insertRow(i);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+        }
+        else
+        {
+            var row = mytable.getElementsByTagName('tr')[i]
+
+            cell1 = row.getElementsByTagName('td')[0]
+            cell2 = row.getElementsByTagName('td')[1]
+
         }
 
-          function toggle_visibility(id) {
-              var e = document.getElementById(id);
-              if (e.style.visibility == 'hidden')
-                  e.style.visibility = 'visible';
-              else
-                  e.style.visibility = 'hidden';
 
-              if (id == "helper");
-              {
-                  // Simple cheating way to resize the area once "helper" is turned off
-                  e.innerHTML=""
-              }
-          }
+
+        cell1.innerHTML = document.myform.elements[i].name
+        var cell_value = ""
+        var x = document.myform.elements[i].name;
+        switch (x) {
+            case 'x_var':
+                cell_value = getSelectedOptions('x_var')//document.myform.elements[2].name; //getRadioValue(param);
+                break;
+            case 'y_var[]':
+                cell_value = getSelectedOptions('y_var');
+                break;
+            case 'filter[]':
+                cell_value = getSelectedOptions('filter');
+                break;
+            case 'x_start':
+                cell_value = getSelectedOptions(x);
+                break;
+            case 'x_end':
+                cell_value = getSelectedOptions(x);
+                break;
+            case 'feature':
+                cell_value = getRadioValue(x);
+                break;
+            //case 'date_start':
+             //   cell_value = getDateValues(x);
+             //   break;
+            //case 'date_end':
+            //    cell_value = getDateValues(x);
+            //    break;
+            default:
+                cell_value = document.myform.elements[i].value ;
+
+        }
+        cell2.innerHTML = cell_value//document.myform.elements[i].value // params_info2(document.myform.elements[i].name,i)
+        cell2.style.maxWidth = '100px'
+        cell2.style.textWrap = 'normal'
+    }
+}
+
+function params_info2(param,idx) {
+
+    var mytable = document.getElementById("ParamTable");
+    var rownum;
+    var cell_value;
+
+//    if (mytable.getElementsByTagName("TR").length == 0) {
+//        for (var i = 0; i < document.myform.elements.length/2; i++) {     // Might not be the best way to build the table initially
+//            mytable.insertRow(i);
+//
+//        }
+//    }
+
+
+
+    switch (param) {
+        case 'x_var':
+            rownum = 0;
+            cell_value = document.myform.elements.length; //getRadioValue(param);
+            break;
+        case 'y_var':
+            rownum = 1;
+            cell_value = getSelectedOptions(param);
+            break;
+        case 'filter':
+            rownum = 2;
+            cell_value = getSelectedOptions(param);
+            break;
+        case 'x_start':
+            rownum = 3;
+            cell_value = getSelectedOptions(param);
+            break;
+        case 'x_end':
+            rownum = 4;
+            cell_value = getSelectedOptions(param);
+            break;
+        case 'feature':
+            rownum = 4;
+            cell_value = getRadioValue(param);
+            break;
+        case 'date_start':
+            rownum = 5;
+            cell_value = getDateValues(param);
+            break;
+        case 'date_end':
+            rownum = 6;
+            cell_value = getDateValues(param);
+            break;
+        default:
+                cell_value = document.myform.element[idx].value ;
+//            rownum = mytable.getElementsByTagName("TR").length;
+    }
+
+//    var row = mytable.insertRow(rownum);
+//    var cell1 = row.insertCell(0);
+//    var cell2 = row.insertCell(1);
+//
+//    cell1.innerHTML = param + "=";
+//    cell2.innerHTML = cell_value;
+//              cell2.innerHTML = document.getElementById('date_start__1i').value
+
+//    mytable.deleteRow(rownum + 1)
+
+    return cell_value
+
+}
+
+
+
+function getSelectedOptions(options) {
+    var list = document.getElementById(options)
+    var SelectedValues = [];
+    if (list.options == undefined) {
+        return list.value
+    }
+
+    for (var i = 1; i < list.options.length; i++) {
+        if (list.options[i].selected == true) {
+            SelectedValues.push(list.options[i].value + " ");
+        }
+    }
+    return SelectedValues;
+
+}
+
+
+
+function getDateValues(DateElement) {
+    var DateValues = [
+        (document.getElementById(DateElement + '__1i').value),
+        (document.getElementById(DateElement + '__2i').value),
+        (document.getElementById(DateElement + '__3i').value)
+    ];
+    return Date(DateValues);
+}
+
+
+
+function getRadioValue(tmp) {
+    var CheckedString = "uh oh...";
+
+
+     if (document.getElementById('feature_Linear_Regression').checked) {
+        CheckedString =  "Linear Regression"
+    }
+    if (document.getElementById('feature_Both').checked) {
+        CheckedString = "Both (experimental)"
+    }
+
+    if (document.getElementById('feature_Checkboxes').checked) {
+        CheckedString =  "Checkboxes ";
+    }
+
+    return CheckedString
+}
+
+
+
+
+function toggle_visibility(id) {
+    var e = document.getElementById(id);
+    if (e.style.visibility == 'hidden')
+        e.style.visibility = 'visible';
+    else
+        e.style.visibility = 'hidden';
+
+    if (id == "helper");
+    {
+        // Simple cheating way to resize the area once "helper" is turned off
+        e.innerHTML = "";
+    }
+
+}
+
+
       </script>
 
