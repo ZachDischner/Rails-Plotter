@@ -4,7 +4,7 @@
 <style type="text/css">
 
     body {
-         }
+    }
 </style>
 
 <h1 position="relative" bottom="20px" style="font:bolder; font-family:monaco; font-size:1.9em;
@@ -28,32 +28,32 @@
           <div style="border:3px solid grey; border-radius: 0.4em; padding-top:5px;"
                id=<%= "'Legend_Div" + ii.to_s + "'" %>></div>
           <td>
-        <div id= <%="'graphdiv" + ii.to_s + "'"%> float=left style="position:relative"></div>
+            <div id=<%= "'graphdiv" + ii.to_s + "'" %> float=left style="position:relative"></div>
 
-          <script type="text/javascript">
-              g<%=ii.to_s%> = new Dygraph(document.getElementById(<%="'graphdiv"  + ii.to_s + "'"%>)
-                      <%# Dynamic Label Maker%>
-                      <%= putc(@plot.first.dygraph_head(@tags)) %>
-                      <%# Dynamic Value Putter%>
-                      <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>
-                      <%# Options for the Dygraph plot %>
-                      <%= render :inline => @plot.first.dygraph_options(ii.to_s) %>
-              );   // finish the Dygraph  Plot section
-
-
-          <%= render :inline => @plot.first.linear_reg(ii.to_s) %>
-          ///// Lines to use checkboxes for Plot updating.
-          <%#= puts getCoeffs() %>
+            <script type="text/javascript">
+                g<%=ii.to_s%> = new Dygraph(document.getElementById(<%="'graphdiv"  + ii.to_s + "'"%>)
+                        <%# Dynamic Label Maker%>
+                        <%= putc(@plot.first.dygraph_head(@tags)) %>
+                        <%# Dynamic Value Putter%>
+                        <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>
+                        <%# Options for the Dygraph plot %>
+                        <%= render :inline => @plot.first.dygraph_options(ii.to_s) %>
+                );   // finish the Dygraph  Plot section
 
 
-      </script>
-      </html>
-    </td>
-    <td>
-      <%= render :inline => @plot.first.linear_reg_buttons(params[:y_var],ii.to_s) %>
-    </td>
-  </tr>
-      <% end %>
+                <%= render :inline => @plot.first.linear_reg(ii.to_s) %>
+                ///// Lines to use checkboxes for Plot updating.
+                <%#= puts getCoeffs() %>
+
+
+            </script>
+          </html>
+        </td>
+        <td>
+          <%= render :inline => @plot.first.linear_reg_buttons(params[:y_var], ii.to_s) %>
+        </td>
+      </tr>
+  <% end %>
 </table>
 
 

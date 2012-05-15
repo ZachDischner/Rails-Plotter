@@ -1,7 +1,7 @@
-Wed, 09 May 2012 21:39:51 -0600
+Tue, 15 May 2012 01:08:08 -0600
 doc/README_FOR_APP	Mon, 30 Apr 2012 12:21:45 -0600
 app/controllers/application_controller.rb	Sun, 29 Apr 2012 22:09:37 -0600
-app/controllers/doc_controller.rb	Wed, 09 May 2012 21:38:08 -0600
-app/controllers/plots_controller.rb	Tue, 01 May 2012 10:54:47 -0600
+app/controllers/doc_controller.rb	Sat, 12 May 2012 11:40:13 -0600
+app/controllers/plots_controller.rb	Thu, 10 May 2012 09:41:48 -0600
 app/helpers/application_helper.rb	Mon, 02 Apr 2012 23:52:47 -0600
-app/models/plot.rb	Wed, 09 May 2012 20:55:32 -0600
+app/models/plot.rb	Tue, 15 May 2012 01:08:05 -0600

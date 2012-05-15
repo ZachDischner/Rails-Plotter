@@ -152,10 +152,10 @@
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/plots_controller.rb, line 93</span>
+            <pre><span class="ruby-comment"># File app/controllers/plots_controller.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-comment"># These tags are to be excluded from any interactions, as they are database utilities</span>
-  <span class="ruby-identifier">exclude_tags</span> = [<span class="ruby-string">&quot;id&quot;</span>,<span class="ruby-string">&quot;created_at&quot;</span>,<span class="ruby-string">&quot;updated_at&quot;</span>,<span class="ruby-string">&quot;ticker&quot;</span>]
+  <span class="ruby-identifier">exclude_tags</span> = [<span class="ruby-string">&quot;created_at&quot;</span>,<span class="ruby-string">&quot;updated_at&quot;</span>,<span class="ruby-string">&quot;ticker&quot;</span>]
 
   <span class="ruby-comment"># Get a single row of info from the database around which to build the user interface</span>
   <span class="ruby-ivar">@plots</span>=<span class="ruby-constant">Plot</span>.<span class="ruby-identifier">first</span>
@@ -234,6 +234,7 @@ Controller ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#</p>
       <span class="ruby-keyword">end</span>
 
       <span class="ruby-ivar">@tags</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">list_vars</span> <span class="ruby-operator">-</span> [<span class="ruby-string">&quot;Ticker&quot;</span>] <span class="ruby-comment"># Don't want to treat &quot;Ticker&quot; as its own plotting variable, since its a string</span>
+
 
     <span class="ruby-keyword">else</span>  <span class="ruby-comment"># Indicates that MULTIPLE     params[:filters]     have been applied</span>
 

@@ -1,7 +1,7 @@
-#*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Plot Class ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
+#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Plot Class =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 #
 #  Written by:
-#             Zach Dischner for LASP scientific uses
+#             Zach Dischner for personal and LASP scientific uses
 #  Updated:
 #             May 1, 2012
 #  Contact:
@@ -59,19 +59,19 @@
 #
 #
 #
-#=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+#<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
 class Plot < ActiveRecord::Base
 
 
 
 
-  # Change table info and scopes below to match your database.
-  # MYSQL development database
+  # MYSQL development database, use the built in Stocks database.
+  # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
   establish_connection :development
-  set_table_name "stock_test"
-  set_primary_key :id
-  @@find_filter = true
+  set_table_name "stock_test"           # Table name defined in the "CreateTestTable.txt" script
+  set_primary_key :id                   # Table's primary key
+  @@find_filter = true                  # Indicates that this database will require column filtering
 
 
   #SQLITE test development environment
@@ -80,19 +80,39 @@ class Plot < ActiveRecord::Base
   #set_table_name "plots"
   #@@find_filter = false
 
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* filter_table =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                  #
+  #     Indicates if columns are to be filtered in db selection               #
+  # Calling:                                                                  #
+  #          >> TorF = Plot.filter_table                                      #
+  # Example:                                                                  #
+  #    In the "plots_controller .. index" section, this is used to aid  the   #
+  #       filling of the "@filters" variable :                                #
+  #          >> @filters = "No Filter" + {stuff} if Plot.filter_table         #
+  #    So if the table requires no column filtering, the @filters variable    #
+  #       will only contain:                                                  #
+  #          @filters --> ["No Filter"]                                       #
+  #    which is used in "plots/views/index.html" to build filter selectors    #
+  #                                                                           #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
   def filter_table
     return  @@find_filter
   end
 
 
 
-  #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Scopes ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
+
+  #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Scopes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   #
   # Scopes to govern the selection of data to be plotted. There are TWO 'classes' of selection methodologies for
-  #   basic database operations. More complicated tables will neccesitate more complicated selection schemes. It is
+  #   basic database operations. More complicated tables will necessitate more complicated selection schemes. It is
   #   recommended that complicated logic regarding data selection be figured out here. That way the user interfaces with
   #   this program the exact same for any level of complication, and logic does not need to be changed throughout the
-  #   app. The two basic selectors are as follows:
+  #   app.
+  # All scopes here are used for database selection in the "app/controllers/plots_controller.rb." The scopes here, and application
+  #   logic in that controller are where all data is gathered from the database. Changes here will need to be reflected by
+  #   appropriate changes in that controller.
+  # The two basic selector 'classes' are as follows:
   #
   #   1. Selections based on ROWS in the database.
   #       eg: " SELECT * FROM table_name WHERE name='some name' "
@@ -147,9 +167,9 @@ class Plot < ActiveRecord::Base
 
 
 
-  # To work, the  /APP/ASSETS MUST have the "dygraph-combined.js"
 
-    #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ list_vars ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*#
+
+    #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= list_vars =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
     # Purpose:                                                                  #
     #     Return an array of attribute names as strings.                        #
     # Calling:                                                                  #
@@ -163,7 +183,6 @@ class Plot < ActiveRecord::Base
     #          =>["x","y","z"]                                                  #
     #                                                                           #
     #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-
     def list_vars
       atts = self.attributes
       vars = []
@@ -171,10 +190,10 @@ class Plot < ActiveRecord::Base
       return vars
     end
 
-    #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+ 
 
 
-    #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ put_checkboxes ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
+    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= put_checkboxes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
     # Purpose:                                                                  #
     #     Dynamically generate HTML for checkboxes. These will provide the      #
     #     user with a quick way to toggle multiple plot sets on the current     #
@@ -195,7 +214,6 @@ class Plot < ActiveRecord::Base
     #          render :inline =>                                                #
     #                                                                           #
     #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-
     def put_checkboxes(list,graphnum="")
       boxstring = '' #
       for ii in 0..(list.length-1)
@@ -207,10 +225,9 @@ class Plot < ActiveRecord::Base
 
     end
 
-    #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
 
-    #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ all_checkboxes_true  *^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*#
+    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= all_checkboxes_true  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
     # Purpose:                                                                              #
     #     Generate list of true/false strings. Not complicated, just replicates             #
     #     'true' or 'false' for placement in dygraphs options                               #
@@ -227,24 +244,40 @@ class Plot < ActiveRecord::Base
     #     When used in conjunction with checkboxes, this marks which plot lines are         #
     #     visibly when the plot shows up, and which are not.                                #
     #                                                                                       #
-
+    #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
     def all_checkboxes_true(list)
       return (["true"]*(list.length-1)).to_s
     end
-    #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
 
 
-    #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ all_checkboxes_false  *^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
+
+    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= all_checkboxes_false  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
     #  Same as >>all_checkbox_true() except that using this function turns all plots
     #  off initially
     #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
     def all_checkboxes_false(list)
       return (["false"]*(list.length-1)).to_s
     end
-    #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
 
 
-
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* dygraph_head  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                              #
+  #     Generate the header (first line) of the argument input to dygraphs function in    #
+  #       an html page. This line holds the names of datasets being plotted. See the      #
+  #       plot templates in "views/layouts/plot_*"                                        #
+  # Calling:                                                                              #
+  #         >> @plot.first.dygraph_head(@Tag_Values)                                      #
+  #     Returns the @Tag_Values to html calling page, formatted for dygraph input         #
+  # Example:                                                                              #
+  #     In a new dygraph element in HTML page:                                            #
+  #          >> g=new Dygraph(...                                                         #
+  #                 <%= putc(@plot.first.dygraph_head(@tags)) %>                          #
+  #     This turns something like:                                                        #
+  #         >> @tags = ["date","y1","y2"]                                                 #
+  #     to dygraphs expected format:                                                      #
+  #         >> {above} ==> "'date,y1,y1\n'+ "                                             #
+  #                                                                                       #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
     def dygraph_head(tags)
       labelstring = ",'"
       for ii in 0..(tags.length-1)
@@ -256,7 +289,30 @@ class Plot < ActiveRecord::Base
       return labelstring
     end
 
-    # Meant to work on ARRAYS of Plot OBJECTS, may want to redo to work for a hash
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* dygraph_body  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                              #
+  #     Similar to "Plot.dygraph_head", this generates the body, or numeric portion of    #
+  #       Dygraph function input in an html page. Basically, parses the @plot object      #
+  #       into numeric strings formatted for dygraphs functions.                          #
+  #        See the plot templates in "views/layouts/plot_*"                               #
+  # Calling:                                                                              #
+  #         >> @plot.first.dygraph_body(@Tag_Values,@Plot_Values)                         #
+  #     Returns the @Plot_Values with @Tag_Values attributes to html calling page,        #
+  #     formatted for dygraph input                                                       #
+  # Example:                                                                              #
+  #     In a new dygraph element in HTML page:                                            #
+  #          >> g=new Dygraph(...                                                         #
+  #                 <%= putc(@plot.first.dygraph_head(@tags)) %>                          #
+  #                 <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>                    #
+  #     This turns something like:                                                        #
+  #         >> @tags = ["date","y1","y2"]                                                 #
+  #         >> @plot --> Plot date:'2012-01-01', y1:1, y2:35 ...                          #
+  #     to dygraphs expected format:                                                      #
+  #         >> {above} ==> "'date,y1,y2\n' + '2012-01-01,1,35\n' + " ...                  #
+  #     in conjunction, "Plot.dygraph_head" and "Plot.dygraph_body" parse the             #
+  #     ActiveRecord @plot object into what Dygraphs functions expect                     #
+  #                                                                                       #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
     def dygraph_body(tags, values)
       valuestring = ''
       values.each do |value|
@@ -272,7 +328,31 @@ class Plot < ActiveRecord::Base
       return valuestring
     end
 
-    def dygraph_options(graphnum="")
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* dygraph_options  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+  # Purpose:                                                                              #
+  #     This function simply returns the Dygraphs options to the calling HTML page. Again #
+  #       this is a simple input to Dygraphs functions. Most of this is static, and       #
+  #       doesn't need to be here, but it reduces clutter in HTML pages and makes graph   #
+  #       stylizing and modification easier.                                              #
+  #     In addition, placing this function here lets the options be customized for EACH   #
+  #       plot window. You may want to specify different colors, options, ect for         #
+  #       different "graphnum" inputs. As is, the "graphnum" input simply allows each     #
+  #       window of plot data to behave independantly of one another.                     #
+  # Calling:                                                                              #
+  #         >> @plot.first.dygraph_options(OptionalNumber)                                #
+  #     Returns string to html page that specifies options for Dygraph plot window        #
+  # Example:                                                                              #
+  #     In a new dygraph element in HTML page:                                            #
+  #         >> g=new Dygraph(...                                                          #
+  #         >>     <%= putc(@plot.first.dygraph_head(@tags)) %>                           #
+  #         >>     <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>                     #
+  #         >>     <%= render :inline => @plot.first.dygraph_options(graphnum)  %>        #
+  #     This concludes inputs to Dygraph function. 1:header, 2: body:, 3:options. The     #
+  #       options have been formatted to apply to just a single graph window.             #
+  #                                                                                       #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+  def dygraph_options(graphnum="")
       options_string =
      ",{
           height: 375,                                                               // Specifies the Height of the plot area
@@ -286,7 +366,7 @@ class Plot < ActiveRecord::Base
           underlayCallback: drawLines" + graphnum.to_s + ",                          // MUST enable this  to show linear regression
           xlabel: '<%=params[:x_var]%>',                                             // Label for the X axis
           ylabel: '<%=render :inline => params[:y_var].to_s %>',                     // Labels for the Y axis
-          visibility: <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   //
+          visibility: <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   // Initial visibility of plot lines
         } "
       return options_string
     end
@@ -438,3 +518,25 @@ class Plot < ActiveRecord::Base
 
 
   end
+
+
+
+
+#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Some Additional Notes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*´#
+#
+#
+#
+# 1.0: For this app to work, "app/assets" MUST have "dygraph-combined.js". Tricky to catch
+# 2.0: Much of the above functions are not especially useful or smart. I just made them this way in
+#      the name of explicitness, and isolation, so that all real logic is housed in this class. Especially
+#      when you know what your datasets will look like, many of these methods can be modified or removed.
+# 3.0  Many methods feature an odd mix of HTML, Javascript, and RoR. It works, provided you follow the
+#      outlines in the "app/views/layouts/plot_*" layouts, but is not especially pretty, or easy to grasp
+#      initially. Again, this approach was mostly chosen for isolation purposes. As well as my desire for
+#      this class to handle ALL application logic, even though Javascript and HTML on the pages themselves
+#      could do much if not all of the logic.
+#
+#
+#
+#
+#
