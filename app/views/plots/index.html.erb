@@ -142,26 +142,29 @@ In addition, there is a "helper" div that floats along the left side of the page
                 with checkbox line selectors, or a linear regression option.
             -->
             <td>
-              <br>
-              <%= radio_button_tag 'feature', 'Both', :true,
+              <!--<br>-->
+              <%#= radio_button_tag 'feature', 'Both', :true,
                                    {:onchange => "params_info('feature')"} %>
-              <%= label(:plot, :feature, "Both") %>
-              <br>
+              <!--<%#= label(:plot, :feature, "Both") %>-->
+              <!--<br>-->
 
-              <br>
-              <%= radio_button_tag 'feature', 'Linear Regression',
+              <!--<br>-->
+              <%#= radio_button_tag 'feature', 'Linear Regression',
                                    {:onchange => "params_info('feature')" }%>
-              <%= label(:plot, :feature, "Linear Regression ") %>
-              <br>
+              <!--<%#= label(:plot, :feature, "Linear Regression ") %>-->
+              <!--<br>-->
 
-              <br>
-              <%= radio_button_tag 'feature', 'Checkboxes',
+              <!--<br>-->
+              <%#= radio_button_tag 'feature', 'Checkboxes',
                                    {:onchange => "params_info('feature')"} %>
-              <%= label(:plot, :feature, "Checkboxes") %>
-              <br>
-
+              <!--<%#= label(:plot, :feature, "Checkboxes") %>-->
+              <!--<br>-->
+              <% features = ["Linear Regression","Checkboxes","Both"] %>
+              <%= label(:plot, :feature, "feature") %>
+              <%= select_tag(:feature, options_for_select(features), :multiple => false,:select => "Both",
+                             :onchange => "params_info('feature')") %>
             </td>
-            <td>
+            <td onmouseover="page_info('date_range')" onmouseout="page_info()">
 
               <!--
                 This is the block that creates a selector for  Datetime options
@@ -175,12 +178,16 @@ In addition, there is a "helper" div that floats along the left side of the page
                 <br>
                 <%= label(:plot, :date_start, "Start") %>
                 <%= date_select(:date_start, params[:date_start], {:include_blank => true},
+                                :onmouseover => "page_info('date_start')",
+                                :onmouseout => "page_info()",
                                 :onchange => "params_info('date_start')")  %>
                 <br>
 
                 <br>
                 <%= label(:plot, :date_end, "End") %>
                 <%= date_select(:date_end, params[:date_end], {:include_blank => true},
+                                :onmouseover => "page_info('date_end')",
+                                :onmouseout => "page_info()",
                                 :onchange => "params_info('date_end')") %>
                 <br>
 
@@ -259,7 +266,7 @@ In addition, there is a "helper" div that floats along the left side of the page
 //                      img2.src = "/ajax-loader.gif";
 //                      document.append(img);
 
-              document.getElementById("StatusString").innerHTML = "Hold yer horses! The Data is being fetched"
+              document.getElementById("StatusString").innerHTML = "Hold yer horses! The Data is being fetched";
               document.getElementById("LoadingIMG").style.display = "block"
           }
 
@@ -268,7 +275,16 @@ In addition, there is a "helper" div that floats along the left side of the page
               {
                   switch (x) {
                       case 'submit':
-                          document.getElementById("helper").innerHTML = "Click to begin the plotting experience!"
+                          document.getElementById("helper").innerHTML = "Click to begin the plotting experience!";
+                          break
+                      case 'date_range':
+                          document.getElementById("helper").innerHTML = "Define plot range with Dates";
+                          break
+                      case 'date_start':
+                          document.getElementById("helper").innerHTML = "Select the starting date for the plot range";
+                          break
+                      case 'date_end':
+                          document.getElementById("helper").innerHTML = "Select the ending date for the plot range";
                           break
                       default:
                           document.getElementById("helper").innerHTML = "Hover over a form area for help"
@@ -323,9 +339,9 @@ function params_info(param)
             case 'x_end':
                 cell_value = getSelectedOptions(x);
                 break;
-            case 'feature':
-                cell_value = getRadioValue(x);
-                break;
+//            case 'feature':
+//                cell_value = getRadioValue(x);
+//                break;
             //case 'date_start':
              //   cell_value = getDateValues(x);
              //   break;
@@ -441,7 +457,7 @@ function getDateValues(DateElement) {
 
 
 function getRadioValue(tmp) {
-    var CheckedString = "uh oh...";
+    var CheckedString = "";
 
 
      if (document.getElementById('feature_Linear_Regression').checked) {

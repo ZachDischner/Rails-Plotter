@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CreateTestTable.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/index.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/index.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/Plot.html" afterPath="$PROJECT_DIR$/doc/app/Plot.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/PlotsController.html" afterPath="$PROJECT_DIR$/doc/app/PlotsController.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/created.rid" afterPath="$PROJECT_DIR$/doc/app/created.rid" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/js/search_index.js" afterPath="$PROJECT_DIR$/doc/app/js/search_index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/table_of_contents.html" afterPath="$PROJECT_DIR$/doc/app/table_of_contents.html" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,19 +33,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="54" selection-start="5123" selection-end="5123" vertical-scroll-proportion="210.04167">
-              <folding />
+            <state line="166" column="85" selection-start="8081" selection-end="8081" vertical-scroll-proportion="0.38577586">
+              <folding>
+                <element signature="e#6935#7060#0" expanded="true" />
+                <element signature="e#7188#7319#0" expanded="true" />
+                <element signature="e#7461#7585#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plot.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="479" column="6" selection-start="28794" selection-end="28794" vertical-scroll-proportion="3.8893442">
+            <state line="564" column="7" selection-start="33631" selection-end="33632" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -59,7 +58,7 @@
       <file leaf-file-name="plot_checkbox_linear_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="24" selection-start="1532" selection-end="1582" vertical-scroll-proportion="-11.875">
+            <state line="47" column="24" selection-start="1532" selection-end="1582" vertical-scroll-proportion="3.125">
               <folding />
             </state>
           </provider>
@@ -77,7 +76,7 @@
       <file leaf-file-name="plotter.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="36" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0">
+            <state line="10" column="36" selection-start="179" selection-end="179" vertical-scroll-proportion="-2.375">
               <folding />
             </state>
           </provider>
@@ -148,10 +147,10 @@
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/doc_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/plots/scripts/dygraph-combined.js" />
-        <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/models/plot.rb" />
+        <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
       </list>
     </option>
   </component>
@@ -972,7 +971,11 @@
       <created>1336983137298</created>
       <updated>1336983137298</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Lots of documenting&#10;">
+      <created>1337069603151</created>
+      <updated>1337069603151</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -999,6 +1002,7 @@
     <frame x="24" y="22" width="1416" height="874" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.027046783" sideWeight="0.7078507" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="6" side_tool="false" content_ui="tabs" />
@@ -1014,7 +1018,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1057,7 +1060,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Niice! I got a good looking helper params table about all sorted ot" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lots of documenting&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1070,7 +1073,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Multi plot regression working, not with the coefficient printing though .Fix that" />
     <MESSAGE value="Got it all back to where it was. VERY PICKY app. Miss one attribute of the dygraph object and it all goes to shit." />
     <MESSAGE value="ITS ALL WORKING!!! &#10;Dynamic checkboxes, dynamic regression lines, and dynamic dynamicness of both. All working." />
     <MESSAGE value="Updated tables to be prettier sorta" />
@@ -1095,6 +1097,7 @@
     <MESSAGE value="FIXED regression for this dataset, since the order seems to be reverse of what is expected.&#10;&#10;Also moved images into a /public/images folder. Shit was getting excessive." />
     <MESSAGE value="More work on params helper table" />
     <MESSAGE value="Niice! I got a good looking helper params table about all sorted ot" />
+    <MESSAGE value="Lots of documenting&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1125,13 +1128,6 @@
         <state line="2199" column="56" selection-start="72447" selection-end="72447" vertical-scroll-proportion="-27.888111" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="36" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="22" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0" />
@@ -1145,13 +1141,6 @@
     <entry file="file://$PROJECT_DIR$/CreateTestTable.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="84" selection-start="5515" selection-end="5515" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1170,31 +1159,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
+    <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="83" selection-start="238" selection-end="238" vertical-scroll-proportion="0.1802935">
+        <state line="10" column="36" selection-start="179" selection-end="179" vertical-scroll-proportion="-2.375">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="54" selection-start="5123" selection-end="5123" vertical-scroll-proportion="210.04167">
+        <state line="105" column="84" selection-start="5515" selection-end="5515" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="24" selection-start="1532" selection-end="1582" vertical-scroll-proportion="-11.875">
+        <state line="47" column="24" selection-start="1532" selection-end="1582" vertical-scroll-proportion="3.125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="83" selection-start="238" selection-end="238" vertical-scroll-proportion="0.19077568">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="479" column="6" selection-start="28794" selection-end="28794" vertical-scroll-proportion="3.8893442">
+        <state line="564" column="7" selection-start="33631" selection-end="33632" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="166" column="85" selection-start="8081" selection-end="8081" vertical-scroll-proportion="0.38577586">
+          <folding>
+            <element signature="e#6935#7060#0" expanded="true" />
+            <element signature="e#7188#7319#0" expanded="true" />
+            <element signature="e#7461#7585#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

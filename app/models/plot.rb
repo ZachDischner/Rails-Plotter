@@ -29,33 +29,13 @@
 #
 #  Each of these tasks is made to be dynamic and iterative, so as to provide means to plot any generic dataset.
 #  Also note that each of these tasks is closely related with the other. Changing one will have a high probability
-#     changing the others. BEWARE!!!
+#     changing the others. Javascripts, HTML, and RoR all are inter-related. BEWARE!!!
 #
 #  On that note, this IS designed to be extremely generic. Changing functionality to fit your specific application will
 #     likely make more sense eventually. Instead of the current procedure of looping through the @plot object, and
 #     "send"ing the variable names, you'll know exactly what you want your @plot variable will look like, and what
-#     from it you'll want to plot.
-#
-#  Case-In-Point: I'm not a rails master. In fact, this is my first rails app, my first experience with HTML, web design,
-#     ruby, and my first attempt at Object-Oriented programming in general. As such, I'm probably pretty bad at it, and
-#     the design of this application seems to violate many hard-and-fast practices of OO programming.
-#  All of the methods below act more like FUNCTIONS. In fact, nothing about this 'class' resembles an object. The reason
-#     for this is that this application is meant to work generically on any DATASET. This brings about problems:
-#     1. Since the app is not designed around any specific database model, its logic can't be aware of the database
-#        schema or elements. Methods and operations must perform their tasks without being consious of what they are
-#        operating on.
-#     2. By working with just raw random data, returns from the database are really more of data STRUCTURES, rather
-#        than specific data OBJECTS. It makes no sense to try and think about these returns as objects. Without knowing
-#        anything about the data, its useless to try and form it all into objects. Its like calling it a "Thing", and
-#        saying that "Thing" has other "things", and can do "stuff".
-#     3. Even if we knew what kind of data we are fetching, we really aren't fetching objects. We're fetching a big hunk
-#        of (mainly) numeric data.
-#     Both of these reasons point towards treating data as structures, and performing procedural operations on that data.
-#        So this app is designed around that notion. But hey, I'm a noob. I could be totally wrong and its just my desire
-#        to default back to a MATLAB mindset!
-#     Either way, I designed all of these methods to work on arbitrary datasets. I did it this way for flexibility,
-#        modularity, and ease of comprehension. They could (and should) easily be modified to have more Object-like
-#        behavior once you implement yourself.
+#     from it you'll want to plot. Now, this all doesn't really look like OO programming, or a typical RoR app. Once
+#     you get a more solid base, you should modify the app to behave more like a typical RoR app, if you want to.
 #
 #
 #
@@ -83,6 +63,10 @@ class Plot < ActiveRecord::Base
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* filter_table =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   # Purpose:                                                                  #
   #     Indicates if columns are to be filtered in db selection               #
+  # Inputs:                                                                   #
+  #     None                                                                  #
+  # Outputs:                                                                  #
+  #     boolean, true or false                                                #
   # Calling:                                                                  #
   #          >> TorF = Plot.filter_table                                      #
   # Example:                                                                  #
@@ -172,6 +156,10 @@ class Plot < ActiveRecord::Base
     #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= list_vars =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
     # Purpose:                                                                  #
     #     Return an array of attribute names as strings.                        #
+    # Inputs:                                                                   #
+    #     None                                                                  #
+    # Outputs:                                                                  #
+    #     Array of strings containing object attributes                         #
     # Calling:                                                                  #
     #          >> my_varnames = @plot.list_vars                                 #
     # Example:                                                                  #
@@ -200,6 +188,14 @@ class Plot < ActiveRecord::Base
     #     chart.                                                                #
     #     *Note that this is HTML, that is tied to DYGRAPHS functionality.      #
     #     Modify appropriately                                                  #
+    # Inputs:                                                                   #
+    #     list-an array of strings tied to the Y axis variables for each plot   #
+    #          window.                                                          #
+    #     {graphnum}-Optional input, ties the checkbox to a single window. This #
+    #                way,for plots with multiple windows, a checkbox only turns #
+    #                on/off lines for that window                               #
+    # Outputs:                                                                  #
+    #     boolean, true or false                                                #
     # Calling:                                                                  #
     #         >> @plot.first.put_checkboxes(y_vars)                             #
     #     This dynamically makes HTML that activates a check box for each of    #
@@ -369,11 +365,25 @@ class Plot < ActiveRecord::Base
           visibility: <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   // Initial visibility of plot lines
         } "
       return options_string
-    end
+  end
 
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= linear_reg_buttons  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+  # Purpose:                                                                              #
+  #     This function returns HTML formatted strings that, when rendered in a view, will  #
+  #       1. create a button linked to each line in the corresponding plot window.        #
+  #       2. create a DIV linked to each line in the corresponding plot window            #
+  #     Clicking the button will generate and plot a linear regression for its            #
+  #       associated dataset, and print the coefficients of that regression inside the    #
+  #       newly created DIV. Both are rendered live to call other Javascript functions    #
+  #       that handle these two actions.                                                  #
+  # Calling:                                                                              #
+  #
+  #
+  #                                                                                       #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
     def linear_reg_buttons(list,graphnum="")
 
-      #button_str = '<div style="position: relative; left: 1000px; top: -250px;">' + "\n"
       button_str = ''
       for ii in 0..list.length-1
         button_str += '<input type=button style="color:RGBColor(g' + graphnum.to_s + '.getColors().[' + ii.to_s + ']).toHex;" value="Regression For --> ' + list[ii] + '"
@@ -535,6 +545,30 @@ class Plot < ActiveRecord::Base
 #      initially. Again, this approach was mostly chosen for isolation purposes. As well as my desire for
 #      this class to handle ALL application logic, even though Javascript and HTML on the pages themselves
 #      could do much if not all of the logic.
+#
+#  4.0 This is not a typical Rails app. It doesn't utilize objects the same as many standard apps should. This was due to a
+#      few things.
+#      I'm not a rails master. In fact, this is my first rails app, my first experience with HTML, web design,
+#      ruby, and my first attempt at Object-Oriented programming in general. As such, I'm probably pretty bad at it, and
+#      the design of this application seems to violate many hard-and-fast practices of OO programming.
+#      All of the methods below act more like FUNCTIONS. In fact, nothing about this 'class' resembles an object. The reason
+#      for this is that this application is meant to work generically on any DATASET. This brings about problems:
+#  4.1. Since the app is not designed around any specific database model, its logic can't be aware of the database
+#        schema or elements. Methods and operations must perform their tasks without being consious of what they are
+#        operating on.
+#  4.2. By working with just raw random data, returns from the database are really more of data STRUCTURES, rather
+#        than specific data OBJECTS. It makes no sense to try and think about these returns as objects. Without knowing
+#        anything about the data, its useless to try and form it all into objects. Its like calling it a "Thing", and
+#        saying that "Thing" has other "things", and can do "stuff".
+#  4.3. Even if we knew what kind of data we are fetching, we really aren't fetching objects. We're fetching a big hunk
+#        of (mainly) numeric data.
+#     Both of these reasons point towards treating data as structures, and performing procedural operations on that data.
+#        So this app is designed around that notion. But hey, I'm a noob. I could be totally wrong and its just my desire
+#        to default back to a MATLAB mindset!
+#     Either way, I designed all of these methods to work on arbitrary datasets. I did it this way for flexibility,
+#        modularity, and ease of comprehension. They could (and should) easily be modified to have more Object-like
+#        behavior once you implement yourself.
+#
 #
 #
 #
