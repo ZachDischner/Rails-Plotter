@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/plots_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/index.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/Plot.html" afterPath="$PROJECT_DIR$/doc/app/Plot.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/created.rid" afterPath="$PROJECT_DIR$/doc/app/created.rid" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/js/search_index.js" afterPath="$PROJECT_DIR$/doc/app/js/search_index.js" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,19 +30,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="166" column="85" selection-start="8081" selection-end="8081" vertical-scroll-proportion="0.38577586">
-              <folding>
-                <element signature="e#6935#7060#0" expanded="true" />
-                <element signature="e#7188#7319#0" expanded="true" />
-                <element signature="e#7461#7585#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
@@ -55,10 +39,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="7" selection-start="1798" selection-end="1798" vertical-scroll-proportion="-5.3053975">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="plot_checkbox_linear_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="24" selection-start="1532" selection-end="1582" vertical-scroll-proportion="3.125">
+            <state line="71" column="60" selection-start="2565" selection-end="2565" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -67,7 +60,7 @@
       <file leaf-file-name="plot_linear_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="78" selection-start="1757" selection-end="1757" vertical-scroll-proportion="-3.0">
+            <state line="43" column="78" selection-start="1757" selection-end="1757" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -76,7 +69,7 @@
       <file leaf-file-name="plotter.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="36" selection-start="179" selection-end="179" vertical-scroll-proportion="-2.375">
+            <state line="10" column="36" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -85,7 +78,7 @@
       <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/routes.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="22" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0">
+            <state line="46" column="69" selection-start="1163" selection-end="1163" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -94,7 +87,7 @@
       <file leaf-file-name="plots_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="84" selection-start="5515" selection-end="5515" vertical-scroll-proportion="0.0">
+            <state line="15" column="78" selection-start="899" selection-end="899" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -112,7 +105,7 @@
       <file leaf-file-name="plot_checkbox_template.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="106" selection-start="2449" selection-end="2449" vertical-scroll-proportion="-4.9583335">
+            <state line="62" column="106" selection-start="2449" selection-end="2449" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -128,10 +121,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Rails console: Stocks" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Rails console: Stocks" root0="SKIP_HIGHLIGHTING" />
-  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
@@ -144,13 +133,13 @@
         <option value="$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html" />
         <option value="$PROJECT_DIR$/app/views/doc/show.html.erb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/doc_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/plots/scripts/dygraph-combined.js" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb" />
         <option value="$PROJECT_DIR$/app/models/plot.rb" />
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
       </list>
     </option>
   </component>
@@ -164,7 +153,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="24" />
     <option name="y" value="22" />
-    <option name="width" value="1416" />
+    <option name="width" value="1413" />
     <option name="height" value="874" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -212,6 +201,26 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="RailsProjectView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -333,6 +342,10 @@
               <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -369,25 +382,23 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-        </subPane>
-      </pane>
-      <pane id="RailsProjectView">
-        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -975,7 +986,11 @@
       <created>1337069603151</created>
       <updated>1337069603151</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Lots of documenting&#10;">
+      <created>1337195426473</created>
+      <updated>1337195426473</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -999,25 +1014,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="24" y="22" width="1416" height="874" extended-state="0" />
+    <frame x="24" y="22" width="1413" height="874" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.027046783" sideWeight="0.7078507" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.7078507" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21710527" sideWeight="0.7078507" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1912088" sideWeight="0.7078507" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26898327" sideWeight="0.21125731" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2921493" sideWeight="0.7836257" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2921493" sideWeight="0.9992674" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.78801167" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1128,9 +1143,46 @@
         <state line="2199" column="56" selection-start="72447" selection-end="72447" vertical-scroll-proportion="-27.888111" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CreateTestTable.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="83" selection-start="238" selection-end="238" vertical-scroll-proportion="0.19077568" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="564" column="7" selection-start="33631" selection-end="33632" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="60" selection-start="2565" selection-end="2565" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="78" selection-start="1757" selection-end="1757" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="36" selection-start="179" selection-end="179" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="22" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0" />
+        <state line="46" column="69" selection-start="1163" selection-end="1163" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="78" selection-start="899" selection-end="899" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/doc_controller.rb">
@@ -1138,70 +1190,15 @@
         <state line="7" column="23" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CreateTestTable.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="1" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_linear_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="78" selection-start="1757" selection-end="1757" vertical-scroll-proportion="-3.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="106" selection-start="2449" selection-end="2449" vertical-scroll-proportion="-4.9583335">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/plots/plotter.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="36" selection-start="179" selection-end="179" vertical-scroll-proportion="-2.375">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="84" selection-start="5515" selection-end="5515" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_checkbox_linear_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="24" selection-start="1532" selection-end="1582" vertical-scroll-proportion="3.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="83" selection-start="238" selection-end="238" vertical-scroll-proportion="0.19077568">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="564" column="7" selection-start="33631" selection-end="33632" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="62" column="106" selection-start="2449" selection-end="2449" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="166" column="85" selection-start="8081" selection-end="8081" vertical-scroll-proportion="0.38577586">
-          <folding>
-            <element signature="e#6935#7060#0" expanded="true" />
-            <element signature="e#7188#7319#0" expanded="true" />
-            <element signature="e#7461#7585#0" expanded="true" />
-          </folding>
+        <state line="19" column="7" selection-start="1798" selection-end="1798" vertical-scroll-proportion="-5.3053975">
+          <folding />
         </state>
       </provider>
     </entry>

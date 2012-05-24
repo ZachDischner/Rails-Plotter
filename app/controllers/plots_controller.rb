@@ -4,8 +4,28 @@ class PlotsController < ApplicationController
   #
   # This controller handles the fetching and organization of data from the database, and then routing that data
   #   into the correct VIEW pages.
+  # As of now, there are two pages associated with the plotting app.
+  #   1. Index.html.erb. This page  Creates a table full of options that allows the user to select criteria used for
+  #      database querying and data collection.
+  #   2. plotter.html.erb. This page dynamically takes the users selection data criteria, fetches the data for plotting,
+  #      and
   #
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+
+  def index
+    # These tags are to be excluded from any interactions, as they are database utilities
+    exclude_tags = ["created_at","updated_at","ticker"]
+
+    # Get a single row of info from the database around which to build the user interface
+    @plots=Plot.first
+
+    # Get an array of the collected data as an array of strings. This will be used throughout plotting
+    @tags = @plots.list_vars - exclude_tags
+
+    # Get Filters, add a "No Filter" option for fast implementation of databases without need for filtering.
+    # Ideally, this is all taken out later for such applications.
+    @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker} unless !@plots.filter_table
+  end
 
 
   def plotter
@@ -88,22 +108,6 @@ class PlotsController < ApplicationController
         @mytemplate = "layouts/plot_checkbox_linear_template"
     end
 
-  end
-
-
-  def index
-    # These tags are to be excluded from any interactions, as they are database utilities
-    exclude_tags = ["created_at","updated_at","ticker"]
-
-    # Get a single row of info from the database around which to build the user interface
-    @plots=Plot.first
-
-    # Get an array of the collected data as an array of strings. This will be used throughout plotting
-    @tags = @plots.list_vars - exclude_tags
-
-    # Get Filters, add a "No Filter" option for fast implementation of databases without need for filtering.
-    # Ideally, this is all taken out later for such applications.
-    @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker} unless !@plots.filter_table
   end
 
 
