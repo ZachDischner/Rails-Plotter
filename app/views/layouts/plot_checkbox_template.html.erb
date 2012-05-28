@@ -14,7 +14,7 @@
 
 <table bgcolor="white" align="center" cellpadding=10px border=5px
        style="margin-top:12%; border-width:9px; border-color:#FFAA00;
-        border-radius:2px;box-shadow: 1em 1em 6em   #1df">
+        border-radius:2px;box-shadow: 1em 1em 6em   #111">
   <% (0..@numgraphs-1).each do |ii|
     if @numgraphs > 1
       eval("@plot = @" + params[:filter][ii])
@@ -22,8 +22,8 @@
     end %>
 
       <tr>
-        <td>
-          <html>
+        <td width=150px>
+          <!--<html>-->
           <p align="center" style="font-size:1.5em; font-style:normal;"><b> <%= params[:filter][ii] %> </b></p>
 
           <div style="border:3px solid grey; border-radius: 0.4em;font-size:0.95em; padding-top:5px;"
@@ -61,7 +61,7 @@
 
 
             </script>
-          </html>
+          <!--</html>-->
         </td>
         <td>
 

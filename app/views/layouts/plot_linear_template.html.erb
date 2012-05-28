@@ -21,8 +21,8 @@
     end %>
 
       <tr>
-        <td>
-          <html>
+        <td width=150px>
+          <!--<html>-->
           <p align="center" style="font-size:1.5em; font-style:normal;"><b> <%= params[:filter][ii] %> </b></p>
 
           <div style="border:3px solid grey; border-radius: 0.4em; padding-top:5px;"
@@ -47,7 +47,7 @@
 
 
             </script>
-          </html>
+          <!--</html>-->
         </td>
         <td>
           <%= render :inline => @plot.first.linear_reg_buttons(params[:y_var], ii.to_s) %>

@@ -227,6 +227,12 @@ class Plot < ActiveRecord::Base
     # Purpose:                                                                              #
     #     Generate list of true/false strings. Not complicated, just replicates             #
     #     'true' or 'false' for placement in dygraphs options                               #
+    # Inputs:                                                                               #
+    #     list-an array of strings, each of which represents an individual line to be       #
+    #          plotted                                                                      #
+    # Outputs:                                                                              #
+    #     HTML string of 'true's to use when initially setting line visibility/checkbox     #
+    #     selection                                                                         #
     # Calling:                                                                              #
     #         >> @plot.first.all_checkboxes_true(params[:y_var])                            #
     #     Makes a list of 'true' for each member of params[:y_var]                          #
