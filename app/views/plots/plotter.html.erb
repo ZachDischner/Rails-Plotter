@@ -6,10 +6,10 @@
 <style type="text/css">
     body {
        font-family: Tahoma;
-      }
+         }
 </style>
 
-<%= "Environment: #{Rails.env}" %>
+<!--<%= "Environment: #{Rails.env}" %>-->
 <div style="background-color:white;
             align:center;
             text-align:center;
@@ -18,12 +18,9 @@
             /*border-radius:2em;*/
             border-style:inset ">
 
-
  <%  @numgraphs =params[:filter].length %>
 
- <%= render :template => @mytemplate %>
- <%  %>
-
+ <%= render :template => "layouts/plot_template" %>
 
 </div>
 

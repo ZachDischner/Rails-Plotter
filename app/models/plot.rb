@@ -12,17 +12,17 @@
 #      1. Define methods to query your database to select appropriate data
 #      2. Take that data and dynamically generate HTML/dygraphs logic.
 #      3. Generate Javascript utils for interacting with graphs. This showcases the app's
-#           Dynamic ability to generate javascript functions and capabilities.
+#           Dynamic ability to employ Javascript capabilities on the fly.
 #
 #  Plot HTML templates can be found in the   >>/app/views/layouts/plot_*
 #  These templates define the proper methodology to implement Plot methods to generate relevant dygraphs HTML.
 #
 #  The general procedure for generating a single dygraphs plot in an HTML page is as follows:
-#          1. Appropriate a div for the plot ("graphdiv#")
-#          2. Create a new dygraphs element ("g#" )
+#          1. Appropriate a div for the plot ( "graphdiv#" )
+#          2. Create a new Javascript dygraphs element ( "g#" )
 #          3. Generate the header for the graph. This allows a legend to correlate values with variable names
-#          4. Generate the graph content, or the body of the graph. This parses database values into a string
-#             recognizable by dygraphs functions.
+#          4. Generate the graph content, or the body of the graph. This parses database values contained in the
+#             @plot object into a string recognizable by dygraphs functions.
 #          5. Generate dygraphs option specifications for each graph.
 #          6. Generate linear regression Javascript logic and HTML if wanted.
 #          7. Generate checkbox logic and HTML elements if wanted.
@@ -66,7 +66,7 @@ class Plot < ActiveRecord::Base
   # Inputs:                                                                   #
   #     None                                                                  #
   # Outputs:                                                                  #
-  #     boolean, true or false                                                #
+  #     @@find_filter: boolean, true or false                                 #
   # Calling:                                                                  #
   #          >> TorF = Plot.filter_table                                      #
   # Example:                                                                  #
@@ -159,7 +159,7 @@ class Plot < ActiveRecord::Base
     # Inputs:                                                                   #
     #     None                                                                  #
     # Outputs:                                                                  #
-    #     Array of strings containing object attributes                         #
+    #     vars: Array of strings containing collected object attributes         #
     # Calling:                                                                  #
     #          >> my_varnames = @plot.list_vars                                 #
     # Example:                                                                  #
@@ -195,7 +195,8 @@ class Plot < ActiveRecord::Base
     #                way,for plots with multiple windows, a checkbox only turns #
     #                on/off lines for that window                               #
     # Outputs:                                                                  #
-    #     boolean, true or false                                                #
+    #    boxstring: String. HTML formatted string tying HTML checkboxes to      #
+    #               individual plot lines.                                      #
     # Calling:                                                                  #
     #         >> @plot.first.put_checkboxes(y_vars)                             #
     #     This dynamically makes HTML that activates a check box for each of    #
@@ -228,11 +229,11 @@ class Plot < ActiveRecord::Base
     #     Generate list of true/false strings. Not complicated, just replicates             #
     #     'true' or 'false' for placement in dygraphs options                               #
     # Inputs:                                                                               #
-    #     list-an array of strings, each of which represents an individual line to be       #
-    #          plotted                                                                      #
+    #     list: Array of strings. Each of which represents an individual line to be         #
+    #           plotted                                                                     #
     # Outputs:                                                                              #
-    #     HTML string of 'true's to use when initially setting line visibility/checkbox     #
-    #     selection                                                                         #
+    #     String. HTML formatted list of 'true's to use when initially setting line         #
+    #     visibility/checkbox selection                                                     #
     # Calling:                                                                              #
     #         >> @plot.first.all_checkboxes_true(params[:y_var])                            #
     #     Makes a list of 'true' for each member of params[:y_var]                          #
@@ -267,6 +268,12 @@ class Plot < ActiveRecord::Base
   #     Generate the header (first line) of the argument input to dygraphs function in    #
   #       an html page. This line holds the names of datasets being plotted. See the      #
   #       plot templates in "views/layouts/plot_*"                                        #
+  # Inputs:                                                                               #
+  #     tags: An array of string values, corresponding to the [x,y1,y2,y3...] variable     #
+  #          names as will displayed in the dygraphs legend.                              #
+  # Outputs:                                                                              #
+  #     labelstring: Dygraph string. Used in first line of Dygraphs plot generation       #
+  #                  containing plot variable names                                       #
   # Calling:                                                                              #
   #         >> @plot.first.dygraph_head(@Tag_Values)                                      #
   #     Returns the @Tag_Values to html calling page, formatted for dygraph input         #
@@ -297,6 +304,13 @@ class Plot < ActiveRecord::Base
   #       Dygraph function input in an html page. Basically, parses the @plot object      #
   #       into numeric strings formatted for dygraphs functions.                          #
   #        See the plot templates in "views/layouts/plot_*"                               #
+  # Inputs:                                                                               #
+  #     tags: Array of strings. Each tag is the name of a @plot attribute to be plotted   #
+  #     values: @plot instance variable, whose attributes are the variables to be plotted #
+  #             by Dygraphs.                                                              #
+  # Outputs:                                                                              #
+  #     body_string: Dygraph string. The 'meat and potatoes' of the Dygraph plotting      #
+  #                  input. This string contains a list of all values to be plotted       #                                                                     #
   # Calling:                                                                              #
   #         >> @plot.first.dygraph_body(@Tag_Values,@Plot_Values)                         #
   #     Returns the @Plot_Values with @Tag_Values attributes to html calling page,        #
@@ -316,31 +330,36 @@ class Plot < ActiveRecord::Base
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
     def dygraph_body(tags, values)
-      valuestring = ''
+      body_string = ''
       values.each do |value|
         ; # for each row in the @plot selection
-        valuestring += "'"
+        body_string += "'"
         for ii in 0..(tags.length-1) # for each tag (column) in that row
-          valuestring += (value.send(tags[ii].to_s)).to_s
-          valuestring += ',' unless (ii==(tags.length-1))
+          body_string += (value.send(tags[ii].to_s)).to_s
+          body_string += ',' unless (ii==(tags.length-1))
         end # End format is <   'x_value,y_value,y2_value,y3_value\n' +  >
-        valuestring += '\n' + "'"
-        valuestring += "   +" unless value==values.last
+        body_string += '\n' + "'"
+        body_string += "   +" unless value==values.last
       end
-      return valuestring
+      return body_string
     end
 
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* dygraph_options  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
   # Purpose:                                                                              #
-  #     This function simply returns the Dygraphs options to the calling HTML page. Again #
-  #       this is a simple input to Dygraphs functions. Most of this is static, and       #
-  #       doesn't need to be here, but it reduces clutter in HTML pages and makes graph   #
-  #       stylizing and modification easier.                                              #
+  #     This function simply returns the Dygraphs options to the calling HTML page.       #
+  #       Most of this is static, and doesn't need to be in a function, but it reduces    #
+  #       clutter in HTML pages and makes graph stylizing and modification easier.        #
   #     In addition, placing this function here lets the options be customized for EACH   #
   #       plot window. You may want to specify different colors, options, ect for         #
   #       different "graphnum" inputs. As is, the "graphnum" input simply allows each     #
-  #       window of plot data to behave independantly of one another.                     #
+  #       window of plot data to behave independently of one another.                     #
+  # Inputs:                                                                               #
+  #     graphnum (optional): Integer Input The plot window that the returned options      #
+  #                          correspond to.                                               #
+  # Outputs:                                                                              #
+  #     options_string: String. Dygraphs string that is an input to the Dygraphs plotting #
+  #                             function. Specifies the options for that plot.            #
   # Calling:                                                                              #
   #         >> @plot.first.dygraph_options(OptionalNumber)                                #
   #     Returns string to html page that specifies options for Dygraph plot window        #
@@ -365,8 +384,13 @@ class Plot < ActiveRecord::Base
           labelsDivWidth: 100,                                                       // Set the
           labelsDiv: document.getElementById('Legend_Div" + graphnum.to_s + "'),     // Specifies External Div to put Legend Labels in
           labelsSeparateLines: true,                                                 // Different lines per label for easier readability
-          underlayCallback: drawLines" + graphnum.to_s + ",                          // MUST enable this  to show linear regression
-          xlabel: '<%=params[:x_var]%>',                                             // Label for the X axis
+          "
+
+         options_string += "underlayCallback: drawLines" + graphnum.to_s + ",        // MUST enable this  to show linear regression
+           " unless @linear == false
+
+
+          options_string += "xlabel: '<%=params[:x_var]%>',                          // Label for the X axis
           ylabel: '<%=render :inline => params[:y_var].to_s %>',                     // Labels for the Y axis
           visibility: <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   // Initial visibility of plot lines
         } "
@@ -495,7 +519,7 @@ class Plot < ActiveRecord::Base
       }
 
 
-      // Here is my function to format and return Linear Regression Ceofficients
+      // Here is my function to format and return Linear Regression Coefficients
       //    It places a formatted string of coefficients in the appropriately named
       //    <div>. Dynamic naming of each line series space as <div_0> , <div_1>
       //    etc is required for this to work. That way, each time a regression is

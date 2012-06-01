@@ -11,12 +11,15 @@ The application logic is laid out as follows:
             |   Pick X axis var  |   Pick Y axis var   | (optional) Pick Filter  |   plots need an x and a y variable right?
             |                    |                     |                         |   Filter is optional, and depends on your db schema.
             |____________________|_____________________|_________________________|
-            |                    |                     |                         |   "Index" and "Date" assume your db has either some
-            | Pick Index Range   |    Pick Feature     |     Pick Date Range     |   sequential index, a date based index, or both for its
-            |     (optional)     |                     |       (optional)        |   typical X variable. If left unselected, no truncation
-            |____________________|_____________________|_________________________|   occurs. "Feature" chooses an extra plot feature
+            |                                |                                   |   "Index" and "Date" assume your db has either some
+            |         Pick Index Range       |         Pick Date Range           |   sequential index, a date based index, or both for its
+            |            (optional)          |           (optional)              |   typical X variable. If left unselected, no truncation
+            |________________________________|___________________________________|   occurs. "Feature" chooses an extra plot feature
             |                                                                    |
-            |                           [Submit]                                 |   Submit selection data for handling in controller,
+            |                             Pick a Feature                         |   Choose extra plot interaction feature
+            |____________________________________________________________________|
+            |                                                                    |
+            |                              [Submit]                              |   Submit selection data for handling in controller,
             |____________________________________________________________________|   plotting in view
 
 In addition, there is a "helper" div that floats along the left side of the page.
@@ -204,7 +207,7 @@ Also, there is a similar helping div that floats along the right hand side of th
 
               <% features = ["Both","Linear Regression","Checkboxes"] %>
               <%= label(:plot, :feature, "feature") %>
-              <%= select_tag(:feature, options_for_select(features), :multiple => false,:select => "Both",
+              <%= select_tag(:feature, options_for_select(features), :multiple => false,:include_blank => true, :select => "Both",
                              :onmouseover => "page_info('feature')",
                              :onmouseout => "page_info()",
                              :onchange => "params_info('feature')") %>

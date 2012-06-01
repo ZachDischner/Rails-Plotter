@@ -45,7 +45,7 @@ class PlotsController < ApplicationController
     if params[:filter].exclude? "No Filter"
 
       # Convert to array if params[:filter] is a string. The rest of the app expects it as an array
-      #   This situation arises when the :filter selection HELPER does NOT include a ":multiple => true",
+      #   This situation arises when the :filter select_tag does NOT include a ":multiple => true",
       #   which turns the :filter param into a string, instead of an array of strings.
       if params[:filter].class == String
         params[:filter] = [params[:filter]]
@@ -101,13 +101,17 @@ class PlotsController < ApplicationController
     # Choose which layout to render based on the "feature" parameter.
     case params[:feature]
       when 'Linear Regression'
-        @mytemplate = "layouts/plot_linear_template"
+        @linear = true
+        @checkboxes = false
       when 'Checkboxes'
-        @mytemplate = "layouts/plot_checkbox_template"
+        @checkboxes = true
+        @linear = false
       when 'Both'
-        @mytemplate = "layouts/plot_checkbox_linear_template"
-      else # Default, in case someone forgets to check their feature.
-        @mytemplate = "layouts/plot_checkbox_linear_template"
+        @linear = true
+        @checkboxes = true
+      else # Default, has no feature. Just a blank plot with no extra interaction.
+        @linear = false
+        @checkboxes = false
     end
 
   end
