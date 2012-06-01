@@ -99,6 +99,7 @@ class PlotsController < ApplicationController
     end
 
     # Choose which layout to render based on the "feature" parameter.
+
     case params[:feature]
       when 'Linear Regression'
         @linear = true

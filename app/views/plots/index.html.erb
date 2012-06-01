@@ -99,7 +99,9 @@ Also, there is a similar helping div that floats along the right hand side of th
              -->
             <br>
             <%= label(:plot, :x_var, "X") %>
-            <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => false,
+            <%= select_tag(:x_var, options_for_select(@tags.map { |t| [t, t.to_s] },
+                                                      :selected => "date"),
+                           :multiple => false,
                            :onmouseover => "page_info('x_var')",
                            :onmouseout => "page_info()",
                            :onchange => "params_info('x_var')") %>
@@ -108,7 +110,9 @@ Also, there is a similar helping div that floats along the right hand side of th
                Y axis variable(s) for plot window
             -->
             <%= label(:plot, :y_var, "Y") %>
-            <%= select_tag(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] }), :multiple => true,
+            <%= select_tag(:y_var, options_for_select(@tags.map { |t| [t, t.to_s] },
+                                                      :selected => ["open","close","low","high"]),
+                           :multiple => true,
                            :onmouseover => "page_info('y_var')",
                            :onmouseout => "page_info()",
                            :onchange => "params_info('y_var')") %>
@@ -122,7 +126,9 @@ Also, there is a similar helping div that floats along the right hand side of th
             -->
             <% if @filters %>
             <%= label(:plot, :filter, "Filter") %>
-            <%= select_tag(:filter, options_for_select(@filters.map { |t| [t, t.to_s] }), :multiple => true,
+            <%= select_tag(:filter, options_for_select(@filters.map { |t| [t, t.to_s] },
+                                        :selected => ["goog","aapl"]),
+                           :multiple => true,
                            :onmouseover => "page_info('filter')",
                            :onmouseout => "page_info()",
                            :onchange => "params_info('filter')")  %>
@@ -143,7 +149,7 @@ Also, there is a similar helping div that floats along the right hand side of th
                       border-style:outset; border-color: #888888; border-radius: 0.5em;
                       text-align: center;
                       padding:10px ">
-                Select "X" Range for Plotting
+                Select "id" Range for Plotting
                 <br>
                 <%= label(:plot, :x_start, "Start") %>
                 <%= number_field_tag(:x_start, params[:x_start],
@@ -205,9 +211,11 @@ Also, there is a similar helping div that floats along the right hand side of th
           <tr>
             <td colspan=3 align=center>
 
-              <% features = ["Both","Linear Regression","Checkboxes"] %>
+              <% features = ["None","Both","Linear Regression","Checkboxes"] %>
               <%= label(:plot, :feature, "feature") %>
-              <%= select_tag(:feature, options_for_select(features), :multiple => false,:include_blank => true, :select => "Both",
+              <%= select_tag(:feature, options_for_select(features,:selected => "Both",),
+
+                             :multiple => false,:include_blank => false,
                              :onmouseover => "page_info('feature')",
                              :onmouseout => "page_info()",
                              :onchange => "params_info('feature')") %>
