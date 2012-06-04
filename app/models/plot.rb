@@ -14,8 +14,8 @@
 #      3. Generate Javascript utils for interacting with graphs. This showcases the app's
 #           Dynamic ability to employ Javascript capabilities on the fly.
 #
-#  Plot HTML templates can be found in the   >>/app/views/layouts/plot_*
-#  These templates define the proper methodology to implement Plot methods to generate relevant dygraphs HTML.
+#  Plot HTML templates can be found in the   >>/app/views/layouts/plot_template.html.erb
+#  This template defines the proper methodology to implement Plot methods to generate relevant dygraphs HTML.
 #
 #  The general procedure for generating a single dygraphs plot in an HTML page is as follows:
 #          1. Appropriate a div for the plot ( "graphdiv#" )
@@ -45,24 +45,79 @@ class Plot < ActiveRecord::Base
 
 
 
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Database Table Specifications =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Use these sections to specify some higher level details about your database setup and schema
+  # Specify:  Connection Method
+  #           Table Name
+  #           Primary Key
+  #           Whether or not a Filter is to be applied
+  #           Several defaults for interaction.
+  #
+  # I have provided two databases and their schemas here in this app
 
+
+  # 1.0
   # MYSQL development database, use the built in Stocks database.
   # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
   establish_connection :development
   set_table_name "stock_test"           # Table name defined in the "CreateTestTable.txt" script
   set_primary_key :id                   # Table's primary key
   @@find_filter = true                  # Indicates that this database will require column filtering
+  @@default_x       = ["date"]
+  @@default_y       = ["open","close","adjclose"]
+  @@default_filter  = ["aapl","arwr","goog","dow"]
+  @@default_feature = ["Both"]
 
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+  # 2.0
   #SQLITE test development environment
   #establish_connection(:adapter => "sqlite3", :database => "db/sqlite_test.sqlite3", :pool => 5 )
   #establish_connection :sqlite_test
   #set_table_name "plots"
   #@@find_filter = false
+  #@@find_filter = true                  # Indicates that this database will require column filtering
+  #@@default_x       = [""]
+  #@@default_y       = [""]
+  #@@default_filter  = [""]
+  #@@default_feature = [""]
+
+
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=* default_selections =*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                  #
+  #     Indicates if columns are to be filtered in db selection. The          #
+  #     @@find_filter variable is set above, under the "Database Table "      #
+  #     "Specifications" section                                              #
+  # Inputs:                                                                   #
+  #     None                                                                  #
+  # Outputs:                                                                  #
+  #     @@find_filter: boolean, true or false                                 #
+  # Calling:                                                                  #
+  #          >> TorF = Plot.filter_table                                      #
+  # Example:                                                                  #
+  #    In the "plots_controller .. index" section, this is used to aid  the   #
+  #       filling of the "@filters" variable :                                #
+  #          >> @filters = "No Filter" + {stuff} if Plot.filter_table         #
+  #    So if the table requires no column filtering, the @filters variable    #
+  #       will only contain:                                                  #
+  #          @filters --> ["No Filter"]                                       #
+  #    which is used in "plots/views/index.html" to build filter selectors    #
+  #                                                                           #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+
+
+  def default_selections()
+    # figure out how to default to " "
+    return @@default_x,@@default_y,@@default_filter,@@default_feature
+  end
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* filter_table =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   # Purpose:                                                                  #
-  #     Indicates if columns are to be filtered in db selection               #
+  #     Indicates if columns are to be filtered in db selection. The          #
+  #     @@find_filter variable is set above, under the "Database Table "      #
+  #     "Specifications" section                                              #
   # Inputs:                                                                   #
   #     None                                                                  #
   # Outputs:                                                                  #
@@ -407,9 +462,29 @@ class Plot < ActiveRecord::Base
   #       associated dataset, and print the coefficients of that regression inside the    #
   #       newly created DIV. Both are rendered live to call other Javascript functions    #
   #       that handle these two actions.                                                  #
+  # Inputs:                                                                               #
+  #     list-String. Array of variable names that will be tied to Linear Regression       #
+  #          generation buttons                                                           #
+  #     graphnum (optional)-Integer. The particular graph window that the buttons will be #
+  #                         connected to                                                  #
+  # Outputs:                                                                              #
+  #     button_str- String. HTML  formatted string that, when rendered, will create       #
+  #                 buttons in an HTML page that activate linear regression functionality #
   # Calling:                                                                              #
-  #
-  #
+  #     >>@plot.first.linear_reg_buttons(my_list,graph_number)                            #
+  # Example:                                                                              #
+  #      Given a list of variables being plotted, the HTML for a button for each of       #
+  #      those variables will be created and returned as a single string.                 #
+  #         >> @tags = ['x','y','z']                                                      #
+  #         >> button_code = @plot.first.linear_reg_buttons(@tags)                        #
+  #      For plots with multiple graph windows, the appropriate window must also be       #
+  #      into this function's calling                                                     #
+  #      In practice, this code must then be rendered live in the VIEW it is being called #
+  #      in                                                                               #
+  #         >> render :inline => button_code                                              #
+  #      Now each button is tied to a single line in the appripriate graph window, and    #
+  #      is set to activate javascript functions that will analyze that line, report      #
+  #      its coefficients, and draw the newly created linear fit.                         #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
     def linear_reg_buttons(list,graphnum="")
@@ -567,9 +642,11 @@ class Plot < ActiveRecord::Base
 #
 #
 # 1.0: For this app to work, "app/assets" MUST have "dygraph-combined.js". Tricky to catch
-# 2.0: Much of the above functions are not especially useful or smart. I just made them this way in
+#
+# 2.0: Many of the above functions are not especially useful or smart. I just made them this way in
 #      the name of explicitness, and isolation, so that all real logic is housed in this class. Especially
-#      when you know what your datasets will look like, many of these methods can be modified or removed.
+#      when you know what your datasets will look like, many of these methods can be simplified or removed.
+#
 # 3.0  Many methods feature an odd mix of HTML, Javascript, and RoR. It works, provided you follow the
 #      outlines in the "app/views/layouts/plot_*" layouts, but is not especially pretty, or easy to grasp
 #      initially. Again, this approach was mostly chosen for isolation purposes. As well as my desire for
@@ -599,6 +676,9 @@ class Plot < ActiveRecord::Base
 #        modularity, and ease of comprehension. They could (and should) easily be modified to have more Object-like
 #        behavior once you implement yourself.
 #
+#  5.0  This app shares many @instance_variables between controller and views. This is unadvisable for some reason.
+#         Don't know the exact reason, but the fact remains this is a practice to avoid. I did not avoid it, so a more
+#         competant Rails programmer may want to fix this.
 #
 #
 #

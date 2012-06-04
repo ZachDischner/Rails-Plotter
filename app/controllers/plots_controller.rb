@@ -13,20 +13,25 @@ class PlotsController < ApplicationController
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
   def index
-    # These tags are to be excluded from any interactions, as they are database utilities
+    # Used in the "index" page to activate helper popups that help in development
+    params[:debug] = true
+
+    # These tags are to be excluded from any interactions, as they are database utilities, strings, or
+    # otherwise unplottable data.
     exclude_tags = ["created_at","updated_at","ticker"]
 
     # Get a single row of info from the database around which to build the user interface
-    @plots=Plot.first
+    @plot=Plot.first
 
     # Get an array of the collected data as an array of strings. This will be used throughout plotting
-    @tags = @plots.list_vars - exclude_tags
+    @tags = @plot.list_vars - exclude_tags
 
     # Get Filters, add a "No Filter" option for fast implementation of databases without need for filtering.
     # Ideally, this is all taken out later for such applications.
-    @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker} unless !@plots.filter_table
+    @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker} unless !@plot.filter_table
 
-    params[:debug] = true
+    @x_default, @y_default, @filter_default, @feature_default = @plot.default_selections()
+
   end
 
 
