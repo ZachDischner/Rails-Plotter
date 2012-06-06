@@ -1,46 +1,46 @@
-Hi! I'm Zach!
-"
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                           May 1 2012
-%      +-------------------------+------------------------\    __      ____
-%  {=  |     Zach Dischner,      | Email:   zach.dischner  \___| \____/ ___\___|
-%  {=  |  Aerospace Engineering  |         @colorado.edu   /   ===---======)--->
-%      +-------------------------+------------------------/                    |
-%
-%     Rails App for dynamic database plotting with dygraphs javascript plotting routines
-%
-%
-%
-%
-%
-%
-%
-%                                                 _
-%                   ___                          (_)
-%                 _/XXX\
-%  _             /XXXXXX\_                                    __
-%  X\__    __   /X XXXX XX\                          _       /XX\__      ___
-%      \__/  \_/__       \ \                       _/X\__   /XX XXX\____/XXX\
-%    \  ___   \/  \_      \ \               __   _/      \_/  _/  -   __  -  \
-%   ___/   \__/   \ \__     \\__           /  \_//  _ _ \  \     __  /  \____/
-%  /  __    \  /     \ \_   _//_\___    __/    //           \___/  \/     __/
-%  __/_______\________\__\_/________\__/_/____/_____________/_______\____/____
-%                                    ___
-%                                   /L|0\
-%                                  /  |  \
-%                                 /       \
-%                                /    |    \
-%                               /           \
-%                              /  __  | __   \
-%                             /  __/    \__   \
-%                            /  /__   |  __\   \
-%                           /___________________\
-%                          /          |         \
-%                                /   _|_   \
-%                        /      ____/___\____     \
-%                        ___________[o0o]___________
-%                                 O   O    O
-%
+=Introduction
+Welcome to the interactive database plotting web engine, built in Ruby on Rails. If you're reading this, then its likely you are trying to
+connect this app with your database. If so, read on.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-"
+This was built for the Laboratory for Atmospheric and Space Physics (LASP) in Boulder, Colorado.
+Its AIM is to enable quick visulization of database numeric data, without spending months developing
+your own custom solutions. Since LASP has a diverse scientific community, using many different database engines and schemas, I tried
+to make this app as generic as I could, so that it may work for any of them.
+
+To date (July 1 2012), I have successfully tested this app with the following databases:
+* MySQL
+* PostgreSQL
+* SQLite
+it should perform for other setups as well, but they have not been examined yet.
+
+=Getting Started
+
+The best way to get started is to load up a demo and try it out.
+BEWARE, The hardest thing is getting Ruby/Ruby on Rails/ RoR + Databases to work cohesively.
+
+==Environment
+Obviously, you'll need to have Ruby, Ruby on Rails, and a Database client installed on your machine.
+SQLite and MYSQL sample databases are included with this app for testing.  Getting Ruby/RoR is notoriously
+difficult for some reason, though in practice it should be very simple. Here is a basic tutorial:
+http://eddorre.com/posts/rails-ultimate-install-guide-on-os-x-lion-using-rvm-homebrew-and-pow
+I went through a similar tutorial, and searching through google got me though any problems I ran into.
+
+This app is built using:
+* Ruby 1.9.3-p125
+* Rails 3.2.3
+Using different versions of Ruby or Rails is known to cause some headaches. They may be easily fixed, but I've never
+felt the need to try. Consider yourself warned.
+
+
+I *strongly* recommend using a nice GUI to help manage everything.
+RubyMine is my weapon of choice:
+http://www.jetbrains.com/ruby
+It is easy to use, very intelligent, and has great integration with GIT version control systems. It also has tools to
+manage your versions of Ruby and Gems, which are much easier to use than trying to do it all from the Command Line.
+
+==Databases
+Included in this package is a self contained SQLite3 table, and a script that will create a MySQL database and table.
+Both connections
+
+
+

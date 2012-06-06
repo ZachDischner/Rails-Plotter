@@ -21,8 +21,6 @@ development:
   reconnect: false
   database: test
   pool: 5
-  username: zachd1_618
-  password: veyron
   host: localhost
 
 

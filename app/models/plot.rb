@@ -38,6 +38,12 @@
 #     you get a more solid base, you should modify the app to behave more like a typical RoR app, if you want to.
 #
 #
+# BUGS TO FIX:
+#     * Slight bug in linear regression rendering for multiple plot windows. Once regressions are calculated and drawn
+#       in one window, moving to another graph window and calculating a single regression results in that regression being
+#       correctly drawn, but the previously calculated regression data from the first window also gets drawn for the
+#       buttons not clicked.
+#
 #
 #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
@@ -208,7 +214,7 @@ class Plot < ActiveRecord::Base
 
 
 
-    #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= list_vars =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= list_vars =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
     # Purpose:                                                                  #
     #     Return an array of attribute names as strings.                        #
     # Inputs:                                                                   #
@@ -408,10 +414,15 @@ class Plot < ActiveRecord::Base
   #     In addition, placing this function here lets the options be customized for EACH   #
   #       plot window. You may want to specify different colors, options, ect for         #
   #       different "graphnum" inputs. As is, the "graphnum" input simply allows each     #
-  #       window of plot data to behave independently of one another.                     #
+  #       window of plot data to behave independently of one another. The "graphnum"      #
+  #       variable should mirror the "graphdivX" labeling used in the view for            #
+  #       Dygraphs instantiation.                                                         #
   # Inputs:                                                                               #
   #     graphnum (optional): Integer Input The plot window that the returned options      #
   #                          correspond to.                                               #
+  #                          "graphnum" should mirror the  Dygraphs instantiation   #
+  #                         of "graphdivX" inside the view. See the plot_template.html    #
+  #                         page for more information.                                    #
   # Outputs:                                                                              #
   #     options_string: String. Dygraphs string that is an input to the Dygraphs plotting #
   #                             function. Specifies the options for that plot.            #
@@ -462,11 +473,17 @@ class Plot < ActiveRecord::Base
   #       associated dataset, and print the coefficients of that regression inside the    #
   #       newly created DIV. Both are rendered live to call other Javascript functions    #
   #       that handle these two actions.                                                  #
+  #     Note that the "graphnum" variable must be the same for all applicable functions.  #
+  #     HTML elements, Javascript operations and internal calculations depend on this     #
+  #     variable being constant throughout.                                               #
   # Inputs:                                                                               #
   #     list-String. Array of variable names that will be tied to Linear Regression       #
   #          generation buttons                                                           #
   #     graphnum (optional)-Integer. The particular graph window that the buttons will be #
   #                         connected to                                                  #
+  #                         Again, "graphnum" should mirror the  Dygraphs instantiation   #
+  #                         of "graphdivX" inside the view. See the plot_template.html    #
+  #                         page for more information.                                    #
   # Outputs:                                                                              #
   #     button_str- String. HTML  formatted string that, when rendered, will create       #
   #                 buttons in an HTML page that activate linear regression functionality #
@@ -475,14 +492,14 @@ class Plot < ActiveRecord::Base
   # Example:                                                                              #
   #      Given a list of variables being plotted, the HTML for a button for each of       #
   #      those variables will be created and returned as a single string.                 #
-  #         >> @tags = ['x','y','z']                                                      #
-  #         >> button_code = @plot.first.linear_reg_buttons(@tags)                        #
+  #         >> params[:y_var] = ['y1','y2','y3']                                          #
+  #         >> button_code = @plot.first.linear_reg_buttons(params[:y_var])               #
   #      For plots with multiple graph windows, the appropriate window must also be       #
   #      into this function's calling                                                     #
   #      In practice, this code must then be rendered live in the VIEW it is being called #
   #      in                                                                               #
   #         >> render :inline => button_code                                              #
-  #      Now each button is tied to a single line in the appripriate graph window, and    #
+  #      Now each button is tied to a single line in the appropriate graph window, and    #
   #      is set to activate javascript functions that will analyze that line, report      #
   #      its coefficients, and draw the newly created linear fit.                         #
   #                                                                                       #
@@ -501,8 +518,47 @@ class Plot < ActiveRecord::Base
     end
 
 
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= linear_reg  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+  # Purpose:                                                                              #
+  #     This function returns javascript functions and utilities that enable the          #
+  #     calculation, displaying, and drawing of linear regression fits for plotted        #
+  #     data sets. While not spectacularly useful, this functionality shows how easily    #
+  #     dynamic interaction and data manipulation of graph data can be implemented.       #
+  #     Each time it is called, this function creates a whole new set of javascript       #
+  #     functions, tailored to an individual graph window.                                #
+  #     Again, all these functions are designed to be tied to dynamically named graph     #
+  #     windows, activation buttons, and div's in order to work. Proper cross referencing #
+  #     simply depends on keeping the "graphnum" variable constant in calling.            #
+  # Inputs:                                                                               #
+  #     graphnum (optional)-Integer. The particular graph window that the regression      #
+  #                         functions will be tied to                                     #
+  #                         Again, "graphnum" should mirror the  Dygraphs instantiation   #
+  #                         of "graphdivX" inside the view. See the plot_template.html    #
+  #                         page for more information.                                    #
+  # Outputs:                                                                              #
+  #     linear_reg_str-String. Contains Javascript code and function definitions.         #
+  #                    Together, they represent all utilities needed for regression       #
+  #                    functionality.                                                     #
+  # Calling:                                                                              #
+  #     >>@plot.first.linear_reg(graph_number)                                            #
+  # Example:                                                                              #
+  #      In a view, to enable linear regression functionality for a particular graph      #
+  #      window, just call this function with the corresponding window number             #
+  #         >> regression_functions = @plot.first.linear_reg(0)                           #
+  #      generates functions tied to the graph window 0 (graphdiv0) and the corresponding #
+  #      HTML elements required for activation.                                           #
+  #      As before, implementation requires live rendering of this string:                #
+  #         >> render :inline => regression_functions                                     #
+  #                                                                                       #
+  # NOTE:                                                                                 #
+  #      Much of this I took from an online open source. It has since been modified and   #
+  #      I have added features and functions of my own, but at its core it is the same as #
+  #      is offered from the Dygraphs website.                                            #
+  #                                                                                       #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+
     def linear_reg(graphnum = "")
-      return '// coefficients of regression for each series.
+      linear_reg_str ='// coefficients of regression for each series.
       // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
       // only. The regression line is y = 1 + 2 * x.
       var coeffs = [ null, null, null ];
@@ -621,7 +677,31 @@ class Plot < ActiveRecord::Base
         }
 
     '
+      return linear_reg_str
     end
+
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* convert_date  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                              #
+  #     Converts the dates selected using a RoR date selector drop down into a date       #
+  #     format that can be used to query a Database. This function can be modified to     #
+  #     work for "Datetime" elements as well. Depending on your database and setup,       #
+  #     modification MAY be required in order to convert correctly.                       #
+  # Inputs:                                                                               #
+  #     obj: A date hash, populated from drop-down menus in a view, which contains a      #
+  #          Year, Month, and Day element. Expects the results from a RoR                 #
+  #          "date_select" helper                                                         #
+  # Outputs:                                                                              #
+  #     RoR Date object which can be used to query the database.                          #
+  # Calling:                                                                              #
+  #         >> @plot.first.convert_date(date_hash)                                        #
+  # Example:                                                                              #
+  #     From the "date_select" helper, a date hash will be populated to look like:        #
+  #         >>params[:my_date]={'(1i)'=>2012,'(2i)' => 6, '(3i)' => 24}                   #
+  #     To convert this hash into a Ruby "Date" class, just pass it through this function.#
+  #         >>R_date = @plot.first.convert_date(params[:my_date])                         #
+  #                                                                                       #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
     def convert_date(obj)
       return Date.new(obj['(1i)'].to_i, obj['(2i)'].to_i, obj['(3i)'].to_i)
@@ -637,7 +717,7 @@ class Plot < ActiveRecord::Base
 
 
 
-#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Some Additional Notes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*´#
+#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Some Additional Notes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 #
 #
 #

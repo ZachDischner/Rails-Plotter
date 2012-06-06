@@ -77,36 +77,72 @@
 
 <div id="documentation" class="description">
   
-<p>Hi! I’m Zach! “
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                           May 1 2012 %     
-<code>-------------------------</code>————————\    __      <em>__</em> % 
-{=  |     Zach Dischner,      | Email:   zach.dischner  ___| _<em>_</em>/
-<em>__</em>__| %  {=  |  Aerospace Engineering  |         @colorado.edu   /
-===—======)—&gt; %      <code>-------------------------</code>————————/    
-| % %     Rails App for dynamic database plotting with dygraphs javascript
-plotting routines % % % % % % % %                                          
-_ %                   <em>_</em>                          (_) %            
-_/XXX\ %  _             /XXXXXX_                                    __ % 
-X__    __   /X XXXX XX\                          _       /XX__     
-<em>_</em> %      __/  _/__       \ \                       <em>/X</em>_  
-/XX XXX_<em>_</em>/XXX\ %    \  <em>_</em>   /  _      \ \               __
-_/      _/  _/  -   __  -  \ %   <em>_</em>/   __/   \ __     __          
-/  _//  _ _ \  \     __  /  _<em>_</em>/ %  /  __    \  /     \ _  
-<em>//_</em>__    __/    //           ___/  /     __/ % 
-<em>/____</em>__/<em>_</em>_/<em>/_</em>/<em>_</em>/<em>___</em>/<em>__</em>
-%                                    <em>_</em> %                          
-/L|0\ %                                  /  |  \ %                         
-/       \ %                                /    |    \ %                   
-/           \ %                              /  __  | __   \ %             
-/  __/    __   \ %                            /  /__   |  __\   \ %        
-/<em>_</em>\ %                          /          |         \ %           
-/   _|_   \ %                        /      <em>__</em>/<em>___</em>     \
-%                        <em><a href="http://o0o">_</a></em><em>_</em> %   
-O   O    O %</p>
+<h1 id="label-Introduction">Introduction</h1>
 
-<p>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-“</p>
+<p>Welcome to the interactive database plotting web engine, built in Ruby on
+Rails. If you’re reading this, then its likely you are trying to connect
+this app with your database. If so, read on.</p>
+
+<p>This was built for the Laboratory for Atmospheric and Space Physics (LASP)
+in Boulder, Colorado. Its AIM is to enable quick visulization of database
+numeric data, without spending months developing your own custom solutions.
+Since LASP has a diverse scientific community, using many different
+database engines and schemas, I tried to make this app as generic as I
+could, so that it may work for any of them.</p>
+
+<p>To date (July 1 2012), I have successfully tested this app with the
+following databases:</p>
+<ul><li>
+<p>MySQL</p>
+</li><li>
+<p>PostgreSQL</p>
+</li><li>
+<p>SQLite</p>
+</li></ul>
+
+<p>it should perform for other setups as well, but they have not been examined
+yet.</p>
+
+<h1 id="label-Getting+Started">Getting Started</h1>
+
+<p>The best way to get started is to load up a demo and try it out. BEWARE,
+The hardest thing is getting Ruby/Ruby on Rails/ RoR + Databases to work
+cohesively.</p>
+
+<h2 id="label-Environment">Environment</h2>
+
+<p>Obviously, you’ll need to have Ruby, Ruby on Rails, and a Database client
+installed on your machine. SQLite and MYSQL sample databases are included
+with this app for testing.  Getting Ruby/RoR is notoriously difficult for
+some reason, though in practice it should be very simple. Here is a basic
+tutorial: <a
+href="http://eddorre.com/posts/rails-ultimate-install-guide-on-os-x-lion-using-rvm-homebrew-and-pow">eddorre.com/posts/rails-ultimate-install-guide-on-os-x-lion-using-rvm-homebrew-and-pow</a>
+I went through a similar tutorial, and searching through google got me
+though any problems I ran into.</p>
+
+<p>This app is built using:</p>
+<ul><li>
+<p>Ruby 1.9.3-p125</p>
+</li><li>
+<p>Rails 3.2.3</p>
+</li></ul>
+
+<p>Using different versions of Ruby or Rails is known to cause some headaches.
+They may be easily fixed, but I’ve never felt the need to try. Consider
+yourself warned.</p>
+
+<p>I <strong>strongly</strong> recommend using a nice GUI to help manage
+everything. RubyMine is my weapon of choice: <a
+href="http://www.jetbrains.com/ruby">www.jetbrains.com/ruby</a> It is easy
+to use, very intelligent, and has great integration with GIT version
+control systems. It also has tools to manage your versions of Ruby and
+Gems, which are much easier to use than trying to do it all from the
+Command Line.</p>
+
+<h2 id="label-Databases">Databases</h2>
+
+<p>Included in this package is a self contained SQLite3 table, and a script
+that will create a MySQL database and table.</p>
 
 </div>
 

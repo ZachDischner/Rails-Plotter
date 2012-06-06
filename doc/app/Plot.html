@@ -78,6 +78,8 @@
     
     <li><a href="#method-i-date_blank">#date_blank</a>
     
+    <li><a href="#method-i-default_selections">#default_selections</a>
+    
     <li><a href="#method-i-dygraph_body">#dygraph_body</a>
     
     <li><a href="#method-i-dygraph_head">#dygraph_head</a>
@@ -152,17 +154,17 @@ Purpose:
      1. Define methods to query your database to select appropriate data
      2. Take that data and dynamically generate HTML/dygraphs logic.
      3. Generate Javascript utils for interacting with graphs. This showcases the app's
-          Dynamic ability to generate javascript functions and capabilities.
+          Dynamic ability to employ Javascript capabilities on the fly.
 
- Plot HTML templates can be found in the   &gt;&gt;/app/views/layouts/plot_*
- These templates define the proper methodology to implement Plot methods to generate relevant dygraphs HTML.
+ Plot HTML templates can be found in the   &gt;&gt;/app/views/layouts/plot_template.html.erb
+ This template defines the proper methodology to implement Plot methods to generate relevant dygraphs HTML.
 
  The general procedure for generating a single dygraphs plot in an HTML page is as follows:
-         1. Appropriate a div for the plot (&quot;graphdiv#&quot;)
-         2. Create a new dygraphs element (&quot;g#&quot; )
+         1. Appropriate a div for the plot ( &quot;graphdiv#&quot; )
+         2. Create a new Javascript dygraphs element ( &quot;g#&quot; )
          3. Generate the header for the graph. This allows a legend to correlate values with variable names
-         4. Generate the graph content, or the body of the graph. This parses database values into a string
-            recognizable by dygraphs functions.
+         4. Generate the graph content, or the body of the graph. This parses database values contained in the
+            @plot object into a string recognizable by dygraphs functions.
          5. Generate dygraphs option specifications for each graph.
          6. Generate linear regression Javascript logic and HTML if wanted.
          7. Generate checkbox logic and HTML elements if wanted.
@@ -175,7 +177,13 @@ Purpose:
     likely make more sense eventually. Instead of the current procedure of looping through the @plot object, and
     &quot;send&quot;ing the variable names, you'll know exactly what you want your @plot variable will look like, and what
     from it you'll want to plot. Now, this all doesn't really look like OO programming, or a typical RoR app. Once
-    you get a more solid base, you should modify the app to behave more like a typical RoR app, if you want to.</pre>
+    you get a more solid base, you should modify the app to behave more like a typical RoR app, if you want to.
+
+BUGS TO FIX:
+    * Slight bug in linear regression rendering for multiple plot windows. Once regressions are calculated and drawn
+      in one window, moving to another graph window and calculating a single regression results in that regression being
+      correctly drawn, but the previously calculated regression data from the first window also gets drawn for the
+      buttons not clicked.</pre>
 
 <p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
 
@@ -222,7 +230,7 @@ off initially</pre>
 
           
           <div class="method-source-code" id="all_checkboxes_false-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 254</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 322</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all_checkboxes_false</span>(<span class="ruby-identifier">list</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-string">&quot;false&quot;</span>]*(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -254,6 +262,12 @@ href="Plot.html#method-i-all_checkboxes_true">#all_checkboxes_true</a>
 <pre>Purpose:                                                                              #
     Generate list of true/false strings. Not complicated, just replicates             #
     'true' or 'false' for placement in dygraphs options                               #
+Inputs:                                                                               #
+    list: Array of strings. Each of which represents an individual line to be         #
+          plotted                                                                     #
+Outputs:                                                                              #
+    String. HTML formatted list of 'true's to use when initially setting line         #
+    visibility/checkbox selection                                                     #
 Calling:                                                                              #
         &gt;&gt; @plot.first.all_checkboxes_true(params[:y_var])                            #
     Makes a list of 'true' for each member of params[:y_var]                          #
@@ -273,7 +287,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="all_checkboxes_true-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 244</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 312</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all_checkboxes_true</span>(<span class="ruby-identifier">list</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-string">&quot;true&quot;</span>]*(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -298,12 +312,37 @@ Example:                                                                        
 
         <div class="method-description">
           
-          
+          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* <a
+href="Plot.html#method-i-convert_date">#convert_date</a> 
+*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
+
+<pre class="ruby"><span class="ruby-constant">Purpose</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+    <span class="ruby-constant">Converts</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dates</span> <span class="ruby-identifier">selected</span> <span class="ruby-identifier">using</span> <span class="ruby-identifier">a</span> <span class="ruby-constant">RoR</span> <span class="ruby-identifier">date</span> <span class="ruby-identifier">selector</span> <span class="ruby-identifier">drop</span> <span class="ruby-identifier">down</span> <span class="ruby-identifier">into</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">date</span>       <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">format</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">can</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">used</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">query</span> <span class="ruby-identifier">a</span> <span class="ruby-constant">Database</span>. <span class="ruby-constant">This</span> <span class="ruby-identifier">function</span> <span class="ruby-identifier">can</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">modified</span> <span class="ruby-identifier">to</span>     <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">work</span> <span class="ruby-keyword">for</span> <span class="ruby-string">&quot;Datetime&quot;</span> <span class="ruby-identifier">elements</span> <span class="ruby-identifier">as</span> <span class="ruby-identifier">well</span>. <span class="ruby-constant">Depending</span> <span class="ruby-identifier">on</span> <span class="ruby-identifier">your</span> <span class="ruby-identifier">database</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">setup</span>,       <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">modification</span> <span class="ruby-constant">MAY</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">required</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">order</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">convert</span> <span class="ruby-identifier">correctly</span>.                       <span class="ruby-comment">#</span>
+<span class="ruby-constant">Inputs</span><span class="ruby-operator">:</span>                                                                               <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">obj</span><span class="ruby-operator">:</span> <span class="ruby-constant">A</span> <span class="ruby-identifier">date</span> <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">populated</span> <span class="ruby-identifier">from</span> <span class="ruby-identifier">drop</span><span class="ruby-operator">-</span><span class="ruby-identifier">down</span> <span class="ruby-identifier">menus</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">view</span>, <span class="ruby-identifier">which</span> <span class="ruby-identifier">contains</span> <span class="ruby-identifier">a</span>      <span class="ruby-comment">#</span>
+         <span class="ruby-constant">Year</span>, <span class="ruby-constant">Month</span>, <span class="ruby-keyword">and</span> <span class="ruby-constant">Day</span> <span class="ruby-identifier">element</span>. <span class="ruby-constant">Expects</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">results</span> <span class="ruby-identifier">from</span> <span class="ruby-identifier">a</span> <span class="ruby-constant">RoR</span>                 <span class="ruby-comment">#</span>
+         <span class="ruby-string">&quot;date_select&quot;</span> <span class="ruby-identifier">helper</span>                                                         <span class="ruby-comment">#</span>
+<span class="ruby-constant">Outputs</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+    <span class="ruby-constant">RoR</span> <span class="ruby-constant">Date</span> <span class="ruby-identifier">object</span> <span class="ruby-identifier">which</span> <span class="ruby-identifier">can</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">used</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">query</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">database</span>.                          <span class="ruby-comment">#</span>
+<span class="ruby-constant">Calling</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+        <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">convert_date</span>(<span class="ruby-identifier">date_hash</span>)                                        <span class="ruby-comment">#</span>
+<span class="ruby-constant">Example</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+    <span class="ruby-constant">From</span> <span class="ruby-identifier">the</span> <span class="ruby-string">&quot;date_select&quot;</span> <span class="ruby-identifier">helper</span>, <span class="ruby-identifier">a</span> <span class="ruby-identifier">date</span> <span class="ruby-identifier">hash</span> <span class="ruby-identifier">will</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">populated</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">look</span> <span class="ruby-identifier">like</span><span class="ruby-operator">:</span>        <span class="ruby-comment">#</span>
+        <span class="ruby-operator">&gt;&gt;</span><span class="ruby-identifier">params</span>[:<span class="ruby-identifier">my_date</span>]={<span class="ruby-string">'(1i)'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value">2012</span>,<span class="ruby-string">'(2i)'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">6</span>, <span class="ruby-string">'(3i)'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">24</span>}                   <span class="ruby-comment">#</span>
+    <span class="ruby-constant">To</span> <span class="ruby-identifier">convert</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">hash</span> <span class="ruby-identifier">into</span> <span class="ruby-identifier">a</span> <span class="ruby-constant">Ruby</span> <span class="ruby-string">&quot;Date&quot;</span> <span class="ruby-keyword">class</span>, <span class="ruby-identifier">just</span> <span class="ruby-identifier">pass</span> <span class="ruby-identifier">it</span> <span class="ruby-identifier">through</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">function</span>.<span class="ruby-comment">#</span>
+        <span class="ruby-operator">&gt;&gt;</span><span class="ruby-constant">R_date</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">convert_date</span>(<span class="ruby-identifier">params</span>[:<span class="ruby-identifier">my_date</span>])                         <span class="ruby-comment">#</span>
+                                                                                      <span class="ruby-comment">#</span>
+</pre>
+
+<p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
           
 
           
           <div class="method-source-code" id="convert_date-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 521</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 706</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">convert_date</span>(<span class="ruby-identifier">obj</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">obj</span>[<span class="ruby-string">'(1i)'</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">obj</span>[<span class="ruby-string">'(2i)'</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">obj</span>[<span class="ruby-string">'(3i)'</span>].<span class="ruby-identifier">to_i</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -333,7 +372,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="date_blank-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 525</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 710</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">date_blank</span>(<span class="ruby-identifier">mydate</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-identifier">mydate</span>[<span class="ruby-string">&quot;(1i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>, <span class="ruby-identifier">mydate</span>[<span class="ruby-string">&quot;(2i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>, <span class="ruby-identifier">mydate</span>[<span class="ruby-string">&quot;(3i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>]).<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -345,6 +384,61 @@ Example:                                                                        
 
         
       </div><!-- date_blank-method -->
+
+    
+      <div id="method-i-default_selections" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">default_selections</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=* <a
+href="Plot.html#method-i-default_selections">#default_selections</a>
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
+
+<pre>Purpose:                                                                  #
+    Indicates if columns are to be filtered in db selection. The          #
+    @@find_filter variable is set above, under the &quot;Database Table &quot;      #
+    &quot;Specifications&quot; section                                              #
+Inputs:                                                                   #
+    None                                                                  #
+Outputs:                                                                  #
+    @@find_filter: boolean, true or false                                 #
+Calling:                                                                  #
+         &gt;&gt; TorF = Plot.filter_table                                      #
+Example:                                                                  #
+   In the &quot;plots_controller .. index&quot; section, this is used to aid  the   #
+      filling of the &quot;@filters&quot; variable :                                #
+         &gt;&gt; @filters = &quot;No Filter&quot; + {stuff} if Plot.filter_table         #
+   So if the table requires no column filtering, the @filters variable    #
+      will only contain:                                                  #
+         @filters --&gt; [&quot;No Filter&quot;]                                       #
+   which is used in &quot;plots/views/index.html&quot; to build filter selectors    #
+                                                                          #</pre>
+
+<p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
+          
+
+          
+          <div class="method-source-code" id="default_selections-source">
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">default_selections</span>()
+  <span class="ruby-comment"># figure out how to default to &quot; &quot;</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@default_x</span>,<span class="ruby-identifier">@@default_y</span>,<span class="ruby-identifier">@@default_filter</span>,<span class="ruby-identifier">@@default_feature</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- default_selections-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- default_selections-method -->
 
     
       <div id="method-i-dygraph_body" class="method-detail ">
@@ -367,6 +461,13 @@ href="Plot.html#method-i-dygraph_body">#dygraph_body</a>
       Dygraph function input in an html page. Basically, parses the @plot object      #
       into numeric strings formatted for dygraphs functions.                          #
        See the plot templates in &quot;views/layouts/plot_*&quot;                               #
+Inputs:                                                                               #
+    tags: Array of strings. Each tag is the name of a @plot attribute to be plotted   #
+    values: @plot instance variable, whose attributes are the variables to be plotted #
+            by Dygraphs.                                                              #
+Outputs:                                                                              #
+    body_string: Dygraph string. The 'meat and potatoes' of the Dygraph plotting      #
+                 input. This string contains a list of all values to be plotted       #                                                                     #
 Calling:                                                                              #
         &gt;&gt; @plot.first.dygraph_body(@Tag_Values,@Plot_Values)                         #
     Returns the @Plot_Values with @Tag_Values attributes to html calling page,        #
@@ -390,20 +491,20 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_body-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 312</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 393</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_body</span>(<span class="ruby-identifier">tags</span>, <span class="ruby-identifier">values</span>)
-  <span class="ruby-identifier">valuestring</span> = <span class="ruby-string">''</span>
+  <span class="ruby-identifier">body_string</span> = <span class="ruby-string">''</span>
   <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
     ; <span class="ruby-comment"># for each row in the @plot selection</span>
-    <span class="ruby-identifier">valuestring</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;'&quot;</span>
+    <span class="ruby-identifier">body_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;'&quot;</span>
     <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">tags</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>) <span class="ruby-comment"># for each tag (column) in that row</span>
-      <span class="ruby-identifier">valuestring</span> <span class="ruby-operator">+=</span> (<span class="ruby-identifier">value</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">tags</span>[<span class="ruby-identifier">ii</span>].<span class="ruby-identifier">to_s</span>)).<span class="ruby-identifier">to_s</span>
-      <span class="ruby-identifier">valuestring</span> <span class="ruby-operator">+=</span> <span class="ruby-string">','</span> <span class="ruby-keyword">unless</span> (<span class="ruby-identifier">ii</span><span class="ruby-operator">==</span>(<span class="ruby-identifier">tags</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>))
+      <span class="ruby-identifier">body_string</span> <span class="ruby-operator">+=</span> (<span class="ruby-identifier">value</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">tags</span>[<span class="ruby-identifier">ii</span>].<span class="ruby-identifier">to_s</span>)).<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">body_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">','</span> <span class="ruby-keyword">unless</span> (<span class="ruby-identifier">ii</span><span class="ruby-operator">==</span>(<span class="ruby-identifier">tags</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>))
     <span class="ruby-keyword">end</span> <span class="ruby-comment"># End format is &lt;   'x_value,y_value,y2_value,y3_value\n' +  &gt;</span>
-    <span class="ruby-identifier">valuestring</span> <span class="ruby-operator">+=</span> <span class="ruby-string">'\n'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span>
-    <span class="ruby-identifier">valuestring</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;   +&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span><span class="ruby-operator">==</span><span class="ruby-identifier">values</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">body_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">'\n'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span>
+    <span class="ruby-identifier">body_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;   +&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span><span class="ruby-operator">==</span><span class="ruby-identifier">values</span>.<span class="ruby-identifier">last</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">valuestring</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">body_string</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- dygraph_body-source -->
           
@@ -434,6 +535,12 @@ href="Plot.html#method-i-dygraph_head">#dygraph_head</a>
     Generate the header (first line) of the argument input to dygraphs function in    #
       an html page. This line holds the names of datasets being plotted. See the      #
       plot templates in &quot;views/layouts/plot_*&quot;                                        #
+Inputs:                                                                               #
+    tags: An array of string values, corresponding to the [x,y1,y2,y3...] variable     #
+         names as will displayed in the dygraphs legend.                              #
+Outputs:                                                                              #
+    labelstring: Dygraph string. Used in first line of Dygraphs plot generation       #
+                 containing plot variable names                                       #
 Calling:                                                                              #
         &gt;&gt; @plot.first.dygraph_head(@Tag_Values)                                      #
     Returns the @Tag_Values to html calling page, formatted for dygraph input         #
@@ -452,7 +559,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_head-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 277</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 351</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_head</span>(<span class="ruby-identifier">tags</span>)
   <span class="ruby-identifier">labelstring</span> = <span class="ruby-string">&quot;,'&quot;</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">tags</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
@@ -489,14 +596,24 @@ href="Plot.html#method-i-dygraph_options">#dygraph_options</a>
 *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#</p>
 
 <pre>Purpose:                                                                              #
-    This function simply returns the Dygraphs options to the calling HTML page. Again #
-      this is a simple input to Dygraphs functions. Most of this is static, and       #
-      doesn't need to be here, but it reduces clutter in HTML pages and makes graph   #
-      stylizing and modification easier.                                              #
+    This function simply returns the Dygraphs options to the calling HTML page.       #
+      Most of this is static, and doesn't need to be in a function, but it reduces    #
+      clutter in HTML pages and makes graph stylizing and modification easier.        #
     In addition, placing this function here lets the options be customized for EACH   #
       plot window. You may want to specify different colors, options, ect for         #
       different &quot;graphnum&quot; inputs. As is, the &quot;graphnum&quot; input simply allows each     #
-      window of plot data to behave independantly of one another.                     #
+      window of plot data to behave independently of one another. The &quot;graphnum&quot;      #
+      variable should mirror the &quot;graphdivX&quot; labeling used in the view for            #
+      Dygraphs instantiation.                                                         #
+Inputs:                                                                               #
+    graphnum (optional): Integer Input The plot window that the returned options      #
+                         correspond to.                                               #
+                         &quot;graphnum&quot; should mirror the  Dygraphs instantiation   #
+                        of &quot;graphdivX&quot; inside the view. See the plot_template.html    #
+                        page for more information.                                    #
+Outputs:                                                                              #
+    options_string: String. Dygraphs string that is an input to the Dygraphs plotting #
+                            function. Specifies the options for that plot.            #
 Calling:                                                                              #
         &gt;&gt; @plot.first.dygraph_options(OptionalNumber)                                #
     Returns string to html page that specifies options for Dygraph plot window        #
@@ -515,7 +632,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_options-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 351</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 442</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_options</span>(<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
     <span class="ruby-identifier">options_string</span> =
    <span class="ruby-string">&quot;,{
@@ -527,8 +644,13 @@ Example:                                                                        
         labelsDivWidth: 100,                                                       // Set the
         labelsDiv: document.getElementById('Legend_Div&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'),     // Specifies External Div to put Legend Labels in
         labelsSeparateLines: true,                                                 // Different lines per label for easier readability
-        underlayCallback: drawLines&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;,                          // MUST enable this  to show linear regression
-        xlabel: '&lt;%=params[:x_var]%&gt;',                                             // Label for the X axis
+        &quot;</span>
+
+       <span class="ruby-identifier">options_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;underlayCallback: drawLines&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;,        // MUST enable this  to show linear regression
+         &quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@linear</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+
+
+        <span class="ruby-identifier">options_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;xlabel: '&lt;%=params[:x_var]%&gt;',                          // Label for the X axis
         ylabel: '&lt;%=render :inline =&gt; params[:y_var].to_s %&gt;',                     // Labels for the Y axis
         visibility: &lt;%= render :inline =&gt; @plot.first.all_checkboxes_true(params[:y_var]) %&gt;   // Initial visibility of plot lines
       } &quot;</span>
@@ -560,11 +682,13 @@ href="Plot.html#method-i-filter_table">#filter_table</a>
 =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
 
 <pre>Purpose:                                                                  #
-    Indicates if columns are to be filtered in db selection               #
+    Indicates if columns are to be filtered in db selection. The          #
+    @@find_filter variable is set above, under the &quot;Database Table &quot;      #
+    &quot;Specifications&quot; section                                              #
 Inputs:                                                                   #
     None                                                                  #
 Outputs:                                                                  #
-    boolean, true or false                                                #
+    @@find_filter: boolean, true or false                                 #
 Calling:                                                                  #
          &gt;&gt; TorF = Plot.filter_table                                      #
 Example:                                                                  #
@@ -582,7 +706,7 @@ Example:                                                                  #
 
           
           <div class="method-source-code" id="filter_table-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 82</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 143</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">filter_table</span>
   <span class="ruby-keyword">return</span>  <span class="ruby-identifier">@@find_filter</span>
 <span class="ruby-keyword">end</span></pre>
@@ -607,14 +731,56 @@ Example:                                                                  #
 
         <div class="method-description">
           
-          
+          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= <a
+href="Plot.html#method-i-linear_reg">#linear_reg</a> 
+*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#</p>
+
+<pre class="ruby"><span class="ruby-constant">Purpose</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+    <span class="ruby-constant">This</span> <span class="ruby-identifier">function</span> <span class="ruby-identifier">returns</span> <span class="ruby-identifier">javascript</span> <span class="ruby-identifier">functions</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">utilities</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">enable</span> <span class="ruby-identifier">the</span>          <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">calculation</span>, <span class="ruby-identifier">displaying</span>, <span class="ruby-keyword">and</span> <span class="ruby-identifier">drawing</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">linear</span> <span class="ruby-identifier">regression</span> <span class="ruby-identifier">fits</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">plotted</span>        <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">data</span> <span class="ruby-identifier">sets</span>. <span class="ruby-constant">While</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">spectacularly</span> <span class="ruby-identifier">useful</span>, <span class="ruby-identifier">this</span> <span class="ruby-identifier">functionality</span> <span class="ruby-identifier">shows</span> <span class="ruby-identifier">how</span> <span class="ruby-identifier">easily</span>    <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">dynamic</span> <span class="ruby-identifier">interaction</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">data</span> <span class="ruby-identifier">manipulation</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">graph</span> <span class="ruby-identifier">data</span> <span class="ruby-identifier">can</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">implemented</span>.       <span class="ruby-comment">#</span>
+    <span class="ruby-constant">Each</span> <span class="ruby-identifier">time</span> <span class="ruby-identifier">it</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">called</span>, <span class="ruby-identifier">this</span> <span class="ruby-identifier">function</span> <span class="ruby-identifier">creates</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">whole</span> <span class="ruby-identifier">new</span> <span class="ruby-identifier">set</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">javascript</span>       <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">functions</span>, <span class="ruby-identifier">tailored</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">individual</span> <span class="ruby-identifier">graph</span> <span class="ruby-identifier">window</span>.                                <span class="ruby-comment">#</span>
+    <span class="ruby-constant">Again</span>, <span class="ruby-identifier">all</span> <span class="ruby-identifier">these</span> <span class="ruby-identifier">functions</span> <span class="ruby-identifier">are</span> <span class="ruby-identifier">designed</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">tied</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">dynamically</span> <span class="ruby-identifier">named</span> <span class="ruby-identifier">graph</span>     <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">windows</span>, <span class="ruby-identifier">activation</span> <span class="ruby-identifier">buttons</span>, <span class="ruby-keyword">and</span> <span class="ruby-identifier">div</span><span class="ruby-string">'s in order to work. Proper cross referencing #
+    simply depends on keeping the &quot;graphnum&quot; variable constant in calling.            #
+Inputs:                                                                               #
+    graphnum (optional)-Integer. The particular graph window that the regression      #
+                        functions will be tied to                                     #
+                        Again, &quot;graphnum&quot; should mirror the  Dygraphs instantiation   #
+                        of &quot;graphdivX&quot; inside the view. See the plot_template.html    #
+                        page for more information.                                    #
+Outputs:                                                                              #
+    linear_reg_str-String. Contains Javascript code and function definitions.         #
+                   Together, they represent all utilities needed for regression       #
+                   functionality.                                                     #
+Calling:                                                                              #
+    &gt;&gt;@plot.first.linear_reg(graph_number)                                            #
+Example:                                                                              #
+     In a view, to enable linear regression functionality for a particular graph      #
+     window, just call this function with the corresponding window number             #
+        &gt;&gt; regression_functions = @plot.first.linear_reg(0)                           #
+     generates functions tied to the graph window 0 (graphdiv0) and the corresponding #
+     HTML elements required for activation.                                           #
+     As before, implementation requires live rendering of this string:                #
+        &gt;&gt; render :inline =&gt; regression_functions                                     #
+                                                                                      #
+NOTE:                                                                                 #
+     Much of this I took from an online open source. It has since been modified and   #
+     I have added features and functions of my own, but at its core it is the same as #
+     is offered from the Dygraphs website.                                            #
+                                                                                      #
+</span></pre>
+
+<p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
           
 
           
           <div class="method-source-code" id="linear_reg-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 399</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 560</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg</span>(<span class="ruby-identifier">graphnum</span> = <span class="ruby-string">&quot;&quot;</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-string">'// coefficients of regression for each series.
+  <span class="ruby-identifier">linear_reg_str</span> =<span class="ruby-string">'// coefficients of regression for each series.
   // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
   // only. The regression line is y = 1 + 2 * x.
   var coeffs = [ null, null, null ];
@@ -706,7 +872,7 @@ Example:                                                                  #
   }
 
 
-  // Here is my function to format and return Linear Regression Ceofficients
+  // Here is my function to format and return Linear Regression Coefficients
   //    It places a formatted string of coefficients in the appropriately named
   //    &lt;div&gt;. Dynamic naming of each line series space as &lt;div_0&gt; , &lt;div_1&gt;
   //    etc is required for this to work. That way, each time a regression is
@@ -733,6 +899,7 @@ Example:                                                                  #
     }
 
 '</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">linear_reg_str</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- linear_reg-source -->
           
@@ -759,24 +926,52 @@ Example:                                                                  #
 href="Plot.html#method-i-linear_reg_buttons">#linear_reg_buttons</a> 
 *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#</p>
 
-<pre>Purpose:                                                                              #
-    This function returns HTML formatted strings that, when rendered in a view, will  #
-      1. create a button linked to each line in the corresponding plot window.        #
-      2. create a DIV linked to each line in the corresponding plot window            #
-    Clicking the button will generate and plot a linear regression for its            #
-      associated dataset, and print the coefficients of that regression inside the    #
-      newly created DIV. Both are rendered live to call other Javascript functions    #
-      that handle these two actions.                                                  #
-Calling:                                                                              #
-
-                                                                                      #</pre>
+<pre class="ruby"><span class="ruby-constant">Purpose</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+    <span class="ruby-constant">This</span> <span class="ruby-identifier">function</span> <span class="ruby-identifier">returns</span> <span class="ruby-constant">HTML</span> <span class="ruby-identifier">formatted</span> <span class="ruby-identifier">strings</span> <span class="ruby-identifier">that</span>, <span class="ruby-keyword">when</span> <span class="ruby-identifier">rendered</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">view</span>, <span class="ruby-identifier">will</span>  <span class="ruby-comment">#</span>
+      <span class="ruby-value">1</span>. <span class="ruby-identifier">create</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">button</span> <span class="ruby-identifier">linked</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">each</span> <span class="ruby-identifier">line</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">corresponding</span> <span class="ruby-identifier">plot</span> <span class="ruby-identifier">window</span>.        <span class="ruby-comment">#</span>
+      <span class="ruby-value">2</span>. <span class="ruby-identifier">create</span> <span class="ruby-identifier">a</span> <span class="ruby-constant">DIV</span> <span class="ruby-identifier">linked</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">each</span> <span class="ruby-identifier">line</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">corresponding</span> <span class="ruby-identifier">plot</span> <span class="ruby-identifier">window</span>            <span class="ruby-comment">#</span>
+    <span class="ruby-constant">Clicking</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">button</span> <span class="ruby-identifier">will</span> <span class="ruby-identifier">generate</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">plot</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">linear</span> <span class="ruby-identifier">regression</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">its</span>            <span class="ruby-comment">#</span>
+      <span class="ruby-identifier">associated</span> <span class="ruby-identifier">dataset</span>, <span class="ruby-keyword">and</span> <span class="ruby-identifier">print</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">coefficients</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">regression</span> <span class="ruby-identifier">inside</span> <span class="ruby-identifier">the</span>    <span class="ruby-comment">#</span>
+      <span class="ruby-identifier">newly</span> <span class="ruby-identifier">created</span> <span class="ruby-constant">DIV</span>. <span class="ruby-constant">Both</span> <span class="ruby-identifier">are</span> <span class="ruby-identifier">rendered</span> <span class="ruby-identifier">live</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">call</span> <span class="ruby-identifier">other</span> <span class="ruby-constant">Javascript</span> <span class="ruby-identifier">functions</span>    <span class="ruby-comment">#</span>
+      <span class="ruby-identifier">that</span> <span class="ruby-identifier">handle</span> <span class="ruby-identifier">these</span> <span class="ruby-identifier">two</span> <span class="ruby-identifier">actions</span>.                                                  <span class="ruby-comment">#</span>
+    <span class="ruby-constant">Note</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">the</span> <span class="ruby-string">&quot;graphnum&quot;</span> <span class="ruby-identifier">variable</span> <span class="ruby-identifier">must</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">same</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">all</span> <span class="ruby-identifier">applicable</span> <span class="ruby-identifier">functions</span>.  <span class="ruby-comment">#</span>
+    <span class="ruby-constant">HTML</span> <span class="ruby-identifier">elements</span>, <span class="ruby-constant">Javascript</span> <span class="ruby-identifier">operations</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">internal</span> <span class="ruby-identifier">calculations</span> <span class="ruby-identifier">depend</span> <span class="ruby-identifier">on</span> <span class="ruby-identifier">this</span>     <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">variable</span> <span class="ruby-identifier">being</span> <span class="ruby-identifier">constant</span> <span class="ruby-identifier">throughout</span>.                                               <span class="ruby-comment">#</span>
+<span class="ruby-constant">Inputs</span><span class="ruby-operator">:</span>                                                                               <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">list</span><span class="ruby-operator">-</span><span class="ruby-constant">String</span>. <span class="ruby-constant">Array</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">variable</span> <span class="ruby-identifier">names</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">will</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">tied</span> <span class="ruby-identifier">to</span> <span class="ruby-constant">Linear</span> <span class="ruby-constant">Regression</span>       <span class="ruby-comment">#</span>
+         <span class="ruby-identifier">generation</span> <span class="ruby-identifier">buttons</span>                                                           <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">graphnum</span> (<span class="ruby-identifier">optional</span>)<span class="ruby-operator">-</span><span class="ruby-constant">Integer</span>. <span class="ruby-constant">The</span> <span class="ruby-identifier">particular</span> <span class="ruby-identifier">graph</span> <span class="ruby-identifier">window</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">buttons</span> <span class="ruby-identifier">will</span> <span class="ruby-identifier">be</span> <span class="ruby-comment">#</span>
+                        <span class="ruby-identifier">connected</span> <span class="ruby-identifier">to</span>                                                  <span class="ruby-comment">#</span>
+                        <span class="ruby-constant">Again</span>, <span class="ruby-string">&quot;graphnum&quot;</span> <span class="ruby-identifier">should</span> <span class="ruby-identifier">mirror</span> <span class="ruby-identifier">the</span>  <span class="ruby-constant">Dygraphs</span> <span class="ruby-identifier">instantiation</span>   <span class="ruby-comment">#</span>
+                        <span class="ruby-identifier">of</span> <span class="ruby-string">&quot;graphdivX&quot;</span> <span class="ruby-identifier">inside</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">view</span>. <span class="ruby-constant">See</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">plot_template</span>.<span class="ruby-identifier">html</span>    <span class="ruby-comment">#</span>
+                        <span class="ruby-identifier">page</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">more</span> <span class="ruby-identifier">information</span>.                                    <span class="ruby-comment">#</span>
+<span class="ruby-constant">Outputs</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">button_str</span><span class="ruby-operator">-</span> <span class="ruby-constant">String</span>. <span class="ruby-constant">HTML</span>  <span class="ruby-identifier">formatted</span> <span class="ruby-identifier">string</span> <span class="ruby-identifier">that</span>, <span class="ruby-keyword">when</span> <span class="ruby-identifier">rendered</span>, <span class="ruby-identifier">will</span> <span class="ruby-identifier">create</span>       <span class="ruby-comment">#</span>
+                <span class="ruby-identifier">buttons</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">an</span> <span class="ruby-constant">HTML</span> <span class="ruby-identifier">page</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">activate</span> <span class="ruby-identifier">linear</span> <span class="ruby-identifier">regression</span> <span class="ruby-identifier">functionality</span> <span class="ruby-comment">#</span>
+<span class="ruby-constant">Calling</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+    <span class="ruby-operator">&gt;&gt;</span><span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">linear_reg_buttons</span>(<span class="ruby-identifier">my_list</span>,<span class="ruby-identifier">graph_number</span>)                            <span class="ruby-comment">#</span>
+<span class="ruby-constant">Example</span><span class="ruby-operator">:</span>                                                                              <span class="ruby-comment">#</span>
+     <span class="ruby-constant">Given</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">list</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">variables</span> <span class="ruby-identifier">being</span> <span class="ruby-identifier">plotted</span>, <span class="ruby-identifier">the</span> <span class="ruby-constant">HTML</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">button</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">each</span> <span class="ruby-identifier">of</span>       <span class="ruby-comment">#</span>
+     <span class="ruby-identifier">those</span> <span class="ruby-identifier">variables</span> <span class="ruby-identifier">will</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">created</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">returned</span> <span class="ruby-identifier">as</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">single</span> <span class="ruby-identifier">string</span>.                 <span class="ruby-comment">#</span>
+        <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">params</span>[:<span class="ruby-identifier">y_var</span>] = [<span class="ruby-string">'y1'</span>,<span class="ruby-string">'y2'</span>,<span class="ruby-string">'y3'</span>]                                          <span class="ruby-comment">#</span>
+        <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">button_code</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">linear_reg_buttons</span>(<span class="ruby-identifier">params</span>[:<span class="ruby-identifier">y_var</span>])               <span class="ruby-comment">#</span>
+     <span class="ruby-constant">For</span> <span class="ruby-identifier">plots</span> <span class="ruby-identifier">with</span> <span class="ruby-identifier">multiple</span> <span class="ruby-identifier">graph</span> <span class="ruby-identifier">windows</span>, <span class="ruby-identifier">the</span> <span class="ruby-identifier">appropriate</span> <span class="ruby-identifier">window</span> <span class="ruby-identifier">must</span> <span class="ruby-identifier">also</span> <span class="ruby-identifier">be</span>       <span class="ruby-comment">#</span>
+     <span class="ruby-identifier">into</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">function</span><span class="ruby-string">'s calling                                                     #
+     In practice, this code must then be rendered live in the VIEW it is being called #
+     in                                                                               #
+        &gt;&gt; render :inline =&gt; button_code                                              #
+     Now each button is tied to a single line in the appropriate graph window, and    #
+     is set to activate javascript functions that will analyze that line, report      #
+     its coefficients, and draw the newly created linear fit.                         #
+                                                                                      #
+</span></pre>
 
 <p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
           
 
           
           <div class="method-source-code" id="linear_reg_buttons-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 385</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 507</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg_buttons</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
 
   <span class="ruby-identifier">button_str</span> = <span class="ruby-string">''</span>
@@ -810,14 +1005,16 @@ Calling:                                                                        
 
         <div class="method-description">
           
-          <h1 id="method-i-list_vars-label-%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D+list_vars+%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%23">*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= <a href="Plot.html#method-i-list_vars">#list_vars</a> =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#</h1>
+          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= <a
+href="Plot.html#method-i-list_vars">#list_vars</a>
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
 
 <pre class="ruby"><span class="ruby-constant">Purpose</span><span class="ruby-operator">:</span>                                                                  <span class="ruby-comment">#</span>
     <span class="ruby-constant">Return</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">array</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">attribute</span> <span class="ruby-identifier">names</span> <span class="ruby-identifier">as</span> <span class="ruby-identifier">strings</span>.                        <span class="ruby-comment">#</span>
 <span class="ruby-constant">Inputs</span><span class="ruby-operator">:</span>                                                                   <span class="ruby-comment">#</span>
     <span class="ruby-constant">None</span>                                                                  <span class="ruby-comment">#</span>
 <span class="ruby-constant">Outputs</span><span class="ruby-operator">:</span>                                                                  <span class="ruby-comment">#</span>
-    <span class="ruby-constant">Array</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">strings</span> <span class="ruby-identifier">containing</span> <span class="ruby-identifier">object</span> <span class="ruby-identifier">attributes</span>                         <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">vars</span><span class="ruby-operator">:</span> <span class="ruby-constant">Array</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">strings</span> <span class="ruby-identifier">containing</span> <span class="ruby-identifier">collected</span> <span class="ruby-identifier">object</span> <span class="ruby-identifier">attributes</span>         <span class="ruby-comment">#</span>
 <span class="ruby-constant">Calling</span><span class="ruby-operator">:</span>                                                                  <span class="ruby-comment">#</span>
          <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">my_varnames</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">list_vars</span>                                 <span class="ruby-comment">#</span>
 <span class="ruby-constant">Example</span><span class="ruby-operator">:</span>                                                                  <span class="ruby-comment">#</span>
@@ -835,7 +1032,7 @@ Calling:                                                                        
 
           
           <div class="method-source-code" id="list_vars-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 174</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 235</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">list_vars</span>
   <span class="ruby-identifier">atts</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>
   <span class="ruby-identifier">vars</span> = []
@@ -880,7 +1077,8 @@ Inputs:                                                                   #
                way,for plots with multiple windows, a checkbox only turns #
                on/off lines for that window                               #
 Outputs:                                                                  #
-    boolean, true or false                                                #
+   boxstring: String. HTML formatted string tying HTML checkboxes to      #
+              individual plot lines.                                      #
 Calling:                                                                  #
         &gt;&gt; @plot.first.put_checkboxes(y_vars)                             #
     This dynamically makes HTML that activates a check box for each of    #
@@ -900,7 +1098,7 @@ Example:                                                                  #
 
           
           <div class="method-source-code" id="put_checkboxes-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 213</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 275</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">put_checkboxes</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">boxstring</span> = <span class="ruby-string">''</span> <span class="ruby-comment">#</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
