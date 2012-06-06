@@ -1,16 +1,19 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
-#require "sqlite3"
+require "sqlite3"
+
+# Gem needed to connect to SQLite3 database
+gem 'sqlite3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
-gem 'sqlite3'
-#gem 'sqlite3-ruby'
+# Gem needed to connect to MySQL database
+#gem 'mysql2'
+
 gem 'calendar_date_select'   # Doesn't Work
-#gem 'calendar'
+
 
 
 

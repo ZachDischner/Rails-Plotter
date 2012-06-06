@@ -16,10 +16,10 @@ To date (July 1 2012), I have successfully tested this app with the following da
 * SQLite
 it should perform for other setups as well, but they have not been examined yet.
 
-=Getting Started
+=Setup
 
 The best way to get started is to load up a demo and try it out.
-BEWARE, The hardest thing is getting Ruby/Ruby on Rails/ RoR + Databases to work cohesively.
+BEWARE, The hardest thing is getting Ruby/Ruby on Rails and RoR + Databases to work cohesively.
 
 ==Environment
 Obviously, you'll need to have Ruby, Ruby on Rails, and a Database client installed on your machine.
@@ -44,11 +44,59 @@ http://www.jetbrains.com/ruby
 It is easy to use, very intelligent, and has great integration with GIT version control systems. It also has tools to
 manage your versions of Ruby and Gems, which are much easier to use than trying to do it all from the Command Line. With
 this program, you can easily manage which Ruby SDKs you are using and which are available, and make sure all Gems are up-to-date
-and working activated.
+and activated.
+
+In addition, RubyMine has built in managers for data sources. It can be difficult to connect RoR to your databases, and
+using this feature makes it much easier.
 
 ==Databases
 Included in this package is a self contained SQLite3 table, and a script that will create a MySQL database and table.
-Both connections
+Since required gems are dependant on local libraries, SQLite3 and MySQL will need to be installed on your machine in
+order for this to work. If you really don't want to install them, you must change requirements in */config/Gemfile*
+All necessary connection gems and database configurations for these databases are included.
+
+The SQLite3 database is self contained, and is located in */db/sqlite_test.sqlite3*. It should be found and connected to
+automatically. It is a simple and small table, where each column is a variable which can be plotted against other columns.
+
+The MySQL database is populated using the text-file: */CreateTestTable.txt*
+
+To populate your MySQL database, simply run:
+
+    >>mysql < /dir/to/app/CreateTestTable.txt
+
+This will build a MySQL test database and table full of stock market data. An important difference between the MySQL and
+the SQLite3 database is in the schema. Where the SQLite3 database just has numeric columns to plot against each-other, the
+MySQL database has a column of strings, which will be used to filter the rows within columns to plot. This is because for
+a database full of stock market stats, you will have lots of the same variables *(open, close, volume, ect)* for a
+variety of stock market symbols. The difference may seem moot, but it really represents a totally different approach
+to data fetching and plotting. The two databases together will show how this app can handle both with ease.
+
+Connecting the database to Rails often is difficult. Error like "database configuration does not specify adapter" pop up
+even when the configurations are all correct. Fixing these errors often seems like magic. Simple restarts sometimes fixes
+them. More often then not, digging through the interweb is the best way to solve these errors.
+
+==The All Clear
+Basically, you'll know everything is working correctly when you can successfully run the rails console, and typing:
+    Plot.first
+Returns the first row in your database.
+Once this works for both of the provided databases (switching between will be covered shortly), you should be good to go!
+
+=Take it for a Test Drive
+Once everything is installed correctly (a never ending struggle), its time to try it out! I'll walk you through how to
+use the app for each database. Hopefully this will illustrate how simple it will be to connect to your own database. The
+RoR connection specifications for both can be found in */config/database.yml*. This is where you will put connection
+information for your own database.
+
+Normally, creating a web server designed to plot data from a database takes months to setup and lots of tweaking and
+tinkering. Then, say you want to start over with an entirely different database server and a completely different table
+schema. Most of the time, this requires a lot of modification to your server, if not a whole new setup.
+
+Keeping that in mind, this app was designed to make this transition especially easy, as I will illustrate below.
+
+==SQLite Database
+
+
+
 
 
 

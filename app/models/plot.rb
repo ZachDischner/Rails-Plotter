@@ -65,27 +65,26 @@ class Plot < ActiveRecord::Base
   # 1.0
   # MYSQL development database, use the built in Stocks database.
   # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
-  establish_connection :development
-  set_table_name "stock_test"           # Table name defined in the "CreateTestTable.txt" script
-  set_primary_key :id                   # Table's primary key
-  @@find_filter = true                  # Indicates that this database will require column filtering
-  @@default_x       = ["date"]
-  @@default_y       = ["open","close","adjclose"]
-  @@default_filter  = ["aapl","arwr","goog","dow"]
-  @@default_feature = ["Both"]
+  #establish_connection :development                    # The connection specs in /config/database.yml
+  #set_table_name "stock_test"                          # Table name defined in the "CreateTestTable.txt" script
+  #set_primary_key :id                                  # Table's primary key
+  #@@find_filter = true                                 # Indicates that this database will require column filtering (No for unique columns)
+  #@@default_x       = ["date"]                         # Default selection for X axis
+  #@@default_y       = ["open","close","adjclose"]      # Default selection(s) for Y axis
+  #@@default_filter  = ["aapl","arwr","goog","dow"]     # Default selection(s) for FILTER selection
+  #@@default_feature = ["Both"]                         # Default selection for interaction FEATURE
 
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   # 2.0
   #SQLITE test development environment
-  #establish_connection(:adapter => "sqlite3", :database => "db/sqlite_test.sqlite3", :pool => 5 )
-  #establish_connection :sqlite_test
-  #set_table_name "plots"
-  #@@find_filter = false                 # Indicates that this database will NOT require column filtering
-  #@@default_x       = [""]
-  #@@default_y       = [""]
-  #@@default_filter  = [""]
-  #@@default_feature = [""]
+  establish_connection :sqlite_test                     # The connection specs in /config/database.yml
+  set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
+  @@find_filter = false                                 # Indicates that this database will require column filtering (No for unique columns)
+  @@default_x       = [""]                              # Default selection for X axis
+  @@default_y       = [""]                              # Default selection(s) for Y axis
+  @@default_filter  = [""]                              # Default selection(s) for FILTER selection
+  @@default_feature = [""]                              # Default selection for interaction FEATURE
 
 
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
@@ -115,6 +114,11 @@ class Plot < ActiveRecord::Base
 
   def default_selections()
     # figure out how to default to " "
+    if !defined? @@default_x       then @@default_x       = [""]  end
+    if !defined? @@default_y       then @@default_y       = [""]  end
+    if !defined? @@default_filter  then @@default_filter  = [""]  end
+    if !defined? @@default_feature then @@default_feature = [""]  end
+
     return @@default_x,@@default_y,@@default_filter,@@default_feature
   end
 

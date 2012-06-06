@@ -1,5 +1,5 @@
 sqlite_test:
-    adapter: sqlite3
+    adapter:  sqlite3
     database: db/sqlite_test.sqlite3
     table: plots
     pool: 5
