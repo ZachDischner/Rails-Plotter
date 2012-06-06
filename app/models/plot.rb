@@ -65,27 +65,27 @@ class Plot < ActiveRecord::Base
   # 1.0
   # MYSQL development database, use the built in Stocks database.
   # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
-  #establish_connection :development
-  #set_table_name "stock_test"           # Table name defined in the "CreateTestTable.txt" script
-  #set_primary_key :id                   # Table's primary key
-  #@@find_filter = true                  # Indicates that this database will require column filtering
-  #@@default_x       = ["date"]
-  #@@default_y       = ["open","close","adjclose"]
-  #@@default_filter  = ["aapl","arwr","goog","dow"]
-  #@@default_feature = ["Both"]
+  establish_connection :development
+  set_table_name "stock_test"           # Table name defined in the "CreateTestTable.txt" script
+  set_primary_key :id                   # Table's primary key
+  @@find_filter = true                  # Indicates that this database will require column filtering
+  @@default_x       = ["date"]
+  @@default_y       = ["open","close","adjclose"]
+  @@default_filter  = ["aapl","arwr","goog","dow"]
+  @@default_feature = ["Both"]
 
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   # 2.0
   #SQLITE test development environment
   #establish_connection(:adapter => "sqlite3", :database => "db/sqlite_test.sqlite3", :pool => 5 )
-  establish_connection :sqlite_test
-  set_table_name "plots"
-  @@find_filter = false                 # Indicates that this database will NOT require column filtering
-  @@default_x       = [""]
-  @@default_y       = [""]
-  @@default_filter  = [""]
-  @@default_feature = [""]
+  #establish_connection :sqlite_test
+  #set_table_name "plots"
+  #@@find_filter = false                 # Indicates that this database will NOT require column filtering
+  #@@default_x       = [""]
+  #@@default_y       = [""]
+  #@@default_filter  = [""]
+  #@@default_feature = [""]
 
 
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
