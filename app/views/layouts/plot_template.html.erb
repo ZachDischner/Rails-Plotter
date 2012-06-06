@@ -47,7 +47,7 @@
                       <%# Dynamic Value Putter%>
                       <%= putc(@plot.first.dygraph_body(@tags,@plot)) %>
                       <%# Options for the Dygraph plot %>
-                      <%= render :inline => @plot.first.dygraph_options(ii.to_s) %>
+                      <%= render :inline => @plot.first.dygraph_options(ii.to_s,@linear) %>
               );   // finish the Dygraph  Plot section
 
 

@@ -115,7 +115,7 @@ class PlotsController < ApplicationController
       when 'Both'
         @linear = true
         @checkboxes = true
-      else # Default, has no feature. Just a blank plot with no extra interaction.
+      when 'None' # Default, has no feature. Just a blank plot with no extra interaction.
         @linear = false
         @checkboxes = false
     end

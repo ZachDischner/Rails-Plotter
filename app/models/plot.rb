@@ -81,8 +81,7 @@ class Plot < ActiveRecord::Base
   #establish_connection(:adapter => "sqlite3", :database => "db/sqlite_test.sqlite3", :pool => 5 )
   establish_connection :sqlite_test
   set_table_name "plots"
-  @@find_filter = false
-  @@find_filter = true                  # Indicates that this database will require column filtering
+  @@find_filter = false                 # Indicates that this database will NOT require column filtering
   @@default_x       = [""]
   @@default_y       = [""]
   @@default_filter  = [""]
@@ -439,7 +438,7 @@ class Plot < ActiveRecord::Base
   #       options have been formatted to apply to just a single graph window.             #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-  def dygraph_options(graphnum="")
+  def dygraph_options(graphnum="",lin_reg="false")
       options_string =
      ",{
           height: 375,                                                               // Specifies the Height of the plot area
@@ -453,7 +452,7 @@ class Plot < ActiveRecord::Base
           "
 
          options_string += "underlayCallback: drawLines" + graphnum.to_s + ",        // MUST enable this  to show linear regression
-           " unless @linear == false
+           " unless !lin_reg
 
 
           options_string += "xlabel: '<%=params[:x_var]%>',                          // Label for the X axis
