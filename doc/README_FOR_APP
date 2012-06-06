@@ -5,7 +5,10 @@ connect this app with your database. If so, read on.
 This was built for the Laboratory for Atmospheric and Space Physics (LASP) in Boulder, Colorado.
 Its AIM is to enable quick visulization of database numeric data, without spending months developing
 your own custom solutions. Since LASP has a diverse scientific community, using many different database engines and schemas, I tried
-to make this app as generic as I could, so that it may work for any of them.
+to make this app as generic as I could, so that it may work for any of them. The goal is that this app will provide a
+startup web server for any basic *single table* database table in under 2 hours. Most of that time will be installing
+RoR dependencies. Once set up, you should be able to run the server for your database within 10 minutes, with only
+minimal adjustments to the code itself.
 
 To date (July 1 2012), I have successfully tested this app with the following databases:
 * MySQL
@@ -20,8 +23,11 @@ BEWARE, The hardest thing is getting Ruby/Ruby on Rails/ RoR + Databases to work
 
 ==Environment
 Obviously, you'll need to have Ruby, Ruby on Rails, and a Database client installed on your machine.
-SQLite and MYSQL sample databases are included with this app for testing.  Getting Ruby/RoR is notoriously
-difficult for some reason, though in practice it should be very simple. Here is a basic tutorial:
+SQLite and MYSQL sample databases are included with this app for testing.  You **must** have MySQL installed on your
+machine in order to for *>>bundle install* to work correctly.
+
+Getting Ruby/RoR is notoriously difficult for some reason, though in practice it should be very simple.
+Here is a basic tutorial:
 http://eddorre.com/posts/rails-ultimate-install-guide-on-os-x-lion-using-rvm-homebrew-and-pow
 I went through a similar tutorial, and searching through google got me though any problems I ran into.
 
@@ -36,7 +42,9 @@ I *strongly* recommend using a nice GUI to help manage everything.
 RubyMine is my weapon of choice:
 http://www.jetbrains.com/ruby
 It is easy to use, very intelligent, and has great integration with GIT version control systems. It also has tools to
-manage your versions of Ruby and Gems, which are much easier to use than trying to do it all from the Command Line.
+manage your versions of Ruby and Gems, which are much easier to use than trying to do it all from the Command Line. With
+this program, you can easily manage which Ruby SDKs you are using and which are available, and make sure all Gems are up-to-date
+and working activated.
 
 ==Databases
 Included in this package is a self contained SQLite3 table, and a script that will create a MySQL database and table.
