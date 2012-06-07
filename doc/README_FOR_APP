@@ -21,7 +21,7 @@ it should perform for other setups as well, but they have not been examined yet.
 ==Architecture
 The architecture of this application is pretty simple, and there are really only 4 real pieces of code.
 
-1. Selector View: An HTML page that contains selectors, tied to database information. This is where you use HTML elements
+1.0 Selector View: An HTML page that contains selectors, tied to database information. This is where you use HTML elements
 to essentially build your database query. These elements include:
 
 * X axis variable
@@ -33,16 +33,16 @@ to essentially build your database query. These elements include:
 
 This page is found in */app/views/plots/index.html.erb*
 
-2. Plot View: An HTML page that takes a data set obtained from your database, and from it renders interactive Dygraphs
+2.0 Plot View: An HTML page that takes a data set obtained from your database, and from it renders interactive Dygraphs
 plots.
 This page is found in  */app/views/plots/plotter.html.erb*
 
-3. Controller: Ruby file that grabs DB data necessary to construct HTML pages, and handles lots of the login requried in
+3.0 Controller: Ruby file that grabs DB data necessary to construct HTML pages, and handles lots of the login requried in
 that selection. Here, there are only two pages. There are two methods, one for the Selector page, and one for the Plot
 page.
 This file is found in */app/controllers/plots_controller.rb*
 
-4. Plot Class: Ruby file that contains all the business logic of this application. The methods defined within are used
+4.0 Plot Class: Ruby file that contains all the business logic of this application. The methods defined within are used
 throughout the plotting process to fetch, parse, and regulate plot data.
 This file is found in */app/models/plot.rb*
 
@@ -183,6 +183,15 @@ for a better description of this. If not set, there will be no filter applied au
 * @@default_* can be used when you know more about your database. They hold what you would like to be the options selected
 by default in the HTML page where you choose plot options. Now, they are blank, if undefined, this program will set them
 to [""] automatically.
+
+==New parts????? Or Scopes??
+
+===Controller
+This file handles the querying of the database, and provides data to an HTML page for rendering.
+
+*[[[HMM do I need to change how all this is going to work?]]]
+
+
 
 
 

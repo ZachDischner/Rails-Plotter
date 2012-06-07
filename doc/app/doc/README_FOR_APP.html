@@ -113,7 +113,7 @@ yet.</p>
 <p>The architecture of this application is pretty simple, and there are really
 only 4 real pieces of code.</p>
 
-<p># Selector View: An HTML page that contains selectors, tied to database
+<p>1.0 Selector View: An HTML page that contains selectors, tied to database
 information. This is where you use HTML elements to essentially build your
 database query. These elements include:</p>
 <ul><li>
@@ -132,20 +132,26 @@ database query. These elements include:</p>
 
 <p>This page is found in <strong>/app/views/plots/index.html.erb</strong></p>
 
-<p># <a href="../Plot.html">Plot</a> View: An HTML page that takes a data set
-obtained from your database, and from it renders interactive Dygraphs
+<p>2.0 <a href="../Plot.html">Plot</a> View: An HTML page that takes a data
+set obtained from your database, and from it renders interactive Dygraphs
 plots. This page is found in 
 <strong>/app/views/plots/plotter.html.erb</strong></p>
 
-<p># Controller: Ruby file that grabs DB data necessary to construct HTML
+<p>3.0 Controller: Ruby file that grabs DB data necessary to construct HTML
 pages, and handles lots of the login requried in that selection. Here,
 there are only two pages. There are two methods, one for the Selector page,
 and one for the <a href="../Plot.html">Plot</a> page. This file is found in
 <strong>/app/controllers/plots_controller.rb</strong></p>
 
-<p># <a href="../Plot.html">Plot</a> Class: Ruby file that contains all the
+<p>4.0 <a href="../Plot.html">Plot</a> Class: Ruby file that contains all the
 business logic of this application. The methods defined within are used
-throughout the plotting process to fetch, parse, and regulate plot data.</p>
+throughout the plotting process to fetch, parse, and regulate plot data.
+This file is found in <strong>/app/models/plot.rb</strong></p>
+
+<p>All files are well documented. Please review said documentation to get a
+better understanding of how it all works. Logic, rendering, and selection
+are all kept separate as much as possible. The way its laid out now, this
+app should be portable to other project platforms, such as Django.</p>
 
 <h1 id="label-Setup">Setup</h1>
 
@@ -325,11 +331,28 @@ uncommented. It should look like this:</p>
 <strong>/config/database.yml</strong> file) to connect to, and which table
 to use in that database connection.</p>
 
-<p>The next 5 lines are optional. *@@find_filter is an indicator, and should
-be set if your column relations are not unique. See *Filter Explanation*
-below for a better description of this. *@@default_* can be used when you
-know more about your database. They hold what you would like to be the
-options selected by default in the HTML page where you choose plot options.</p>
+<p>The next 5 lines are optional.</p>
+<ul><li>
+<p>@@find_filter is an indicator, and should be set if your column relations
+are not unique. See *Filter Explanation* below</p>
+</li></ul>
+
+<p>for a better description of this. If not set, there will be no filter
+applied automatically.</p>
+<ul><li>
+<p>@@default_* can be used when you know more about your database. They hold
+what you would like to be the options selected</p>
+</li></ul>
+
+<p>by default in the HTML page where you choose plot options. Now, they are
+blank, if undefined, this program will set them to [“”] automatically.</p>
+
+<h2 id="label-New+parts%3F%3F%3F%3F%3F+Or+Scopes%3F%3F">New parts????? Or Scopes??</h2>
+
+<h3 id="label-Controller">Controller</h3>
+
+<p>This file handles the querying of the database, and provides data to an
+HTML page for rendering.</p>
 
 </div>
 

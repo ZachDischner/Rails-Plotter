@@ -68,14 +68,14 @@ class Plot < ActiveRecord::Base
   establish_connection :development                    # The connection specs in /config/database.yml
   set_table_name "stock_test"                          # Table name defined in the "CreateTestTable.txt" script
   set_primary_key :id                                  # Table's primary key
-  @@find_filter = true                                 # Indicates that this database will require column filtering (No for unique columns)
-  @@default_x       = ["date"]                         # Default selection for X axis
-  @@default_y       = ["open","close","adjclose"]      # Default selection(s) for Y axis
-  @@default_filter  = ["aapl","arwr","goog","dow"]     # Default selection(s) for FILTER selection
-  @@default_feature = ["Both"]                         # Default selection for interaction FEATURE
-  date_name         = "date"                           # Name of column containing Date values
-  index_name        = "id"                             # Name of column containing some index value
-  filter_name       = "ticker"                         # Name of column containing filters
+  find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
+  default_x       = ["date"]                         # Default selection for X axis
+  default_y       = ["open","close","adjclose"]      # Default selection(s) for Y axis
+  default_filter  = ["aapl","arwr","goog","dow"]     # Default selection(s) for FILTER selection
+  default_feature = ["Both"]                         # Default selection for interaction FEATURE
+  date_name       = "date"                           # Name of column containing Date values
+  index_name      = "id"                             # Name of column containing some index value
+  filter_name     = "ticker"                         # Name of column containing filters
 
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -151,12 +151,6 @@ class Plot < ActiveRecord::Base
   #
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
-
-  ################################################################################################################
-  #>>>>>>>>>>>> Everything Below this line shouldn't be changed unless you know what you're doing  <<<<<<<<<<<<<<#
-  ################################################################################################################
-
-
   #*=*=*=*=*=*=*=*=*=*=*=*=*=* default_selections =*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   # Purpose:                                                                  #
   #     Indicates if columns are to be filtered in db selection. The          #
@@ -182,12 +176,12 @@ class Plot < ActiveRecord::Base
 
   def default_selections()
     # figure out how to default to " "
-    if !defined? @@default_x       then @@default_x       = [""]  end
-    if !defined? @@default_y       then @@default_y       = [""]  end
-    if !defined? @@default_filter  then @@default_filter  = [""]  end
-    if !defined? @@default_feature then @@default_feature = [""]  end
+    if !defined? default_x       then default_x       = [""]  end
+    if !defined? default_y       then default_y       = [""]  end
+    if !defined? default_filter  then default_filter  = [""]  end
+    if !defined? default_feature then default_feature = [""]  end
 
-    return @@default_x,@@default_y,@@default_filter,@@default_feature
+    return default_x,default_y,default_filter,default_feature
   end
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* filter_table =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
@@ -212,8 +206,54 @@ class Plot < ActiveRecord::Base
   #                                                                           #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
   def filter_table
-    if !defined @@find_filter then @@find_filter = false
-    return  @@find_filter
+    if !defined find_filter then find_filter = false end
+    return  find_filter
+  end
+
+
+  ##############################################################################################################################
+  #>>>>>>>>>>>>>>>>>>> Everything Below this line shouldn't be changed unless you know what you're doing  <<<<<<<<<<<<<<<<<<<<<#
+  ##############################################################################################################################
+
+
+
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= all_checkboxes_true  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                              #
+  #     Generate list of true/false strings. Not complicated, just replicates             #
+  #     'true' or 'false' for placement in dygraphs options                               #
+  # Inputs:                                                                               #
+  #     list: Array of strings. Each of which represents an individual line to be         #
+  #           plotted                                                                     #
+  # Outputs:                                                                              #
+  #     String. HTML formatted list of 'true's to use when initially setting line         #
+  #     visibility/checkbox selection                                                     #
+  # Calling:                                                                              #
+  #         >> @plot.first.all_checkboxes_true(params[:y_var])                            #
+  #     Makes a list of 'true' for each member of params[:y_var]                          #
+  # Example:                                                                              #
+  #     If the Y variables of a plot are contained within an array as:                    #
+  #         >>params[:y_var] = ['y1','y2']                                                #
+  #     Then inside the method >>dygraph_options() (or if relocated directly to a view)   #
+  #         visibility: <%=                                                               #
+  #                 render :inline => @plot.first.all_checkboxes_true(params[:y_var])     #
+  #                      %>                                                               #
+  #     When used in conjunction with checkboxes, this marks which plot lines are         #
+  #     visibly when the plot shows up, and which are not.                                #
+  #                                                                                       #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+  def all_checkboxes_true(list)
+    return (["true"]*(list.length-1)).to_s
+  end
+
+
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= all_checkboxes_false  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+  #  Same as >>all_checkbox_true() except that using this function turns all plots
+  #  off initially
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+  def all_checkboxes_false(list)
+    return (["false"]*(list.length-1)).to_s
   end
 
 
@@ -284,46 +324,6 @@ class Plot < ActiveRecord::Base
       boxstring += '</p>'
       return boxstring
 
-    end
-
-
-
-    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= all_checkboxes_true  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
-    # Purpose:                                                                              #
-    #     Generate list of true/false strings. Not complicated, just replicates             #
-    #     'true' or 'false' for placement in dygraphs options                               #
-    # Inputs:                                                                               #
-    #     list: Array of strings. Each of which represents an individual line to be         #
-    #           plotted                                                                     #
-    # Outputs:                                                                              #
-    #     String. HTML formatted list of 'true's to use when initially setting line         #
-    #     visibility/checkbox selection                                                     #
-    # Calling:                                                                              #
-    #         >> @plot.first.all_checkboxes_true(params[:y_var])                            #
-    #     Makes a list of 'true' for each member of params[:y_var]                          #
-    # Example:                                                                              #
-    #     If the Y variables of a plot are contained within an array as:                    #
-    #         >>params[:y_var] = ['y1','y2']                                                #
-    #     Then inside the method >>dygraph_options() (or if relocated directly to a view)   #
-    #         visibility: <%=                                                               #
-    #                 render :inline => @plot.first.all_checkboxes_true(params[:y_var])     #
-    #                      %>                                                               #
-    #     When used in conjunction with checkboxes, this marks which plot lines are         #
-    #     visibly when the plot shows up, and which are not.                                #
-    #                                                                                       #
-    #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    def all_checkboxes_true(list)
-      return (["true"]*(list.length-1)).to_s
-    end
-
-
-
-    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= all_checkboxes_false  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
-    #  Same as >>all_checkbox_true() except that using this function turns all plots
-    #  off initially
-    #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    def all_checkboxes_false(list)
-      return (["false"]*(list.length-1)).to_s
     end
 
 
@@ -715,9 +715,9 @@ class Plot < ActiveRecord::Base
     end
 
 
-  end
 
 
+ end
 
 
 #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Some Additional Notes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#

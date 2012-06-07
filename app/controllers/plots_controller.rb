@@ -16,12 +16,13 @@ class PlotsController < ApplicationController
     # Used in the "index" page to activate helper popups that help in development
     params[:debug] = true
 
+    # Get a single row of info from the database around which to build the user interface
+    @plot=Plot.first
+
     # These tags are to be excluded from any interactions, as they are database utilities, strings, or
     # otherwise unplottable data.
     exclude_tags = ["created_at","updated_at","ticker"]
 
-    # Get a single row of info from the database around which to build the user interface
-    @plot=Plot.first
 
     # Get an array of the collected data as an array of strings. This will be used throughout plotting
     @tags = @plot.list_vars - exclude_tags
