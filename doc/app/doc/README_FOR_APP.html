@@ -81,14 +81,21 @@
 
 <p>Welcome to the interactive database plotting web engine, built in Ruby on
 Rails. If you’re reading this, then its likely you are trying to connect
-this app with your database. If so, read on.</p>
+this app with your database. This readme assumes you have some knowledge of
+Ruby on Rails. If you don’t, online resources can be great teachers. Most
+of what you’re about to read shouldn’t require much RoR insight, and the
+demo should be comprehendible even for noobs.</p>
 
 <p>This was built for the Laboratory for Atmospheric and Space Physics (LASP)
 in Boulder, Colorado. Its AIM is to enable quick visulization of database
 numeric data, without spending months developing your own custom solutions.
 Since LASP has a diverse scientific community, using many different
 database engines and schemas, I tried to make this app as generic as I
-could, so that it may work for any of them.</p>
+could, so that it may work for any of them. The goal is that this app will
+provide a startup web server for any basic *single table* database table in
+under 2 hours. Most of that time will be installing RoR dependencies. Once
+set up, you should be able to run the server for your database within 10
+minutes, with only minimal adjustments to the code itself.</p>
 
 <p>To date (July 1 2012), I have successfully tested this app with the
 following databases:</p>
@@ -103,19 +110,21 @@ following databases:</p>
 <p>it should perform for other setups as well, but they have not been examined
 yet.</p>
 
-<h1 id="label-Getting+Started">Getting Started</h1>
+<h1 id="label-Setup">Setup</h1>
 
 <p>The best way to get started is to load up a demo and try it out. BEWARE,
-The hardest thing is getting Ruby/Ruby on Rails/ RoR + Databases to work
+The hardest thing is getting Ruby/Ruby on Rails and RoR + Databases to work
 cohesively.</p>
 
 <h2 id="label-Environment">Environment</h2>
 
 <p>Obviously, you’ll need to have Ruby, Ruby on Rails, and a Database client
 installed on your machine. SQLite and MYSQL sample databases are included
-with this app for testing.  Getting Ruby/RoR is notoriously difficult for
-some reason, though in practice it should be very simple. Here is a basic
-tutorial: <a
+with this app for testing.  You <strong>must</strong> have MySQL installed
+on your machine in order to for *&gt;&gt;bundle install* to work correctly.</p>
+
+<p>Getting Ruby/RoR is notoriously difficult for some reason, though in
+practice it should be very simple. Here is a basic tutorial: <a
 href="http://eddorre.com/posts/rails-ultimate-install-guide-on-os-x-lion-using-rvm-homebrew-and-pow">eddorre.com/posts/rails-ultimate-install-guide-on-os-x-lion-using-rvm-homebrew-and-pow</a>
 I went through a similar tutorial, and searching through google got me
 though any problems I ran into.</p>
@@ -137,12 +146,108 @@ href="http://www.jetbrains.com/ruby">www.jetbrains.com/ruby</a> It is easy
 to use, very intelligent, and has great integration with GIT version
 control systems. It also has tools to manage your versions of Ruby and
 Gems, which are much easier to use than trying to do it all from the
-Command Line.</p>
+Command Line. With this program, you can easily manage which Ruby SDKs you
+are using and which are available, and make sure all Gems are up-to-date
+and activated.</p>
+
+<p>In addition, RubyMine has built in managers for data sources. It can be
+difficult to connect RoR to your databases, and using this feature makes it
+much easier.</p>
 
 <h2 id="label-Databases">Databases</h2>
 
 <p>Included in this package is a self contained SQLite3 table, and a script
-that will create a MySQL database and table.</p>
+that will create a MySQL database and table. Since required gems are
+dependant on local libraries, SQLite3 and MySQL will need to be installed
+on your machine in order for this to work. If you really don’t want to
+install them, you must change requirements in
+<strong>/config/Gemfile</strong> All necessary connection gems and database
+configurations for these databases are included.</p>
+
+<p>The SQLite3 database is self contained, and is located in
+<strong>/db/sqlite_test.sqlite3</strong>. It should be found and connected
+to automatically. It is a simple and small table, where each column is a
+variable which can be plotted against other columns.</p>
+
+<p>The MySQL database is populated using the text-file:
+<strong>/CreateTestTable.txt</strong></p>
+
+<p>To populate your MySQL database, simply run:</p>
+
+<pre>&gt;&gt;mysql &lt; /dir/to/app/CreateTestTable.txt</pre>
+
+<p>This will build a MySQL test database and table full of stock market data.
+An important difference between the MySQL and the SQLite3 database is in
+the schema. Where the SQLite3 database just has numeric columns to plot
+against each-other, the MySQL database has a column of strings, which will
+be used to filter the rows within columns to plot. This is because for a
+database full of stock market stats, you will have lots of the same
+variables *(open, close, volume, ect)* for a variety of stock market
+symbols. The difference may seem moot, but it really represents a totally
+different approach to data fetching and plotting. The two databases
+together will show how this app can handle both with ease.</p>
+
+<p>Connecting the database to Rails often is difficult. Error like “database
+configuration does not specify adapter” pop up even when the configurations
+are all correct. Fixing these errors often seems like magic. Simple
+restarts sometimes fixes them. More often then not, digging through the
+interweb is the best way to solve these errors.</p>
+
+<h2 id="label-The+All+Clear">The All Clear</h2>
+
+<p>Basically, you’ll know everything is working correctly when you can
+successfully run the rails console, and typing:</p>
+
+<pre>Plot.first</pre>
+
+<p>Returns the first row in your database. Once this works for both of the
+provided databases (switching between will be covered shortly), you should
+be good to go!</p>
+
+<h1 id="label-Take+it+for+a+Test+Drive">Take it for a Test Drive</h1>
+
+<p>Once everything is installed correctly (a never ending struggle), its time
+to try it out! I’ll walk you through how to use the app for each database.
+Hopefully this will illustrate how simple it will be to connect to your own
+database. The RoR connection specifications for both can be found in
+<strong>/config/database.yml</strong>. This is where you will put
+connection information for your own database.</p>
+
+<p>Normally, creating a web server designed to plot data from a database takes
+months to setup and lots of tweaking and tinkering. Then, say you want to
+start over with an entirely different database server and a completely
+different table schema. Most of the time, this requires a lot of
+modification to your server, if not a whole new setup.</p>
+
+<p>Keeping that in mind, this app was designed to make this transition
+especially easy, as I will illustrate below.</p>
+
+<h2 id="label-SQLite+Database">SQLite Database</h2>
+
+<p>(need to migrate and seed?)</p>
+
+<p>This is a database built in Rails, populated in the
+<strong>/db/seeds.rb</strong>. You can easily add or change the values in
+this file, and update the database with:</p>
+
+<pre>&gt;&gt;rake db:seed</pre>
+
+<p>This is a small, simple database. Each column contains a single variable,
+which can be plotted against other columns. Configuring the app to run on
+this database happens in three places: *Database Specs –&gt;
+/config/database.yml *model          –&gt; /app/models/plot.rb *controller 
+–&gt; /app/controllers/plots_controller.rb</p>
+
+<h3 id="label-Database+Specs">Database Specs</h3>
+
+<p>This section has been filled out for you. Look at
+<strong>/config/database.yml</strong> and examine the database environment:</p>
+
+<pre>sqlite_test:</pre>
+
+<p>this is where you tell Rails how to connect to your database</p>
+
+<h3 id="label-Model">Model</h3>
 
 </div>
 

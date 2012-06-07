@@ -1,6 +1,8 @@
 =Introduction
 Welcome to the interactive database plotting web engine, built in Ruby on Rails. If you're reading this, then its likely you are trying to
-connect this app with your database. If so, read on.
+connect this app with your database. This readme assumes you have some knowledge of Ruby on Rails. If you don't, online
+resources can be great teachers. Most of what you're about to read shouldn't require much RoR insight, and the demo
+should be comprehendible even for noobs.
 
 This was built for the Laboratory for Atmospheric and Space Physics (LASP) in Boulder, Colorado.
 Its AIM is to enable quick visulization of database numeric data, without spending months developing
@@ -23,7 +25,7 @@ BEWARE, The hardest thing is getting Ruby/Ruby on Rails and RoR + Databases to w
 
 ==Environment
 Obviously, you'll need to have Ruby, Ruby on Rails, and a Database client installed on your machine.
-SQLite and MYSQL sample databases are included with this app for testing.  You **must** have MySQL installed on your
+SQLite and MYSQL sample databases are included with this app for testing.  You *must* have MySQL installed on your
 machine in order to for *>>bundle install* to work correctly.
 
 Getting Ruby/RoR is notoriously difficult for some reason, though in practice it should be very simple.
@@ -95,6 +97,26 @@ Keeping that in mind, this app was designed to make this transition especially e
 
 ==SQLite Database
 
+(need to migrate and seed?)
+
+This is a database built in Rails, populated in the */db/seeds.rb*. You can easily add or change the values in this
+file, and update the database with:
+
+    >>rake db:seed
+
+This is a small, simple database. Each column contains a single variable, which can be plotted against other columns.
+Configuring the app to run on this database happens in three places:
+*Database Specs --> /config/database.yml
+*model          --> /app/models/plot.rb
+*controller     --> /app/controllers/plots_controller.rb
+
+===Database Specs
+This is where you tell Rails how to connect to your database
+This section has been filled out for you. Look at */config/database.yml* and examine the database environment:
+    sqlite_test:
+
+===Model
+This class definition is where you tell Ruby how to interpret and work with database data.
 
 
 
