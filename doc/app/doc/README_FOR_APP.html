@@ -63,8 +63,6 @@
   
     <li><a href="../ApplicationHelper.html">ApplicationHelper</a>
   
-    <li><a href="../DocController.html">DocController</a>
-  
     <li><a href="../Plot.html">Plot</a>
   
     <li><a href="../PlotsController.html">PlotsController</a>
@@ -109,6 +107,45 @@ following databases:</p>
 
 <p>it should perform for other setups as well, but they have not been examined
 yet.</p>
+
+<h2 id="label-Architecture">Architecture</h2>
+
+<p>The architecture of this application is pretty simple, and there are really
+only 4 real pieces of code.</p>
+
+<p># Selector View: An HTML page that contains selectors, tied to database
+information. This is where you use HTML elements to essentially build your
+database query. These elements include:</p>
+<ul><li>
+<p>X axis variable</p>
+</li><li>
+<p>Y axis variable(s)</p>
+</li><li>
+<p>Different plot sets or filters (optional)</p>
+</li><li>
+<p>X axis range selector using a numeric indicator (optional)</p>
+</li><li>
+<p>X axis range selector using a date indicator (optional)</p>
+</li><li>
+<p>Feature selector, enables different plot features aimed to help interaction</p>
+</li></ul>
+
+<p>This page is found in <strong>/app/views/plots/index.html.erb</strong></p>
+
+<p># <a href="../Plot.html">Plot</a> View: An HTML page that takes a data set
+obtained from your database, and from it renders interactive Dygraphs
+plots. This page is found in 
+<strong>/app/views/plots/plotter.html.erb</strong></p>
+
+<p># Controller: Ruby file that grabs DB data necessary to construct HTML
+pages, and handles lots of the login requried in that selection. Here,
+there are only two pages. There are two methods, one for the Selector page,
+and one for the <a href="../Plot.html">Plot</a> page. This file is found in
+<strong>/app/controllers/plots_controller.rb</strong></p>
+
+<p># <a href="../Plot.html">Plot</a> Class: Ruby file that contains all the
+business logic of this application. The methods defined within are used
+throughout the plotting process to fetch, parse, and regulate plot data.</p>
 
 <h1 id="label-Setup">Setup</h1>
 
@@ -204,6 +241,14 @@ successfully run the rails console, and typing:</p>
 provided databases (switching between will be covered shortly), you should
 be good to go!</p>
 
+<p>Next, either from the command line or using
+<strong>tools/bundle/install</strong> in RubyMine, run:</p>
+
+<pre>bundle install</pre>
+
+<p>to install all gems required for this app. If any fail to install, it is
+likely an issue with your environment setup.</p>
+
 <h1 id="label-Take+it+for+a+Test+Drive">Take it for a Test Drive</h1>
 
 <p>Once everything is installed correctly (a never ending struggle), its time
@@ -235,19 +280,56 @@ this file, and update the database with:</p>
 <p>This is a small, simple database. Each column contains a single variable,
 which can be plotted against other columns. Configuring the app to run on
 this database happens in three places: *Database Specs –&gt;
-/config/database.yml *model          –&gt; /app/models/plot.rb *controller 
+/config/database.yml *Model          –&gt; /app/models/plot.rb *Controller 
 –&gt; /app/controllers/plots_controller.rb</p>
 
 <h3 id="label-Database+Specs">Database Specs</h3>
 
-<p>This section has been filled out for you. Look at
-<strong>/config/database.yml</strong> and examine the database environment:</p>
+<p>This is where you tell Rails how to connect to your database This section
+has been filled out for you. Look at <strong>/config/database.yml</strong>
+and examine the database environment:</p>
 
 <pre>sqlite_test:</pre>
 
-<p>this is where you tell Rails how to connect to your database</p>
+<p>Everything needed should be included there, and should connect
+automatically to the SQLite3 database.</p>
 
 <h3 id="label-Model">Model</h3>
+
+<p>This class definition is where you tell Ruby how to interpret and work with
+database data. This really is the ‘meat and potatoes’ of the plotting app.
+The methods and code within is what turns a connection to a database into a
+epic interactive plotting experience.</p>
+
+<p>In the *Database Specs* section, you told RoR <strong>how</strong> to
+connect to your database. Here, you must give a few specifics about
+<strong>what</strong> you are connecting to.</p>
+
+<p>Now, edit/examine the *Database Table Specifications* section (near the top
+of the file). Two subsections have been pre-defined. Make sure the MySQL
+section (1.0) is all commented out, and the SQLite3 section (2.0) is
+uncommented. It should look like this:</p>
+
+<pre class="ruby"><span class="ruby-comment"># 2.0</span>
+<span class="ruby-comment">#SQLITE test development environment</span>
+<span class="ruby-identifier">establish_connection</span> :<span class="ruby-identifier">sqlite_test</span>                     <span class="ruby-comment"># The connection specs in /config/database.yml</span>
+<span class="ruby-identifier">set_table_name</span> <span class="ruby-string">&quot;plots&quot;</span>                                <span class="ruby-comment"># Table name defined in the &quot;CreateTestTable.txt&quot; script</span>
+<span class="ruby-identifier">@@find_filter</span> = <span class="ruby-keyword">false</span>                                 <span class="ruby-comment"># Indicates that this database will require column filtering (No for unique columns)</span>
+<span class="ruby-identifier">@@default_x</span>       = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection for X axis</span>
+<span class="ruby-identifier">@@default_y</span>       = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection(s) for Y axis</span>
+<span class="ruby-identifier">@@default_filter</span>  = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection(s) for FILTER selection</span>
+<span class="ruby-identifier">@@default_feature</span> = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection for interaction FEATURE</span>
+</pre>
+
+<p>The first two lines tell RoR which connection (of all listed in the
+<strong>/config/database.yml</strong> file) to connect to, and which table
+to use in that database connection.</p>
+
+<p>The next 5 lines are optional. *@@find_filter is an indicator, and should
+be set if your column relations are not unique. See *Filter Explanation*
+below for a better description of this. *@@default_* can be used when you
+know more about your database. They hold what you would like to be the
+options selected by default in the HTML page where you choose plot options.</p>
 
 </div>
 

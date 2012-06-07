@@ -10,11 +10,11 @@ gem 'sqlite3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # Gem needed to connect to MySQL database
-gem 'mysql2'
+#gem 'mysql2'
 
 gem 'calendar_date_select'   # Doesn't Work
 
-
+gem 'rake','0.9.3.beta.1'
 
 
 # Gems used only for assets and not required

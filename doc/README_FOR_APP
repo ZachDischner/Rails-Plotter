@@ -18,6 +18,38 @@ To date (July 1 2012), I have successfully tested this app with the following da
 * SQLite
 it should perform for other setups as well, but they have not been examined yet.
 
+==Architecture
+The architecture of this application is pretty simple, and there are really only 4 real pieces of code.
+
+1. Selector View: An HTML page that contains selectors, tied to database information. This is where you use HTML elements
+to essentially build your database query. These elements include:
+
+* X axis variable
+* Y axis variable(s)
+* Different plot sets or filters (optional)
+* X axis range selector using a numeric indicator (optional)
+* X axis range selector using a date indicator (optional)
+* Feature selector, enables different plot features aimed to help interaction
+
+This page is found in */app/views/plots/index.html.erb*
+
+2. Plot View: An HTML page that takes a data set obtained from your database, and from it renders interactive Dygraphs
+plots.
+This page is found in  */app/views/plots/plotter.html.erb*
+
+3. Controller: Ruby file that grabs DB data necessary to construct HTML pages, and handles lots of the login requried in
+that selection. Here, there are only two pages. There are two methods, one for the Selector page, and one for the Plot
+page.
+This file is found in */app/controllers/plots_controller.rb*
+
+4. Plot Class: Ruby file that contains all the business logic of this application. The methods defined within are used
+throughout the plotting process to fetch, parse, and regulate plot data.
+This file is found in */app/models/plot.rb*
+
+All files are well documented. Please review said documentation to get a better understanding of how it all works.
+Logic, rendering, and selection are all kept separate as much as possible. The way its laid out now, this app should be
+portable to other project platforms, such as Django.
+
 =Setup
 
 The best way to get started is to load up a demo and try it out.
@@ -83,6 +115,10 @@ Basically, you'll know everything is working correctly when you can successfully
 Returns the first row in your database.
 Once this works for both of the provided databases (switching between will be covered shortly), you should be good to go!
 
+Next, either from the command line or using *tools/bundle/install* in RubyMine, run:
+    bundle install
+to install all gems required for this app. If any fail to install, it is likely an issue with your environment setup.
+
 =Take it for a Test Drive
 Once everything is installed correctly (a never ending struggle), its time to try it out! I'll walk you through how to
 use the app for each database. Hopefully this will illustrate how simple it will be to connect to your own database. The
@@ -107,16 +143,46 @@ file, and update the database with:
 This is a small, simple database. Each column contains a single variable, which can be plotted against other columns.
 Configuring the app to run on this database happens in three places:
 *Database Specs --> /config/database.yml
-*model          --> /app/models/plot.rb
-*controller     --> /app/controllers/plots_controller.rb
+*Model          --> /app/models/plot.rb
+*Controller     --> /app/controllers/plots_controller.rb
 
 ===Database Specs
 This is where you tell Rails how to connect to your database
 This section has been filled out for you. Look at */config/database.yml* and examine the database environment:
     sqlite_test:
+Everything needed should be included there, and should connect automatically to the SQLite3 database.
 
 ===Model
-This class definition is where you tell Ruby how to interpret and work with database data.
+This class definition is where you tell Ruby how to interpret and work with database data. This really is the 'meat and
+potatoes' of the plotting app. The methods and code within is what turns a connection to a database into a epic
+interactive plotting experience.
+
+In the *Database Specs* section, you told RoR *how* to connect to your database. Here, you must give a few specifics
+about *what* you are connecting to.
+
+Now, edit/examine the *Database Table Specifications* section (near the top of the file). Two subsections have
+been pre-defined. Make sure the MySQL section (1.0) is all commented out, and the SQLite3 section (2.0) is uncommented.
+It should look like this:
+      # 2.0
+      #SQLITE test development environment
+      establish_connection :sqlite_test                     # The connection specs in /config/database.yml
+      set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
+      @@find_filter = false                                 # Indicates that this database will require column filtering (No for unique columns)
+      @@default_x       = [""]                              # Default selection for X axis
+      @@default_y       = [""]                              # Default selection(s) for Y axis
+      @@default_filter  = [""]                              # Default selection(s) for FILTER selection
+      @@default_feature = [""]                              # Default selection for interaction FEATURE
+
+The first two lines tell RoR which connection (of all listed in the */config/database.yml* file) to connect to, and which
+table to use in that database connection.
+
+The next 5 lines are optional.
+
+* @@find_filter is an indicator, and should be set if your column relations are not unique. See *Filter Explanation* below
+for a better description of this. If not set, there will be no filter applied automatically.
+* @@default_* can be used when you know more about your database. They hold what you would like to be the options selected
+by default in the HTML page where you choose plot options. Now, they are blank, if undefined, this program will set them
+to [""] automatically.
 
 
 

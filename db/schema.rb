@@ -22,5 +22,4 @@ ActiveRecord::Schema.define(:version => 20120328040626) do
     t.datetime "DataDate"
   end
 
-
 end
