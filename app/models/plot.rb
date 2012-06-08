@@ -426,9 +426,14 @@ class Plot < ActiveRecord::Base
   # Inputs:                                                                               #
   #     graphnum (optional): Integer Input The plot window that the returned options      #
   #                          correspond to.                                               #
-  #                          "graphnum" should mirror the  Dygraphs instantiation   #
+  #                          "graphnum" should mirror the  Dygraphs instantiation         #
   #                         of "graphdivX" inside the view. See the plot_template.html    #
   #                         page for more information.                                    #
+  #     lin_reg (optional): Indicator whether or not the user has asked for linear        #
+  #                         regression functionality to be added to the plot. If not set, #
+  #                         the Dygraphs function, "underlayCallback", interferes with    #
+  #                         plotting. Can't be included since the rest of the             #
+  #                         functionality isn't included                                  #
   # Outputs:                                                                              #
   #     options_string: String. Dygraphs string that is an input to the Dygraphs plotting #
   #                             function. Specifies the options for that plot.            #
@@ -690,12 +695,13 @@ class Plot < ActiveRecord::Base
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* convert_date  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   # Purpose:                                                                              #
   #     Converts the dates selected using a RoR date selector drop down into a date       #
-  #     format that can be used to query a Database. This function can be modified to     #
-  #     work for "Datetime" elements as well. Depending on your database and setup,       #
-  #     modification MAY be required in order to convert correctly.                       #
+  #     format that can be used to query a Database.                                      #
+  #     This can be easily modified/duplicated to work for DATETIME type objects. The     #
+  #      general form is the same, just add a few more components to the logic below      #
   # Inputs:                                                                               #
-  #     obj: A date hash, populated from drop-down menus in a view, which contains a      #
-  #          Year, Month, and Day element. Expects the results from a RoR                 #
+  #     date_obj: A date hash, populated from drop-down menus in a view, which contains a #
+  #          Year, Month, and Day element. These elements are stored in the               #
+  #          ['(1i)','(2i)','(3i)'] keys. Expects the results from a RoR                  #
   #          "date_select" helper                                                         #
   # Outputs:                                                                              #
   #     RoR Date object which can be used to query the database.                          #
@@ -706,15 +712,42 @@ class Plot < ActiveRecord::Base
   #         >>params[:my_date]={'(1i)'=>2012,'(2i)' => 6, '(3i)' => 24}                   #
   #     To convert this hash into a Ruby "Date" class, just pass it through this function.#
   #         >>R_date = @plot.first.convert_date(params[:my_date])                         #
+  # Note:                                                                                 #
+  #     For some reason, this appears to be an erroneous statement in some editors. But   #
+  #     it still works, so the validity of the error statement is questionable.           #                                                                            #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+
+    def convert_date(date_obj)
+      return Date.new(date_obj['(1i)'].to_i, date_obj['(2i)'].to_i, date_obj['(3i)'].to_i)
+    end
+
+
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* date_invalid  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                              #
+  #     Performs a check on a date object, to see whether or not any component of it is   #
+  #     blank.                                                                            #
+  #     This can be easily modified/duplicated to work for DATETIME type objects. The     #
+  #      general form is the same, just add a few more components to the logic below      #
+  # Inputs:                                                                               #
+  #     date_obj: A date hash, populated from drop-down menus in a view, which contains a #
+  #          Year, Month, and Day element. These elements are stored in the               #
+  #          ['(1i)','(2i)','(3i)'] keys. Expects the results from a RoR                  #
+  #          "date_select" helper                                                         #
+  # Outputs:                                                                              #
+  #     Boolean True/False indicator. Returns true if the date is invalid                 #
+  # Calling:                                                                              #
+  #         >> @plot.first.date_invalid(date_hash)                                        #
+  # Example:                                                                              #
+  #     From the "date_select" helper, a date hash will be populated to look like:        #
+  #         >>params[:my_date]={'(1i)'=>2012,'(2i)' => 6, '(3i)' => 24}                   #
+  #     To see if this is a valid date selection, run:                                    #
+  #         >>bad_date = @plot.first.date_invalid(params[:my_date])                       #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
-    def convert_date(obj)
-      return Date.new(obj['(1i)'].to_i, obj['(2i)'].to_i, obj['(3i)'].to_i)
-    end
-
-    def date_blank(mydate)
-      return ([mydate["(1i)"].to_s.blank?, mydate["(2i)"].to_s.blank?, mydate["(3i)"].to_s.blank?]).include?(true)
+    def date_invalid(date_obj)
+      return ([date_obj["(1i)"].to_s.blank?, date_obj["(2i)"].to_s.blank?, date_obj["(3i)"].to_s.blank?]).include?(true)
     end
 
 
@@ -731,10 +764,12 @@ class Plot < ActiveRecord::Base
 #
 # 2.0: Many of the above functions are not especially useful or smart. I just made them this way in
 #      the name of explicitness, and isolation, so that all real logic is housed in this class. Especially
-#      when you know what your datasets will look like, many of these methods can be simplified or removed.
+#      when you know what your datasets will look like, many of these methods can be simplified or removed. In addition
+#      isolating everything in this way will hopefully make it easier to port this design to other architectures. I have
+#      ambition to someday try to convert this project to a Django one.
 #
 # 3.0  Many methods feature an odd mix of HTML, Javascript, and RoR. It works, provided you follow the
-#      outlines in the "app/views/layouts/plot_*" layouts, but is not especially pretty, or easy to grasp
+#      outlines in the "app/views/layouts/plot_template.html.erb" layout, but is not especially pretty, or easy to grasp
 #      initially. Again, this approach was mostly chosen for isolation purposes. As well as my desire for
 #      this class to handle ALL application logic, even though Javascript and HTML on the pages themselves
 #      could do much if not all of the logic.
@@ -746,25 +781,25 @@ class Plot < ActiveRecord::Base
 #      the design of this application seems to violate many hard-and-fast practices of OO programming.
 #      All of the methods below act more like FUNCTIONS. In fact, nothing about this 'class' resembles an object. The reason
 #      for this is that this application is meant to work generically on any DATASET. This brings about problems:
-#  4.1. Since the app is not designed around any specific database model, its logic can't be aware of the database
-#        schema or elements. Methods and operations must perform their tasks without being consious of what they are
-#        operating on.
-#  4.2. By working with just raw random data, returns from the database are really more of data STRUCTURES, rather
-#        than specific data OBJECTS. It makes no sense to try and think about these returns as objects. Without knowing
-#        anything about the data, its useless to try and form it all into objects. Its like calling it a "Thing", and
-#        saying that "Thing" has other "things", and can do "stuff".
-#  4.3. Even if we knew what kind of data we are fetching, we really aren't fetching objects. We're fetching a big hunk
-#        of (mainly) numeric data.
-#     Both of these reasons point towards treating data as structures, and performing procedural operations on that data.
-#        So this app is designed around that notion. But hey, I'm a noob. I could be totally wrong and its just my desire
-#        to default back to a MATLAB mindset!
-#     Either way, I designed all of these methods to work on arbitrary datasets. I did it this way for flexibility,
-#        modularity, and ease of comprehension. They could (and should) easily be modified to have more Object-like
-#        behavior once you implement yourself.
+#    4.1. Since the app is not designed around any specific database model, its logic can't be aware of the database
+#         schema or elements. Methods and operations must perform their tasks without being concious of what they are
+#         operating on.
+#    4.2. By working with just raw random data, returns from the database are really more of data STRUCTURES, rather
+#         than specific data OBJECTS. It makes no sense to try and think about these returns as objects. Without knowing
+#         anything about the data, its useless to try and form it all into objects. Its like calling it a "Thing", and
+#         saying that "Thing" has other "things", and can do "stuff".
+#    4.3. Even if we knew what kind of data we are fetching, we really aren't fetching objects. We're fetching a big hunk
+#         of (mainly) numeric data.
+#         Both of these reasons point towards treating data as structures, and performing procedural operations on that data.
+#         So this app is designed around that notion. But hey, I'm a noob. I could be totally wrong and its just my desire
+#         to default back to a MATLAB mindset!
+#         Either way, I designed all of these methods to work on arbitrary datasets. I did it this way for flexibility,
+#         modularity, and ease of comprehension. They could (and should) easily be modified to have more Object-like
+#         behavior once you implement yourself.
 #
-#  5.0  This app shares many @instance_variables between controller and views. This is unadvisable for some reason.
-#         Don't know the exact reason, but the fact remains this is a practice to avoid. I did not avoid it, so a more
-#         competant Rails programmer may want to fix this.
+#  5.0  This app shares many @instance_variables between controller and views. This is un-advisable for some reason.
+#       Don't know the exact reason, but the fact remains this is a practice to avoid. I did not avoid it, so a more
+#       competent Rails programmer may want to fix this.
 #
 #
 #
