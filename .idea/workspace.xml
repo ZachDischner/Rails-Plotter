@@ -5,6 +5,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/plots_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/Plot.html" afterPath="$PROJECT_DIR$/doc/app/Plot.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/PlotsController.html" afterPath="$PROJECT_DIR$/doc/app/PlotsController.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/created.rid" afterPath="$PROJECT_DIR$/doc/app/created.rid" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html" afterPath="$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/js/search_index.js" afterPath="$PROJECT_DIR$/doc/app/js/search_index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/table_of_contents.html" afterPath="$PROJECT_DIR$/doc/app/table_of_contents.html" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,7 +39,7 @@
       <file leaf-file-name="plot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="52" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0931677">
+            <state line="88" column="117" selection-start="5581" selection-end="5581" vertical-scroll-proportion="0.6608315">
               <folding />
             </state>
           </provider>
@@ -69,7 +75,7 @@
       <file leaf-file-name="README_FOR_APP.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="332" column="47" selection-start="15450" selection-end="15450" vertical-scroll-proportion="-0.625">
+            <state line="331" column="47" selection-start="15287" selection-end="15287" vertical-scroll-proportion="-0.625">
               <folding />
             </state>
           </provider>
@@ -78,7 +84,7 @@
       <file leaf-file-name="plots_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="85" selection-start="3509" selection-end="3509" vertical-scroll-proportion="0.0">
+            <state line="33" column="72" selection-start="1783" selection-end="1783" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -221,6 +227,60 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stocks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -864,7 +924,11 @@
       <created>1339133189591</created>
       <updated>1339133189591</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Changed names, added commenting">
+      <created>1339185061978</created>
+      <updated>1339185061978</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -949,7 +1013,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added some class variables, changed scope setup. Now adding a new connection method is really easy to do." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed names, added commenting" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -962,7 +1026,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Aligned and formatted table stuff" />
     <MESSAGE value="More formatting. Not sure if I like the background setup I have now." />
     <MESSAGE value="Made backgrounds partially pretty. Lets see if I stick with it" />
     <MESSAGE value="Trying to change between databases." />
@@ -987,6 +1050,7 @@
     <MESSAGE value="Fixed Linear Regression Problem in *dygraphs_options*" />
     <MESSAGE value="Commented, started implementing new idea for how to isolate DB specific changes. Keep working on it..." />
     <MESSAGE value="Added some class variables, changed scope setup. Now adding a new connection method is really easy to do." />
+    <MESSAGE value="Changed names, added commenting" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1055,7 +1119,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="332" column="47" selection-start="15450" selection-end="15450" vertical-scroll-proportion="-0.625">
+        <state line="331" column="47" selection-start="15287" selection-end="15287" vertical-scroll-proportion="-0.625">
           <folding />
         </state>
       </provider>
@@ -1069,14 +1133,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="85" selection-start="3509" selection-end="3509" vertical-scroll-proportion="0.0">
+        <state line="33" column="72" selection-start="1783" selection-end="1783" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="52" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0931677">
+        <state line="88" column="117" selection-start="5581" selection-end="5581" vertical-scroll-proportion="0.6608315">
           <folding />
         </state>
       </provider>

@@ -68,7 +68,7 @@ class Plot < ActiveRecord::Base
   establish_connection :development                    # The connection specs in /config/database.yml
   set_table_name "stock_test"                          # Table name defined in the "CreateTestTable.txt" script
   set_primary_key :id                                  # Table's primary key
-  @@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
+  @@find_filter     = true                             # Indicates that this database will require column filtering (No for unique columns)
   @@default_x       = ["date"]                         # Default selection for X axis
   @@default_y       = ["open","close","adjclose"]      # Default selection(s) for Y axis
   @@default_filter  = ["aapl","arwr","goog","dow"]     # Default selection(s) for FILTER selection
@@ -77,7 +77,7 @@ class Plot < ActiveRecord::Base
   @@index_name      = "id"                             # Name of column containing some index value
   @@filter_name     = "ticker"                         # Name of column containing filters
 
-  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #zZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZ
 
   # 2.0
   #SQLITE test development environment
@@ -154,37 +154,73 @@ class Plot < ActiveRecord::Base
   #
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
-  #*=*=*=*=*=*=*=*=*=*=*=*=*=* default_selections =*=*=*=*=*=*=*=*=*=*=*=*=*=*#
-  # Purpose:                                                                  #
-  #     Indicates if columns are to be filtered in db selection. The          #
-  #     @@find_filter variable is set above, under the "Database Table "      #
-  #     "Specifications" section                                              #
-  # Inputs:                                                                   #
-  #     None                                                                  #
-  # Outputs:                                                                  #
-  #     @@find_filter: boolean, true or false                                 #
-  # Calling:                                                                  #
-  #          >> TorF = Plot.filter_table                                      #
-  # Example:                                                                  #
-  #    In the "plots_controller .. index" section, this is used to aid  the   #
-  #       filling of the "@filters" variable :                                #
-  #          >> @filters = "No Filter" + {stuff} if Plot.filter_table         #
-  #    So if the table requires no column filtering, the @filters variable    #
-  #       will only contain:                                                  #
-  #          @filters --> ["No Filter"]                                       #
-  #    which is used in "plots/views/index.html" to build filter selectors    #
-  #                                                                           #
-  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+
+  #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Class Variable Accessors =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:
+  #     The following methods provide a means to access class variables outside of the class itself. They also include logic to
+  #     set these variables by default if they were not assigned in the "Database Table Specifications" section above. They are
+  #     used throughout the app and are must be defined at some point.
+  # Inputs:
+  #     none
+  # Outputs:
+  #      #
+  #
+  def class_var(name)
+    case name
+      when 'filter_name'
+        if !defined? @@filter_name then @@filter_name = [""] end
+        return @@filter_name
+      when 'default_x'
+        if !defined? @@default_x   then @@default_x   = [""]  end
+        return @@default_x
+      when 'default_y'
+        if !defined? @@default_y   then @@default_y   = [""]  end
+        return @@default_y
+      when 'default_filter'
+        if !defined? @@default_filter   then @@default_filter   = [""]  end
+        return @@default_filter
+      when 'default_feature'
+        if !defined? @@default_feature   then @@default_feature   = ["None"]  end
+        return @@default_feature
+      else
+        return name.to_s + " is an invalid input"
+    end
+  end
+
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* default_selections *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+  # Purpose:                                                                        #
+  #     Indicates if columns are to be filtered in db selection. The                #
+  #     @@find_filter variable is set above, under the "Database Table "            #
+  #     "Specifications" section                                                    #
+  # Inputs:                                                                         #
+  #     None                                                                        #
+  # Outputs:                                                                        #
+  #     String/String Arrays. List of variables that you would like to be selected  #
+  #                           by default in the query building page. Not necessary  #
+  #                           but good for interaction, in case you have a          #
+  #                           repeating query.                                      #
+  # Calling:                                                                        #
+  #          >> x,y,filter,feature = @plot.default_selections()                     #
+  # Example:                                                                        #
+  #    In the "plots_controller .. index" section, this is used to define the       #
+  #    default choices for form elements:                                           #
+  #          >> @x_default, @y_default, @filter_default, @feature_default =...      #
+  #                                                 ...@plot.default_selections()   #
+  #    Then, the "app/views/plots/index.html.erb" page will use the above defined   #
+  #    variables to fill in form selections upon loading of the page                #
+  #                                                                                 #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
 
   def default_selections()
     # figure out how to default to " "
-    if !defined? @@default_x       then @@default_x       = [""]  end
-    if !defined? @@default_y       then @@default_y       = [""]  end
-    if !defined? @@default_filter  then @@default_filter  = [""]  end
-    if !defined? @@default_feature then @@default_feature = [""]  end
+    d_x       = self.class_var('default_x')
+    d_y       = self.class_var('default_y')
+    d_filter  = self.class_var('default_filter')
+    d_feature = self.class_var('default_feature')
 
-    return @@default_x,@@default_y,@@default_filter,@@default_feature
+    return d_x,d_y,d_filter,d_feature
   end
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* filter_table =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
@@ -377,7 +413,7 @@ class Plot < ActiveRecord::Base
   #             by Dygraphs.                                                              #
   # Outputs:                                                                              #
   #     body_string: Dygraph string. The 'meat and potatoes' of the Dygraph plotting      #
-  #                  input. This string contains a list of all values to be plotted       #                                                                     #
+  #                  input. This string contains a list of all values to be plotted       #
   # Calling:                                                                              #
   #         >> @plot.first.dygraph_body(@Tag_Values,@Plot_Values)                         #
   #     Returns the @Plot_Values with @Tag_Values attributes to html calling page,        #
@@ -714,7 +750,7 @@ class Plot < ActiveRecord::Base
   #         >>R_date = @plot.first.convert_date(params[:my_date])                         #
   # Note:                                                                                 #
   #     For some reason, this appears to be an erroneous statement in some editors. But   #
-  #     it still works, so the validity of the error statement is questionable.           #                                                                            #
+  #     it still works, so the validity of the error statement is questionable.           #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
     def convert_date(date_obj)
