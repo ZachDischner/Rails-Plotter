@@ -63,6 +63,8 @@
   
     <li><a href="../ApplicationHelper.html">ApplicationHelper</a>
   
+    <li><a href="../DocController.html">DocController</a>
+  
     <li><a href="../Plot.html">Plot</a>
   
     <li><a href="../PlotsController.html">PlotsController</a>
@@ -325,27 +327,37 @@ uncommented. It should look like this:</p>
 <span class="ruby-identifier">@@default_y</span>       = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection(s) for Y axis</span>
 <span class="ruby-identifier">@@default_filter</span>  = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection(s) for FILTER selection</span>
 <span class="ruby-identifier">@@default_feature</span> = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection for interaction FEATURE</span>
+<span class="ruby-identifier">@@date_name</span>       = <span class="ruby-string">&quot;date&quot;</span>                            <span class="ruby-comment"># Name of column containing Date values</span>
+<span class="ruby-identifier">@@index_name</span>      = <span class="ruby-string">&quot;id&quot;</span>                              <span class="ruby-comment"># Name of column containing some index value</span>
+<span class="ruby-identifier">@@filter_name</span>     = <span class="ruby-string">&quot;ticker&quot;</span>                          <span class="ruby-comment"># Name of column containing filters</span>
 </pre>
 
 <p>The first two lines tell RoR which connection (of all listed in the
 <strong>/config/database.yml</strong> file) to connect to, and which table
 to use in that database connection.</p>
 
-<p>The next 5 lines are optional.</p>
+<p>The next 8 lines are optional.</p>
 <ul><li>
-<p>@@find_filter is an indicator, and should be set if your column relations
+<p>+@@find_filter+ is an indicator, and should be set if your column relations
 are not unique. See *Filter Explanation* below</p>
 </li></ul>
 
 <p>for a better description of this. If not set, there will be no filter
 applied automatically.</p>
 <ul><li>
-<p>@@default_* can be used when you know more about your database. They hold
+<p>+@@default_*+ can be used when you know more about your database. They hold
 what you would like to be the options selected</p>
 </li></ul>
 
 <p>by default in the HTML page where you choose plot options. Now, they are
 blank, if undefined, this program will set them to [“”] automatically.</p>
+<ul><li>
+<p>+@@*_name+ gives the column name of some pertinent variables to be used in
+db querying and data selection. By defining</p>
+</li></ul>
+
+<p>these here, you can avoid mucking around throughout the rest of the program
+and save some initial headaches</p>
 
 <h2 id="label-New+parts%3F%3F%3F%3F%3F+Or+Scopes%3F%3F">New parts????? Or Scopes??</h2>
 
@@ -353,6 +365,8 @@ blank, if undefined, this program will set them to [“”] automatically.</p>
 
 <p>This file handles the querying of the database, and provides data to an
 HTML page for rendering.</p>
+
+<p>*[[[HMM do I need to change how all this is going to work?]]]</p>
 
 </div>
 

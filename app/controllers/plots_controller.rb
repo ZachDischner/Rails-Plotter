@@ -29,7 +29,7 @@ class PlotsController < ApplicationController
 
     # Get Filters, add a "No Filter" option for fast implementation of databases without need for filtering.
     # Ideally, this is all taken out later for such applications.
-    @filters = ["No Filter"] + Plot.select_filter("ticker").map {|dd| dd.ticker} unless !@plot.filter_table
+    @filters = ["No Filter"] + Plot.get_filter("ticker").map {|dd| dd.send(dd.attributes.to_a[0][0])} unless !@plot.filter_table
 
     @x_default, @y_default, @filter_default, @feature_default = @plot.default_selections()
 
@@ -62,11 +62,11 @@ class PlotsController < ApplicationController
       if params[:filter].length == 1
         if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
           @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
-              select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
+              select_var(params[:x_var]).select_var(params[:y_var]).select_filter(params[:filter].first)
         elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
-          @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
+          @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_filter(params[:filter].first)
         else
-          @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(params[:filter].first)
+          @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_filter(params[:filter].first)
         end
 
         @tags = @plot.first.list_vars - ["Ticker"] # Don't want to treat "Ticker" as its own plotting variable, since its a string
@@ -80,11 +80,11 @@ class PlotsController < ApplicationController
         params[:filter].each do |p|
           if !Plot.first.date_blank(params[:date_start]) && !Plot.first.date_blank(params[:date_end])
             eval("@" + p.to_s + "= Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
-                select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(p)"   )
+                select_var(params[:x_var]).select_var(params[:y_var]).select_filter(p)"   )
           elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
-            eval("@" + p.to_s + "= Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(p)")
+            eval("@" + p.to_s + "= Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_filter(p)")
           else
-            eval("@" + p.to_s + "= Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_ticker(p)")
+            eval("@" + p.to_s + "= Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_filter(p)")
           end
         end
       end

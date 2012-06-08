@@ -68,14 +68,14 @@ class Plot < ActiveRecord::Base
   establish_connection :development                    # The connection specs in /config/database.yml
   set_table_name "stock_test"                          # Table name defined in the "CreateTestTable.txt" script
   set_primary_key :id                                  # Table's primary key
-  find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
-  default_x       = ["date"]                         # Default selection for X axis
-  default_y       = ["open","close","adjclose"]      # Default selection(s) for Y axis
-  default_filter  = ["aapl","arwr","goog","dow"]     # Default selection(s) for FILTER selection
-  default_feature = ["Both"]                         # Default selection for interaction FEATURE
-  date_name       = "date"                           # Name of column containing Date values
-  index_name      = "id"                             # Name of column containing some index value
-  filter_name     = "ticker"                         # Name of column containing filters
+  @@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
+  @@default_x       = ["date"]                         # Default selection for X axis
+  @@default_y       = ["open","close","adjclose"]      # Default selection(s) for Y axis
+  @@default_filter  = ["aapl","arwr","goog","dow"]     # Default selection(s) for FILTER selection
+  @@default_feature = ["Both"]                         # Default selection for interaction FEATURE
+  @@date_name       = "date"                           # Name of column containing Date values
+  @@index_name      = "id"                             # Name of column containing some index value
+  @@filter_name     = "ticker"                         # Name of column containing filters
 
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -83,11 +83,14 @@ class Plot < ActiveRecord::Base
   #SQLITE test development environment
   #establish_connection :sqlite_test                     # The connection specs in /config/database.yml
   #set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
-  #@@find_filter = false                                 # Indicates that this database will require column filtering (No for unique columns)
+  #@@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
   #@@default_x       = [""]                              # Default selection for X axis
   #@@default_y       = [""]                              # Default selection(s) for Y axis
   #@@default_filter  = [""]                              # Default selection(s) for FILTER selection
   #@@default_feature = [""]                              # Default selection for interaction FEATURE
+  #@@date_name       = "DataDate"
+  #@@index_name      = "id"
+  #@@filter_name     = ""
 
 
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
@@ -110,23 +113,23 @@ class Plot < ActiveRecord::Base
   #
   #     1.1 DATE SCOPES: Change the "Date" in the following sql parser argument. "Date" should be changed to the name of
   #                      the column in your database that corresponds to a DATETIME field.
-  scope :between_dates, lambda { |start_date, end_date| where("Date > ? AND Date < ?", "#{start_date}", "#{end_date}") }
+  scope :between_dates, lambda { |start_date, end_date| where(@@date_name +" > ? AND " + @@date_name + " < ?", "#{start_date}", "#{end_date}") }
   scope :after_date, lambda { |start_date| where(date_name + " > ?", "%#{start_date}") }
 
-  #     1.2 STRING SCOPES: Change the "ticker" string in the following sql parser argument. This is for selection of rows
-  #                        containing certain strings in your database, based on a column full of strings.
+  #     1.2 STRING SCOPES: This is for selection of rows containing certain strings in your database, based on a column
+  #                        full of strings.
   #                     EG. if you have a column called "Names" in your database, you want to change "ticker" --> "Names"
   #                        and pass a single name ("Joe", "Sally") to the selector as an argument.
-  scope :select_ticker, lambda { |tickername| where("ticker in (?)", "#{tickername}") }
+  scope :select_filter, lambda { |filtername| where(@@filter_name + " in (?)", "#{filtername}") }
 
 
   #     1.3 NUMERIC SCOPES: Change "x" to whichever numeric column you want to filter by.
   #                     EG. "x" can be 'laps','orbits', or just some index you would want to truncate your dataset by.
   #                         If you have y(x), but don't want to plot y for ALL values of x, use these scopes to truncate
   #                         your dataset.
-  scope :after_x, lambda { |x1| where("x >= ?", "#{x1}") }
-  scope :before_x, lambda { |x2| where("x <=?", "#{x2}") }
-  scope :between_x, lambda { |x1, x2| where("x BETWEEN ? and ?", "#{x1}", "#{x2}") }
+  scope :after_x, lambda { |x1| where(@@index_name + " >= ?", "#{x1}") }
+  scope :before_x, lambda { |x2| where(@@index_name + " <=?", "#{x2}") }
+  scope :between_x, lambda { |x1, x2| where(@@index_name + " BETWEEN ? and ?", "#{x1}", "#{x2}") }
 
   # (1.5) "Filter" selection. This is the optional scope, which depends heavily on your database schema and how you want to plot.
   #         -This will get a list of distinct values in the "filter" column, which can be used in the interaction webpage to obtain
@@ -139,7 +142,7 @@ class Plot < ActiveRecord::Base
   #             eg:     RoR>> @stocks = Plot.select_filter("ticker")
   #             yeilds: ['aapl','goog','arwr',...]
   #          That array can be populated into a drop-down that the user can use to plot stock data based on its ticker.
-  scope :select_filter, lambda {|filter| select("DISTINCT #{filter}")}
+  scope :get_filter, lambda {|filter| select("DISTINCT #{filter}")}
 
   #   2. Selections based on COLUMNS in the database.
   #       eg: " SELECT (name,birthday,address) FROM table_name"
@@ -176,12 +179,12 @@ class Plot < ActiveRecord::Base
 
   def default_selections()
     # figure out how to default to " "
-    if !defined? default_x       then default_x       = [""]  end
-    if !defined? default_y       then default_y       = [""]  end
-    if !defined? default_filter  then default_filter  = [""]  end
-    if !defined? default_feature then default_feature = [""]  end
+    if !defined? @@default_x       then @@default_x       = [""]  end
+    if !defined? @@default_y       then @@default_y       = [""]  end
+    if !defined? @@default_filter  then @@default_filter  = [""]  end
+    if !defined? @@default_feature then @@default_feature = [""]  end
 
-    return default_x,default_y,default_filter,default_feature
+    return @@default_x,@@default_y,@@default_filter,@@default_feature
   end
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* filter_table =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
@@ -206,8 +209,8 @@ class Plot < ActiveRecord::Base
   #                                                                           #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
   def filter_table
-    if !defined find_filter then find_filter = false end
-    return  find_filter
+    if !defined? @@find_filter then @@find_filter = false end
+    return  @@find_filter
   end
 
 
