@@ -155,32 +155,33 @@ class Plot < ActiveRecord::Base
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
 
-  #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Class Variable Accessors =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
-  # Purpose:
-  #     The following methods provide a means to access class variables outside of the class itself. They also include logic to
-  #     set these variables by default if they were not assigned in the "Database Table Specifications" section above. They are
-  #     used throughout the app and are must be defined at some point.
-  # Inputs:
-  #     none
-  # Outputs:
-  #      #
-  #
+  #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* class_var =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                                                        #
+  #     The following methods provide a means to access class variables outside of the class itself. They also      #
+  #     include logic to set these variables by default if they were not assigned in the                            #
+  #     "Database Table Specifications" section above. They are used throughout the app and are must be defined     #
+  #     at some point.                                                                                              #
+  # Inputs:                                                                                                         #
+  #     name-the name of your class variable without "@@" signs included                                            #
+  # Outputs:                                                                                                        #
+  #      #                                                                                                          #
+  #                                                                                                                 #
   def class_var(name)
     case name
       when 'filter_name'
-        if !defined? @@filter_name then @@filter_name = [""] end
+        if !defined? @@filter_name      then @@filter_name      = [""]     end
         return @@filter_name
       when 'default_x'
-        if !defined? @@default_x   then @@default_x   = [""]  end
+        if !defined? @@default_x        then @@default_x        = [""]      end
         return @@default_x
       when 'default_y'
-        if !defined? @@default_y   then @@default_y   = [""]  end
+        if !defined? @@default_y        then @@default_y        = [""]      end
         return @@default_y
       when 'default_filter'
-        if !defined? @@default_filter   then @@default_filter   = [""]  end
+        if !defined? @@default_filter   then @@default_filter   = [""]      end
         return @@default_filter
       when 'default_feature'
-        if !defined? @@default_feature   then @@default_feature   = ["None"]  end
+        if !defined? @@default_feature  then @@default_feature  = ["None"]  end
         return @@default_feature
       else
         return name.to_s + " is an invalid input"
