@@ -1,17 +1,28 @@
+#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+#                                                                                                                   #
+# This controller handles the fetching and organization of data from the database, and then routing that data       #
+#   into the correct VIEW pages.                                                                                    #
+# As of now, there are two pages associated with the plotting app.                                                  #
+#   1. Index.html.erb. This page creates a table full of options that allows the user to select criteria used for   #
+#      database querying and data collection.                                                                       #
+#   2. plotter.html.erb. This page dynamically takes the users selection data criteria, and renders that data into  #
+#      interactive and totally fun graph windows.                                                                   #
+#                                                                                                                   #
+#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+
 class PlotsController < ApplicationController
 
-  #*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ Plot Controller ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#
-  #
-  # This controller handles the fetching and organization of data from the database, and then routing that data
-  #   into the correct VIEW pages.
-  # As of now, there are two pages associated with the plotting app.
-  #   1. Index.html.erb. This page  Creates a table full of options that allows the user to select criteria used for
-  #      database querying and data collection.
-  #   2. plotter.html.erb. This page dynamically takes the users selection data criteria, fetches the data for plotting,
-  #      and
-  #
-  #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
-
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*  index  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  #                                                                                                                   #
+  # This controller handles the fetching and organization of data from the database, and then routing that data       #
+  #   into the correct VIEW pages.                                                                                    #
+  # As of now, there are two pages associated with the plotting app.                                                  #
+  #   1. Index.html.erb. This page creates a table full of options that allows the user to select criteria used for   #
+  #      database querying and data collection.                                                                       #
+  #   2. plotter.html.erb. This page dynamically takes the users selection data criteria, and renders that data into  #
+  #      interactive and totally fun graph windows.                                                                   #
+  #                                                                                                                   #
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   def index
     # Used in the "index" page to activate helper popups that help in development
     params[:debug] = true
@@ -19,17 +30,24 @@ class PlotsController < ApplicationController
     # Get a single row of info from the database around which to build the user interface
     @plot=Plot.first
 
+    # Get a list of all variable names
+    vars = @plot.list_vars
+
     # These tags are to be excluded from any interactions, as they are database utilities, strings, or
     # otherwise unplottable data.
-    exclude_tags = ["created_at","updated_at","ticker"]
+    exclude_tags = @plot.class_var('exclude_tags')
 
+    vars.each do |var|
+      exclude_tags += [var] unless @plots.send(var).class != String
+    end
+    exclude_tags = Array(exclude_tags) - Array(@plot.class_var('date_name'))
 
     # Get an array of the collected data as an array of strings. This will be used throughout plotting
     @tags = @plot.list_vars - exclude_tags
 
     # Get Filters, add a "No Filter" option for fast implementation of databases without need for filtering.
     # Ideally, this is all taken out later for such applications.
-    @filters = ["No Filter"] + Plot.get_filter(@plot.class_var('filter_name')).map {|dd| dd.send(dd.attributes.to_a[0][0])} unless !@plot.filter_table
+    @filters = ["No Filter"] + Plot.get_filter(@plot.class_var('filter_name')).map {|dd| dd.send(dd.attributes.to_a[0][0])} unless !@plot.class_var('find_filter?')
 
     @x_default, @y_default, @filter_default, @feature_default = @plot.default_selections()
 
@@ -69,7 +87,7 @@ class PlotsController < ApplicationController
           @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_filter(params[:filter].first)
         end
 
-        @tags = @plot.first.list_vars - ["Ticker"] # Don't want to treat "Ticker" as its own plotting variable, since its a string
+        @tags = @plot.first.list_vars - Array(@plot.first.class_var('filter_name')) # Don't want to treat "Ticker" as its own plotting variable, since its a string
 
 
       else  # Indicates that MULTIPLE     params[:filters]     have been applied

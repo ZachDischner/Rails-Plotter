@@ -231,9 +231,10 @@ Also, there is a similar helping div that floats along the right hand side of th
        More useful for development of future apps and stuff
  -->
 
-
+      <% if params[:debug] %>
       <div id="helperDIV" style="background-color:#87cefa;border:3px outset gray; border-radius:10px; width:auto;max-width:250px;
-              padding-left:8px; padding-right:8px; display:block; top:25%; left:10px; position:fixed; text-align:center">
+              padding-left:8px; padding-right:8px; display:block; top:25%; left:10px; position:fixed; text-align:center"
+              onmouseover="page_info('helper')">
         <table>
           <tr>
             <td>
@@ -248,7 +249,7 @@ Also, there is a similar helping div that floats along the right hand side of th
       </div>
 
 
-      <% if params[:debug] %>
+
       <div align=center style="background-color:#87CEFA;border:3px outset gray; border-radius:10px; width:auto;
               padding-left:8px; padding-right:8px; display:block; top:10%; right:10px; position:fixed; max-width:200px"
               onmouseover="page_info('params')" onmouseout="page_info()">
@@ -302,22 +303,23 @@ Also, there is a similar helping div that floats along the right hand side of th
           }
 
           function page_info(x) {
+              var helper_div = document.getElementById("helper");
               if (document.getElementById("helper").style.visibility == 'visible')
               {
                   switch (x) {
                       case 'ZD':
-                          document.getElementById("helper").innerHTML = "Class of 2012-Summa Kum Dumass";
+                          helper_div.innerHTML = "Class of 2012-Summa Kum Dumass";
                           break;
                       case 'x_var':
-                          document.getElementById("helper").innerHTML = "Choose the variable for the X axis of plot" +
+                          helper_div.innerHTML = "Choose the variable for the X axis of plot" +
                                                                          " (typically database column)";
                           break
                       case 'y_var':
-                          document.getElementById("helper").innerHTML = "Choose variable(s) for the y axis of plot" +
+                          helper_div.innerHTML = "Choose variable(s) for the y axis of plot" +
                                                                          " (typically database column)";
                           break
                       case 'filter':
-                          document.getElementById("helper").innerHTML = "Filter selector for database query. Filters column " +
+                          helper_div.innerHTML = "Filter selector for database query. Filters column " +
                                                                             "selections based on 'filter' row indicators" ;
                           break;
                       case 'feature':
@@ -341,6 +343,10 @@ Also, there is a similar helping div that floats along the right hand side of th
                       case 'params':
                           document.getElementById("helper").innerHTML = "For developers: Shows exactly which 'params[]' are " +
                                                                            "being sent to app/plots/plots_controller.rb" ;
+                          break;
+                      case 'helper':
+                          document.getElementById("helper").innerHTML = "Simple explination of page sections. Disable by changing   params[:debug]  to  'false' in" +
+                                                                                    "   app/controllers/plots_controller.rb [index]";
                           break;
                       default:
                           document.getElementById("helper").innerHTML = "Hover over a form area for help";

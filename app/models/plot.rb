@@ -65,17 +65,18 @@ class Plot < ActiveRecord::Base
   # 1.0
   # MYSQL development database, use the built in Stocks database.
   # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
-  establish_connection :development                    # The connection specs in /config/database.yml
-  set_table_name "stock_test"                          # Table name defined in the "CreateTestTable.txt" script
-  set_primary_key :id                                  # Table's primary key
-  @@find_filter     = true                             # Indicates that this database will require column filtering (No for unique columns)
-  @@default_x       = ["date"]                         # Default selection for X axis
-  @@default_y       = ["open","close","adjclose"]      # Default selection(s) for Y axis
-  @@default_filter  = ["aapl","arwr","goog","dow"]     # Default selection(s) for FILTER selection
-  @@default_feature = ["Both"]                         # Default selection for interaction FEATURE
-  @@date_name       = "date"                           # Name of column containing Date values
-  @@index_name      = "id"                             # Name of column containing some index value
-  @@filter_name     = "ticker"                         # Name of column containing filters
+  establish_connection :development                        # The connection specs in /config/database.yml
+  set_table_name "stock_test"                              # Table name defined in the "CreateTestTable.txt" script
+  set_primary_key :id                                      # Table's primary key
+  @@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
+  @@default_x       = ["date"]                             # Default selection for X axis
+  @@default_y       = ["open","close","adjclose"]          # Default selection(s) for Y axis
+  @@default_filter  = ["aapl","arwr","goog","dow"]         # Default selection(s) for FILTER selection
+  @@default_feature = ["Both"]                             # Default selection for interaction FEATURE
+  @@date_name       = "date"                               # Name of column containing Date values
+  @@index_name      = "id"                                 # Name of column containing some index value
+  @@filter_name     = "ticker"                             # Name of column containing filters
+  @@exclude_tags    = ["created_at","updated_at","ticker"] # Name of columns you don't want to be considered for plotting
 
   #zZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZ
 
@@ -88,10 +89,10 @@ class Plot < ActiveRecord::Base
   #@@default_y       = [""]                              # Default selection(s) for Y axis
   #@@default_filter  = [""]                              # Default selection(s) for FILTER selection
   #@@default_feature = [""]                              # Default selection for interaction FEATURE
-  #@@date_name       = "DataDate"
-  #@@index_name      = "id"
-  #@@filter_name     = ""
-
+  #@@date_name       = "DataDate"                        # Name of column containing Date values
+  #@@index_name      = "id"                              # Name of column containing some index value
+  #@@filter_name     = ""                                # Name of column containing filters
+  #@@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
 
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
@@ -109,45 +110,44 @@ class Plot < ActiveRecord::Base
   # The two basic selector 'classes' are as follows:
   #
   #   1. Selections based on ROWS in the database.
-  #       eg: " SELECT * FROM table_name WHERE name='some name' "
+  #      eg: " SELECT * FROM table_name WHERE name='some name' "
   #
-  #     1.1 DATE SCOPES: Change the "Date" in the following sql parser argument. "Date" should be changed to the name of
-  #                      the column in your database that corresponds to a DATETIME field.
+  #      1.1 DATE SCOPES: Change the "Date" in the following sql parser argument. "Date" should be changed to the name of
+  #                       the column in your database that corresponds to a DATETIME field.
   scope :between_dates, lambda { |start_date, end_date| where(@@date_name +" > ? AND " + @@date_name + " < ?", "#{start_date}", "#{end_date}") }
-  scope :after_date, lambda { |start_date| where(date_name + " > ?", "%#{start_date}") }
-
-  #     1.2 STRING SCOPES: This is for selection of rows containing certain strings in your database, based on a column
-  #                        full of strings.
-  #                     EG. if you have a column called "Names" in your database, you want to change "ticker" --> "Names"
-  #                        and pass a single name ("Joe", "Sally") to the selector as an argument.
+  scope :after_date, lambda { |start_date| where(@@date_name + " > ?", "%#{start_date}") }
+  #
+  #      1.2 STRING SCOPES: This is for selection of rows containing certain strings in your database, based on a column
+  #                         full of strings.
+  #                         EG. if you have a column called "Names" in your database, you want to change "ticker" --> "Names"
+  #                         and pass a single name ("Joe", "Sally") to the selector as an argument.
   scope :select_filter, lambda { |filtername| where(@@filter_name + " in (?)", "#{filtername}") }
-
-
-  #     1.3 NUMERIC SCOPES: Change "x" to whichever numeric column you want to filter by.
+  #
+  #      1.3 NUMERIC SCOPES: Change "x" to whichever numeric column you want to filter by.
   #                     EG. "x" can be 'laps','orbits', or just some index you would want to truncate your dataset by.
   #                         If you have y(x), but don't want to plot y for ALL values of x, use these scopes to truncate
   #                         your dataset.
   scope :after_x, lambda { |x1| where(@@index_name + " >= ?", "#{x1}") }
   scope :before_x, lambda { |x2| where(@@index_name + " <=?", "#{x2}") }
   scope :between_x, lambda { |x1, x2| where(@@index_name + " BETWEEN ? and ?", "#{x1}", "#{x2}") }
-
+  #
   # (1.5) "Filter" selection. This is the optional scope, which depends heavily on your database schema and how you want to plot.
   #         -This will get a list of distinct values in the "filter" column, which can be used in the interaction webpage to obtain
-  #           separate datasets.
+  #          separate datasets.
   #         -Technically, this is still a ROW based selection. However, in its implementation, the "filter" param will be utilized to create
-  #           completely different datasets, not provide selection criteria.
+  #          completely different datasets, not provide selection criteria.
   #         -For a stock market database, the user would want to plot stats (in columns) for different stocks.
-  #           The stock names are stored in a "tickers" column. So In order to get a list of all tickers so that the
-  #           user can make their selection, you can populate a drop down with values gathered from this scope.
+  #          The stock names are stored in a "tickers" column. So In order to get a list of all tickers so that the
+  #          user can make their selection, you can populate a drop down with values gathered from this scope.
   #             eg:     RoR>> @stocks = Plot.select_filter("ticker")
   #             yeilds: ['aapl','goog','arwr',...]
   #          That array can be populated into a drop-down that the user can use to plot stock data based on its ticker.
   scope :get_filter, lambda {|filter| select("DISTINCT #{filter}")}
-
+  #
   #   2. Selections based on COLUMNS in the database.
   #       eg: " SELECT (name,birthday,address) FROM table_name"
   scope :select_var, lambda { |varname| select(varname) }
-
+  #
   # Together, these two scope classes can be layered to create actual database queries
   #       eg:       RoR>> Plot.after_x(4).select_var('z')
   #       becomes:  SQL>> SELECT ('z') FROM Plot where(x>4);
@@ -155,17 +155,28 @@ class Plot < ActiveRecord::Base
   #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 
 
-  #=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* class_var =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
-  # Purpose:                                                                                                        #
-  #     The following methods provide a means to access class variables outside of the class itself. They also      #
-  #     include logic to set these variables by default if they were not assigned in the                            #
-  #     "Database Table Specifications" section above. They are used throughout the app and are must be defined     #
-  #     at some point.                                                                                              #
-  # Inputs:                                                                                                         #
-  #     name-the name of your class variable without "@@" signs included                                            #
-  # Outputs:                                                                                                        #
-  #      #                                                                                                          #
-  #                                                                                                                 #
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* class_var =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+  # Purpose:                                                                                                            #
+  #     The following methods provide a means to access class variables outside of the class itself. They also          #
+  #     include logic to set these variables by default if they were not assigned in the                                #
+  #     "Database Table Specifications" section above. They are used throughout the app and are must be defined         #
+  #     at some point. These variables are the only place in the app where you should provide specific information      #
+  #     about your database                                                                                             #
+  # Inputs:                                                                                                             #
+  #     name-the name of your class variable without "@@" signs included                                                #
+  # Outputs:                                                                                                            #
+  #     @@{class_var}-A class variable that holds some information about this Plot class. These variables SHOULD be     #
+  #                   set when defining your database connection.                                                       #
+  # Calling:                                                                                                            #
+  #         >>my_class_info = @plot.class_var('my_class_variable_name')                                                 #
+  # Example:                                                                                                            #
+  #     Inside of a controller or view, use this function to fetch some info about your database/schema. For            #
+  #     example, to determine if the current connection setup requires "filtering", just call:                          #
+  #         >> filter_TorF = @plot.class_var('find_filter?')                                                            #
+  #     To get the selections that you would like to be selected by default when the index page is loaded, just:        #
+  #         >> X_var_default = @plot.class_var('default_x')                                                             #
+  #                                                                                                                     #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
   def class_var(name)
     case name
       when 'filter_name'
@@ -183,6 +194,14 @@ class Plot < ActiveRecord::Base
       when 'default_feature'
         if !defined? @@default_feature  then @@default_feature  = ["None"]  end
         return @@default_feature
+      when 'date_name'
+        if !defined? @@date_name        then @@date_name        = 'date'
+      when 'find_filter?'
+        if !defined? @@find_filter      then @@find_filter      = false     end
+        return  @@find_filter
+      when 'exclude_tags'
+        if !defined? @@exclude_tags     then @@exclude_tags     = ['']      end
+        return @@exclude_tags
       else
         return name.to_s + " is an invalid input"
     end
@@ -212,8 +231,6 @@ class Plot < ActiveRecord::Base
   #    variables to fill in form selections upon loading of the page                #
   #                                                                                 #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-
-
   def default_selections()
     # figure out how to default to " "
     d_x       = self.class_var('default_x')
@@ -223,6 +240,7 @@ class Plot < ActiveRecord::Base
 
     return d_x,d_y,d_filter,d_feature
   end
+
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* filter_table =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   # Purpose:                                                                  #
@@ -245,10 +263,10 @@ class Plot < ActiveRecord::Base
   #    which is used in "plots/views/index.html" to build filter selectors    #
   #                                                                           #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-  def filter_table
-    if !defined? @@find_filter then @@find_filter = false end
-    return  @@find_filter
-  end
+  #def filter_table
+  #  if !defined? @@find_filter then @@find_filter = false end
+  #  return  @@find_filter
+  #end
 
 
   ##############################################################################################################################
@@ -350,7 +368,7 @@ class Plot < ActiveRecord::Base
     #         >>params[:y_var] = ['y1','y2']                                    #
     #     Then inside a view:  #                                                #
     #         <%=render :inline => @plot.first.put_checkboxes(params[:y_var])%> #
-    #     *Note that this function returns a formated string. So in order to    #
+    #     *Note that this function returns a formatted string. So in order to   #
     #     use the string inside the view, you must use the protocol:            #
     #          render :inline =>                                                #
     #                                                                           #
@@ -363,7 +381,6 @@ class Plot < ActiveRecord::Base
       end
       boxstring += '</p>'
       return boxstring
-
     end
 
 
@@ -391,16 +408,16 @@ class Plot < ActiveRecord::Base
   #         >> {above} ==> "'date,y1,y1\n'+ "                                             #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    def dygraph_head(tags)
-      labelstring = ",'"
-      for ii in 0..(tags.length-1)
-        labelstring += tags[ii].to_s
-        labelstring += ',' unless (ii==(tags.length-1))
-      end
-      labelstring += '\n' +"'+"
-
-      return labelstring
+  def dygraph_head(tags)
+    labelstring = ",'"
+    for ii in 0..(tags.length-1)
+      labelstring += tags[ii].to_s
+      labelstring += ',' unless (ii==(tags.length-1))
     end
+    labelstring += '\n' +"'+"
+
+    return labelstring
+  end
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* dygraph_body  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   # Purpose:                                                                              #
@@ -433,20 +450,20 @@ class Plot < ActiveRecord::Base
   #     ActiveRecord @plot object into what Dygraphs functions expect                     #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    def dygraph_body(tags, values)
-      body_string = ''
-      values.each do |value|
-        ; # for each row in the @plot selection
-        body_string += "'"
-        for ii in 0..(tags.length-1) # for each tag (column) in that row
-          body_string += (value.send(tags[ii].to_s)).to_s
-          body_string += ',' unless (ii==(tags.length-1))
-        end # End format is <   'x_value,y_value,y2_value,y3_value\n' +  >
-        body_string += '\n' + "'"
-        body_string += "   +" unless value==values.last
-      end
-      return body_string
+  def dygraph_body(tags, values)
+    body_string = ''
+    values.each do |value|
+      ; # for each row in the @plot selection
+      body_string += "'"
+      for ii in 0..(tags.length-1) # for each tag (column) in that row
+        body_string += (value.send(tags[ii].to_s)).to_s
+        body_string += ',' unless (ii==(tags.length-1))
+      end # End format is <   'x_value,y_value,y2_value,y3_value\n' +  >
+      body_string += '\n' + "'"
+      body_string += "   +" unless value==values.last
     end
+    return body_string
+  end
 
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* dygraph_options  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
@@ -487,9 +504,9 @@ class Plot < ActiveRecord::Base
   #       options have been formatted to apply to just a single graph window.             #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-  def dygraph_options(graphnum="",lin_reg="false")
-      options_string =
-     ",{
+  def dygraph_options(graphnum="", lin_reg="false")
+    options_string =
+        ",{
           height: 375,                                                               // Specifies the Height of the plot area
           width: 700,                                                                // Specifies the Width of the plot area
           hideOverlayOnMouseOut: false,                                              // Keeps the legend visible at all times
@@ -500,15 +517,15 @@ class Plot < ActiveRecord::Base
           labelsSeparateLines: true,                                                 // Different lines per label for easier readability
           "
 
-         options_string += "underlayCallback: drawLines" + graphnum.to_s + ",        // MUST enable this  to show linear regression
+    options_string += "underlayCallback: drawLines" + graphnum.to_s + ",        // MUST enable this  to show linear regression
            " unless !lin_reg
 
 
-          options_string += "xlabel: '<%=params[:x_var]%>',                          // Label for the X axis
+    options_string += "xlabel: '<%=params[:x_var]%>',                          // Label for the X axis
           ylabel: '<%=render :inline => params[:y_var].to_s %>',                     // Labels for the Y axis
           visibility: <%= render :inline => @plot.first.all_checkboxes_true(params[:y_var]) %>   // Initial visibility of plot lines
         } "
-      return options_string
+    return options_string
   end
 
 
@@ -552,18 +569,17 @@ class Plot < ActiveRecord::Base
   #      its coefficients, and draw the newly created linear fit.                         #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    def linear_reg_buttons(list,graphnum="")
-
-      button_str = ''
-      for ii in 0..list.length-1
-        button_str += '<input type=button style="color:RGBColor(g' + graphnum.to_s + '.getColors().[' + ii.to_s + ']).toHex;" value="Regression For --> ' + list[ii] + '"
+  def linear_reg_buttons(list, graphnum="")
+    button_str = ''
+    for ii in 0..list.length-1
+      button_str += '<input type=button style="color:RGBColor(g' + graphnum.to_s + '.getColors().[' + ii.to_s + ']).toHex;" value="Regression For --> ' + list[ii] + '"
                                     onClick="regression' + graphnum.to_s + '(' + (ii + 1).to_s + '), coeffs_' + (ii+1).to_s + '()" />' + "\n"
-        button_str += '<br/><div style="padding:5px; border:2px solid black" id="Div_' + graphnum.to_s  + (ii+1).to_s + '">Coefficients are: </div><br/>' + "\n"
-      end
-      button_str += '<input type=button value="Clear Lines" onClick="clearLines' + graphnum.to_s + '()" />' + "\n"
-      #button_str += '</div>'   + "\n"
-      return button_str
+      button_str += '<br/><div style="padding:5px; border:2px solid black" id="Div_' + graphnum.to_s + (ii+1).to_s + '">Coefficients are: </div><br/>' + "\n"
     end
+    button_str += '<input type=button value="Clear Lines" onClick="clearLines' + graphnum.to_s + '()" />' + "\n"
+    #button_str += '</div>'   + "\n"
+    return button_str
+  end
 
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= linear_reg  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
@@ -723,8 +739,7 @@ class Plot < ActiveRecord::Base
         {
           for (var i = 1; i < coeffs.length; i++) document.getElementById("Div_' + graphnum.to_s + '" + i).innerHTML = "Coefficients are:";
         }
-
-    '
+      '
       return linear_reg_str
     end
 
@@ -782,11 +797,9 @@ class Plot < ActiveRecord::Base
   #         >>bad_date = @plot.first.date_invalid(params[:my_date])                       #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-
     def date_invalid(date_obj)
       return ([date_obj["(1i)"].to_s.blank?, date_obj["(2i)"].to_s.blank?, date_obj["(3i)"].to_s.blank?]).include?(true)
     end
-
 
 
 
