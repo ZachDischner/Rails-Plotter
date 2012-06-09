@@ -202,3 +202,58 @@ This file handles the querying of the database, and provides data to an HTML pag
 
 
 
+
+=Filter Explanation
+One of the more confusing aspects of this application is the "FILTER" used throughout. This is used to distinguish the
+two common database schemas I see this application working for. There are an infinite number of possible schemas and
+designs, but for numeric setups, these are the two forms I envision the database taking on.
+
+==Databases not requiring a 'filter'
+This type of database arises when column relations are unique. I.E. one whole column can be plotted versus another whole
+column as a single relation. See the envisioned schema below:
+
+                ----------------------Plot-----------------------
+
+                 |____x____|____y1____|____y2____|_____date_____|
+                 |    1    |    1     |    1     |  Jan 1 2011  |
+                 |    2    |    2     |    4     |  Jan 2 2011  |
+                 |    3    |    3     |    9     |  Jan 3 2011  |
+                 |    4    |    4     |    16    |  Jan 4 2011  |
+                 |    5    |    5     |    25    |  Jan 5 2011  |
+                 |    6    |    6     |    36    |  Jan 6 2011  |
+                 |    7    |    7     |    49    |  Jan 7 2011  |
+                 ...
+
+
+This is the simplest type of schema. Columns represent variables that can be plotted. Each column has a unique relation
+with the others.
+
+The included *SQLite3* database has this type of setup. Use *Section 2* under *Database Table Specifications* in the file
+*app/models/plot.rb* to see this type of schema in action.
+
+==Databases requiring a 'filter'
+This type of database arises when your schema has column relations that are not unique throughout the table.
+
+For example, picture a table full of stock market data (this is why one was included). The table would contain numeric
+data for various stock market symbols. Plotting one column vs another would be useless, since each column several
+relations with other columns. Again, see the schema below.
+
+                ----------------------Plot----------------------
+
+                |____x____|____y1____|____y2____|_____date_____|
+                |    1    |    1     |    1     |  Jan 1 2011  |
+                |    2    |    2     |    4     |  Jan 2 2011  |
+                |    3    |    3     |    9     |  Jan 3 2011  |
+                |    4    |    4     |    16    |  Jan 4 2011  |
+                |    5    |    5     |    25    |  Jan 5 2011  |
+                |    6    |    6     |    36    |  Jan 6 2011  |
+                |    7    |    7     |    49    |  Jan 7 2011  |
+                ...
+
+
+
+
+
+
+
+

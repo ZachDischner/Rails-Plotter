@@ -182,26 +182,34 @@ class Plot < ActiveRecord::Base
       when 'filter_name'
         if !defined? @@filter_name      then @@filter_name      = [""]     end
         return @@filter_name
+
       when 'default_x'
         if !defined? @@default_x        then @@default_x        = [""]      end
         return @@default_x
+
       when 'default_y'
         if !defined? @@default_y        then @@default_y        = [""]      end
         return @@default_y
+
       when 'default_filter'
         if !defined? @@default_filter   then @@default_filter   = [""]      end
         return @@default_filter
+
       when 'default_feature'
         if !defined? @@default_feature  then @@default_feature  = ["None"]  end
         return @@default_feature
+
       when 'date_name'
-        if !defined? @@date_name        then @@date_name        = 'date'
+        if !defined? @@date_name        then @@date_name        = 'date'    end
+        return @@date_name
       when 'find_filter?'
         if !defined? @@find_filter      then @@find_filter      = false     end
         return  @@find_filter
+
       when 'exclude_tags'
         if !defined? @@exclude_tags     then @@exclude_tags     = ['']      end
         return @@exclude_tags
+
       else
         return name.to_s + " is an invalid input"
     end
