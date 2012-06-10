@@ -2,10 +2,10 @@
 Welcome to the interactive database plotting web engine, built in Ruby on Rails. If you're reading this, then its likely you are trying to
 connect this app with your database. This readme assumes you have some knowledge of Ruby on Rails. If you don't, online
 resources can be great teachers. Most of what you're about to read shouldn't require much RoR insight, and the demo
-should be comprehendible even for noobs.
+should be comprehensible even for noobs.
 
 This was built for the Laboratory for Atmospheric and Space Physics (LASP) in Boulder, Colorado.
-Its AIM is to enable quick visulization of database numeric data, without spending months developing
+Its AIM is to enable quick visualization of database numeric data, without spending months developing
 your own custom solutions. Since LASP has a diverse scientific community, using many different database engines and schemas, I tried
 to make this app as generic as I could, so that it may work for any of them. The goal is that this app will provide a
 startup web server for any basic *single table* database table in under 2 hours. Most of that time will be installing
@@ -37,7 +37,7 @@ This page is found in */app/views/plots/index.html.erb*
 plots.
 This page is found in  */app/views/plots/plotter.html.erb*
 
-3.0 Controller: Ruby file that grabs DB data necessary to construct HTML pages, and handles lots of the login requried in
+3.0 Controller: Ruby file that grabs DB data necessary to construct HTML pages, and handles lots of the login required in
 that selection. Here, there are only two pages. There are two methods, one for the Selector page, and one for the Plot
 page.
 This file is found in */app/controllers/plots_controller.rb*
@@ -262,6 +262,19 @@ a filter of 'appl', the app will grab 'open/close/date', but will _filter_ those
 the 'ticker == aapl'.
 
 Underneath the hood, each *filter* selection results in its own database query, and its own instance variable being set.
+
+== One Last Note on the Filter
+It is assumed that the 'filter' column in your database is a string. If it in fact is a numeric type, this app will require
+some adjustment. I believe the filter selection will just have to be converted to a string, with a string character
+concatenated to the beginning of that selection.
+
+In the controller, each filter has its own instance variable, labeled after that filter. So a filter selection of 'aapl'
+becomes @aapl. So if your selection happens to be
+    params[:filter] = '1'
+The controller would attempt to assign
+    @1 = Plot.select_var ...
+That wouldn't work. Just something to keep in mind.
+
 
 
 =Summary

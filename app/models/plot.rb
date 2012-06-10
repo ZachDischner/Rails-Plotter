@@ -113,10 +113,22 @@ class Plot < ActiveRecord::Base
   #   1. Selections based on ROWS in the database.
   #      eg: " SELECT * FROM table_name WHERE name='some name' "
   #
-  #      1.1 DATE SCOPES: Change the "Date" in the following sql parser argument. "Date" should be changed to the name of
-  #                       the column in your database that corresponds to a DATETIME field.
+  #      1.1 DATE SCOPES: Set the @@date_name class variable in the "Database Table Specifications" section above. This
+  #                       should be the name of your date-type column in your database
   scope :between_dates, lambda { |start_date, end_date| where(@@date_name +" > ? AND " + @@date_name + " < ?", "#{start_date}", "#{end_date}") }
   scope :after_date, lambda { |start_date| where(@@date_name + " > ?", "%#{start_date}") }
+
+
+
+  # PUT IN METHOD INSTEAD MAYBE, SINGLE QUERY? IDK MIGHT BE TOO MUCH
+
+  #        1.1.1 FIRST_YEAR: This will dynamically get the earliest year in your database. When you know more about your
+  #                          setup, you can set this in a method instead of a scope
+  scope :first_year, find(:first, :order => @@date_name + "ASC").send(@@date_name).to_date.year
+  #        1.1.2 LAST_YEAR: This will dynamically get the latest year in your database. When you know more about your
+  #                          setup, you can set this in a method instead of a scope
+  scope :first_year, find(:first, :order => @@date_name + "DESC").send(@@date_name).to_date.year
+  #
   #
   #      1.2 STRING SCOPES: This is for selection of rows containing certain strings in your database, based on a column
   #                         full of strings.
@@ -877,8 +889,8 @@ end
 #      could be added to the plots_controller, or to a method inside of the model. I just don't have a database like
 #      this to test the idea yet.
 #
-# 2.0: I don't especially like the Dygraphs parsing is now. Every filter selection gets its own separate query and its
-#      own @instance variable. Then, to parse the data into Dygraphs format, each @tag is 'sent' to that variable.
+# 2.0: I don't especially like the wayDygraphs parsing is now. Every filter selection gets its own separate query and
+#      its own @instance variable. Then, to parse the data into Dygraphs format, each @tag is 'sent' to that variable.
 #      Its kinda a wishy washy procedure. At some point, I would like for the fetched variable to be turned into a
 #      hash, which can be sorted and worked with on the fly. The same idea of 'sending' variable names will still work,
 #      but now it will be in a hash. In addition, instead of sending @tags, sending params[:x_var] and params[:y_var]

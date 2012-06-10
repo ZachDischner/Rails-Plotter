@@ -170,6 +170,7 @@ Also, there is a similar helping div that floats along the right hand side of th
                 <br>
                 <%= label(:plot, :date_start, "Start") %>
                 <%= date_select(:date_start, params[:date_start], {:include_blank => true},
+                                :start_year => @start_year,
                                 :onmouseover => "page_info('date_start')",
                                 :onmouseout => "page_info()",
                                 :onchange => "params_info('date_start')")  %>
@@ -178,6 +179,7 @@ Also, there is a similar helping div that floats along the right hand side of th
                 <br>
                 <%= label(:plot, :date_end, "End") %>
                 <%= date_select(:date_end, params[:date_end], {:include_blank => true},
+                                :end_year => @end_year,
                                 :onmouseover => "page_info('date_end')",
                                 :onmouseout => "page_info()",
                                 :onchange => "params_info('date_end')") %>

@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/app/controllers/plots_controller.rb" line="24" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="Added more helpers. More class variable isolation and stuff. Also added logic in controller to add string type columns to all &quot;exclude_tags&quot;. Gotta test it all out still">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.generators" afterPath="$PROJECT_DIR$/.idea/.generators" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Stocks.iml" afterPath="$PROJECT_DIR$/.idea/Stocks.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/created.rid" afterPath="$PROJECT_DIR$/doc/app/created.rid" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/plots_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/plots/index.html.erb" afterPath="$PROJECT_DIR$/app/views/plots/index.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/README_FOR_APP" afterPath="$PROJECT_DIR$/doc/README_FOR_APP" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/Plot.html" afterPath="$PROJECT_DIR$/doc/app/Plot.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/PlotsController.html" afterPath="$PROJECT_DIR$/doc/app/PlotsController.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html" afterPath="$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/js/search_index.js" afterPath="$PROJECT_DIR$/doc/app/js/search_index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/app/table_of_contents.html" afterPath="$PROJECT_DIR$/doc/app/table_of_contents.html" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,19 +38,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="plot.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="864" column="1" selection-start="58002" selection-end="58002" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="database.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/database.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="21" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0">
+            <state line="891" column="86" selection-start="59794" selection-end="59794" vertical-scroll-proportion="0.6721311">
               <folding />
             </state>
           </provider>
@@ -63,7 +50,7 @@
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="25" selection-start="3273" selection-end="3273" vertical-scroll-proportion="-0.625">
+            <state line="179" column="45" selection-start="9258" selection-end="9258" vertical-scroll-proportion="-108.75">
               <folding />
             </state>
           </provider>
@@ -73,17 +60,24 @@
         <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
           <provider selected="true" editor-type-id="text-editor">
             <state line="414" column="47" selection-start="18882" selection-end="18882" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1339304403000" expanded="true" signature="2290:20719" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plots_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plots_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="68" selection-start="3034" selection-end="3034" vertical-scroll-proportion="0.02952756">
+            <state line="95" column="82" selection-start="7839" selection-end="7839" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README_FOR_APP" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/doc/README_FOR_APP">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="269" column="53" selection-start="15689" selection-end="15689" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -102,28 +96,7 @@
         <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_template.html.erb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="91" column="20" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1338995962000" expanded="true" signature="74:175" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="87:121" placeholder="{...}" />
-                <marker date="1338995962000" expanded="true" signature="132:166" placeholder="{...}" />
-                <marker date="1338995962000" expanded="true" signature="356:413" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="603:2959" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="646:753" placeholder="if ... end" />
-                <marker date="1338995962000" expanded="true" signature="767:2938" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="792:1102" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="1032:1093" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="1106:2518" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="1246:2479" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="1811:1881" placeholder="if ... end" />
-                <marker date="1338995962000" expanded="true" signature="1968:2457" placeholder="if ... end" />
-                <marker date="1338995962000" expanded="true" signature="2078:2252" placeholder="{...}" />
-                <marker date="1338995962000" expanded="true" signature="2300:2436" placeholder="{...}" />
-                <marker date="1338995962000" expanded="true" signature="2531:2696" placeholder="if ... end" />
-                <marker date="1338995962000" expanded="true" signature="2565:2680" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="2711:2924" placeholder="if ... end" />
-                <marker date="1338995962000" expanded="true" signature="2749:2908" placeholder="..." />
-                <marker date="1338995962000" expanded="true" signature="2992:3057" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -152,11 +125,11 @@
         <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html" />
-        <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/app/models/plot.rb" />
-        <option value="$PROJECT_DIR$/doc/README_FOR_APP" />
+        <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
+        <option value="$PROJECT_DIR$/doc/README_FOR_APP" />
+        <option value="$PROJECT_DIR$/app/models/plot.rb" />
       </list>
     </option>
   </component>
@@ -168,9 +141,9 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
-    <option name="width" value="1440" />
-    <option name="height" value="874" />
+    <option name="y" value="25" />
+    <option name="width" value="1674" />
+    <option name="height" value="983" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -227,16 +200,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="RailsProjectView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -251,7 +214,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
+              <option name="myItemId" value="rails-stocks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -261,7 +224,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
+              <option name="myItemId" value="rails-stocks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -269,80 +232,14 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="RailsProjectView">
+        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plots" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -353,14 +250,14 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="44" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="49" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="48" />
-    <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="recentsLimit" value="5" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="48" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="51" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="492" />
+    <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="488" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="492" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="51" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="49" />
     <property name="Database.TableEditor.Splitter" value="0.8999999" />
@@ -375,8 +272,8 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
     <property name="DefaultHtmlFileTemplate" value="Html" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1021,25 +918,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="874" extended-state="0" />
+    <frame x="0" y="25" width="1674" height="983" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.09339081" sideWeight="0.7052767" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32983682" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.057549506" sideWeight="0.67016315" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908458" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908458" sideWeight="0.49707603" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11853448" sideWeight="0.7052767" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11509901" sideWeight="0.67016315" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3765933" sideWeight="0.06740196" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2947233" sideWeight="0.92830884" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29445073" sideWeight="0.92830884" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.78801167" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3267671" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1160,28 +1057,9 @@
         <state line="11" column="62" selection-start="181" selection-end="181" vertical-scroll-proportion="0.20496894" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/doc/README_FOR_APP">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="270" column="64" selection-start="15675" selection-end="15675" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="864" column="1" selection-start="58002" selection-end="58002" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/database.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="21" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="414" column="47" selection-start="18882" selection-end="18882" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1339304403000" expanded="true" signature="2290:20719" placeholder="..." />
-          </folding>
-        </state>
+        <state line="414" column="47" selection-start="18882" selection-end="18882" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
@@ -1191,42 +1069,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="20" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1338995962000" expanded="true" signature="74:175" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="87:121" placeholder="{...}" />
-            <marker date="1338995962000" expanded="true" signature="132:166" placeholder="{...}" />
-            <marker date="1338995962000" expanded="true" signature="356:413" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="603:2959" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="646:753" placeholder="if ... end" />
-            <marker date="1338995962000" expanded="true" signature="767:2938" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="792:1102" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="1032:1093" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="1106:2518" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="1246:2479" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="1811:1881" placeholder="if ... end" />
-            <marker date="1338995962000" expanded="true" signature="1968:2457" placeholder="if ... end" />
-            <marker date="1338995962000" expanded="true" signature="2078:2252" placeholder="{...}" />
-            <marker date="1338995962000" expanded="true" signature="2300:2436" placeholder="{...}" />
-            <marker date="1338995962000" expanded="true" signature="2531:2696" placeholder="if ... end" />
-            <marker date="1338995962000" expanded="true" signature="2565:2680" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="2711:2924" placeholder="if ... end" />
-            <marker date="1338995962000" expanded="true" signature="2749:2908" placeholder="..." />
-            <marker date="1338995962000" expanded="true" signature="2992:3057" placeholder="..." />
-          </folding>
+        <state line="91" column="20" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="21" selection-start="170" selection-end="170" vertical-scroll-proportion="0.027322404">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="25" selection-start="3273" selection-end="3273" vertical-scroll-proportion="-0.625">
+        <state line="179" column="45" selection-start="9258" selection-end="9258" vertical-scroll-proportion="-108.75">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="68" selection-start="3034" selection-end="3034" vertical-scroll-proportion="0.02952756">
+        <state line="95" column="82" selection-start="7839" selection-end="7839" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc/README_FOR_APP">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="269" column="53" selection-start="15689" selection-end="15689" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="891" column="86" selection-start="59794" selection-end="59794" vertical-scroll-proportion="0.6721311">
           <folding />
         </state>
       </provider>

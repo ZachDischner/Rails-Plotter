@@ -1,4 +1,4 @@
-#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*  PlotsController =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 #                                                                                                                   #
 # This controller handles the fetching and organization of data from the database, and then routing that data       #
 #   into the correct VIEW pages.                                                                                    #
@@ -14,17 +14,22 @@ class PlotsController < ApplicationController
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*  index  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   #                                                                                                                   #
-  # This controller handles the fetching and organization of data from the database, and then routing that data       #
-  #   into the correct VIEW pages.                                                                                    #
-  # As of now, there are two pages associated with the plotting app.                                                  #
-  #   1. Index.html.erb. This page creates a table full of options that allows the user to select criteria used for   #
-  #      database querying and data collection.                                                                       #
-  #   2. plotter.html.erb. This page dynamically takes the users selection data criteria, and renders that data into  #
-  #      interactive and totally fun graph windows.                                                                   #
+  # Purpose:                                                                                                          #
+  #     The INDEX method is responsible for fetching and handling the information needed to build a form that the     #
+  #     user will use to select plot criteria. Its tasks are as follows:                                              #
+  #                                                                                                                   #
+  #     1.0-Fetch single row from the database. This set is examined and used to build the form later.                #
+  #                                                                                                                   #
+  #     2.0-Get list of all variables (database columns) in that selection.                                           #
+  #                                                                                                                   #
+  #     3.0-Get list of variables that are to be EXCLUDED from the user interface.                                    #
+  #                                                                                                                   #
+  #     4.0-Get the default selections for each form field. These values will be implemented upon loading the page    #
   #                                                                                                                   #
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   def index
-    # Used in the "index" page to activate helper popups that help in development
+    # Used in the "index" page to activate helper popups that help in development.
+    # Set to 'false' if you no longer wish to view these helpers.
     params[:debug] = true
 
     # Get a single row of info from the database around which to build the user interface
@@ -47,13 +52,44 @@ class PlotsController < ApplicationController
 
     # Get Filters, add a "No Filter" option for fast implementation of databases without need for filtering.
     # Ideally, this is all taken out later for such applications.
-    @filters = ["No Filter"] + Plot.get_filter(@plot.class_var('filter_name')).map {|dd| dd.send(dd.attributes.to_a[0][0])} unless !@plot.class_var('find_filter?')
+    @filters = ["No Filter"] + Array(Plot.get_filter(@plot.class_var('filter_name')).map {|dd| dd.send(dd.attributes.to_a[0][0])}) unless !@plot.class_var('find_filter?')
 
     @x_default, @y_default, @filter_default, @feature_default = @plot.default_selections()
 
+    @start_year = Plot.first_year
+    @end_year   = Plot.last_year
+
   end
 
-   # NOTE NOTE NOTE, @tags holds all variables, and it is assumed that the order goes [x var, y1 var, y2 var, y3 var ...]
+
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*  plotter  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  #                                                                                                                   #
+  # Purpose:                                                                                                          #
+  #     The PLOTTER method is responsible for taking the user's selections from the form built in  index.html.erb and #
+  #     fetching data from the database based on that criteria. This simple task is more complicated than it seems.   #
+  #     There is logic in place to handle the user selecting/neglecting X-Axis range inputs.                          #
+  #     More important is the handling of the FILTER option. If the database does not need to be 'filtered', or there #
+  #     is just one filter applied, there only needs to be one query of the database. All data then is stored in the  #
+  #     @plot variable.                                                                                               #
+  #                                                                                                                   #
+  #     If there are multiple filters, this controller dynamically performs additional queries, and stores each       #
+  #     dataset in its own instance variable, named after the filter string itself. This means the filter selection   #
+  #     MUST be a string by the time it arrives here for querying.                                                    #
+  #                                                                                                                   #
+  #     Finally, it sets some instance variables that control extra plot features such as adding interactive          #
+  #     checkboxes and linear regressions to the plot.                                                                #
+  #                                                                                                                   #
+  # NOTE:                                                                                                             #
+  #     The @tags variable holds ALL variable names that are to be plotted. The rest of the app assumes that the order#
+  #     of these variable names starts with the 'X' variable, and progresses through each 'Y' variable. In other words#
+  #     @tags = [x_var, y1_var, y2_var, y3_var ...]                                                                   #
+  #     So far, stacking scope statements so that the 'X' axis variable is added first ensures that this ordering     #
+  #     works out. In the future, a rework of certain Plot methods to work off of:  params[:x_var] and                #
+  #     params[:y_var] separately, instead of just iterating over   @tags  elements would be more robust              #
+  #                                                                                                                   #
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+
   def plotter
 
     # If there is no :filter applied to the data, set this param to "No Filter"
