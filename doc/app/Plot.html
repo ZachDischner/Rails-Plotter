@@ -74,6 +74,8 @@
     
     <li><a href="#method-i-all_checkboxes_true">#all_checkboxes_true</a>
     
+    <li><a href="#method-i-class_var">#class_var</a>
+    
     <li><a href="#method-i-convert_date">#convert_date</a>
     
     <li><a href="#method-i-date_invalid">#date_invalid</a>
@@ -85,8 +87,6 @@
     <li><a href="#method-i-dygraph_head">#dygraph_head</a>
     
     <li><a href="#method-i-dygraph_options">#dygraph_options</a>
-    
-    <li><a href="#method-i-filter_table">#filter_table</a>
     
     <li><a href="#method-i-linear_reg">#linear_reg</a>
     
@@ -230,7 +230,7 @@ off initially</pre>
 
           
           <div class="method-source-code" id="all_checkboxes_false-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 258</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 322</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all_checkboxes_false</span>(<span class="ruby-identifier">list</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-string">&quot;false&quot;</span>]*(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -287,7 +287,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="all_checkboxes_true-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 248</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 312</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all_checkboxes_true</span>(<span class="ruby-identifier">list</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-string">&quot;true&quot;</span>]*(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -299,6 +299,96 @@ Example:                                                                        
 
         
       </div><!-- all_checkboxes_true-method -->
+
+    
+      <div id="method-i-class_var" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">class_var</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* <a
+href="Plot.html#method-i-class_var">#class_var</a>
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#</p>
+
+<pre class="ruby"><span class="ruby-constant">Purpose</span><span class="ruby-operator">:</span>                                                                                                            <span class="ruby-comment">#</span>
+    <span class="ruby-constant">The</span> <span class="ruby-identifier">following</span> <span class="ruby-identifier">methods</span> <span class="ruby-identifier">provide</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">means</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">access</span> <span class="ruby-keyword">class</span> <span class="ruby-identifier">variables</span> <span class="ruby-identifier">outside</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">the</span> <span class="ruby-keyword">class</span> <span class="ruby-identifier">itself</span>. <span class="ruby-constant">They</span> <span class="ruby-identifier">also</span>          <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">include</span> <span class="ruby-identifier">logic</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">set</span> <span class="ruby-identifier">these</span> <span class="ruby-identifier">variables</span> <span class="ruby-identifier">by</span> <span class="ruby-identifier">default</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">they</span> <span class="ruby-identifier">were</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">assigned</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">the</span>                                <span class="ruby-comment">#</span>
+    <span class="ruby-string">&quot;Database Table Specifications&quot;</span> <span class="ruby-identifier">section</span> <span class="ruby-identifier">above</span>. <span class="ruby-constant">They</span> <span class="ruby-identifier">are</span> <span class="ruby-identifier">used</span> <span class="ruby-identifier">throughout</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">app</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">are</span> <span class="ruby-identifier">must</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">defined</span>         <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">at</span> <span class="ruby-identifier">some</span> <span class="ruby-identifier">point</span>. <span class="ruby-constant">These</span> <span class="ruby-identifier">variables</span> <span class="ruby-identifier">are</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">only</span> <span class="ruby-identifier">place</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">app</span> <span class="ruby-identifier">where</span> <span class="ruby-identifier">you</span> <span class="ruby-identifier">should</span> <span class="ruby-identifier">provide</span> <span class="ruby-identifier">specific</span> <span class="ruby-identifier">information</span>      <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">about</span> <span class="ruby-identifier">your</span> <span class="ruby-identifier">database</span>                                                                                             <span class="ruby-comment">#</span>
+<span class="ruby-constant">Inputs</span><span class="ruby-operator">:</span>                                                                                                             <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">name</span><span class="ruby-operator">-</span><span class="ruby-identifier">the</span> <span class="ruby-identifier">name</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">your</span> <span class="ruby-keyword">class</span> <span class="ruby-identifier">variable</span> <span class="ruby-identifier">without</span> <span class="ruby-string">&quot;@@&quot;</span> <span class="ruby-identifier">signs</span> <span class="ruby-identifier">included</span>                                                <span class="ruby-comment">#</span>
+<span class="ruby-constant">Outputs</span><span class="ruby-operator">:</span>                                                                                                            <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">@@</span>{<span class="ruby-identifier">class_var</span>}<span class="ruby-operator">-</span><span class="ruby-constant">A</span> <span class="ruby-keyword">class</span> <span class="ruby-identifier">variable</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">holds</span> <span class="ruby-identifier">some</span> <span class="ruby-identifier">information</span> <span class="ruby-identifier">about</span> <span class="ruby-identifier">this</span> <span class="ruby-constant">Plot</span> <span class="ruby-keyword">class</span>. <span class="ruby-constant">These</span> <span class="ruby-identifier">variables</span> <span class="ruby-constant">SHOULD</span> <span class="ruby-identifier">be</span>     <span class="ruby-comment">#</span>
+                  <span class="ruby-identifier">set</span> <span class="ruby-keyword">when</span> <span class="ruby-identifier">defining</span> <span class="ruby-identifier">your</span> <span class="ruby-identifier">database</span> <span class="ruby-identifier">connection</span>.                                                       <span class="ruby-comment">#</span>
+<span class="ruby-constant">Calling</span><span class="ruby-operator">:</span>                                                                                                            <span class="ruby-comment">#</span>
+        <span class="ruby-operator">&gt;&gt;</span><span class="ruby-identifier">my_class_info</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'my_class_variable_name'</span>)                                                 <span class="ruby-comment">#</span>
+<span class="ruby-constant">Example</span><span class="ruby-operator">:</span>                                                                                                            <span class="ruby-comment">#</span>
+    <span class="ruby-constant">Inside</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">controller</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">view</span>, <span class="ruby-identifier">use</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">function</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">fetch</span> <span class="ruby-identifier">some</span> <span class="ruby-identifier">info</span> <span class="ruby-identifier">about</span> <span class="ruby-identifier">your</span> <span class="ruby-identifier">database</span><span class="ruby-operator">/</span><span class="ruby-identifier">schema</span>. <span class="ruby-constant">For</span>            <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">example</span>, <span class="ruby-identifier">to</span> <span class="ruby-identifier">determine</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">current</span> <span class="ruby-identifier">connection</span> <span class="ruby-identifier">setup</span> <span class="ruby-identifier">requires</span> <span class="ruby-string">&quot;filtering&quot;</span>, <span class="ruby-identifier">just</span> <span class="ruby-identifier">call</span><span class="ruby-operator">:</span>                          <span class="ruby-comment">#</span>
+        <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">filter_TorF</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'find_filter?'</span>)                                                            <span class="ruby-comment">#</span>
+    <span class="ruby-constant">To</span> <span class="ruby-identifier">get</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">selections</span> <span class="ruby-identifier">that</span> <span class="ruby-identifier">you</span> <span class="ruby-identifier">would</span> <span class="ruby-identifier">like</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">selected</span> <span class="ruby-identifier">by</span> <span class="ruby-identifier">default</span> <span class="ruby-keyword">when</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">index</span> <span class="ruby-identifier">page</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">loaded</span>, <span class="ruby-identifier">just</span><span class="ruby-operator">:</span>        <span class="ruby-comment">#</span>
+        <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-constant">X_var_default</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'default_x'</span>)                                                             <span class="ruby-comment">#</span>
+                                                                                                                    <span class="ruby-comment">#</span>
+</pre>
+
+<p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
+          
+
+          
+          <div class="method-source-code" id="class_var-source">
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 181</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">class_var</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">name</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'filter_name'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@filter_name</span>      <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@filter_name</span>      = [<span class="ruby-string">&quot;&quot;</span>]     <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@filter_name</span>
+
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'default_x'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@default_x</span>        <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@default_x</span>        = [<span class="ruby-string">&quot;&quot;</span>]      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@default_x</span>
+
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'default_y'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@default_y</span>        <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@default_y</span>        = [<span class="ruby-string">&quot;&quot;</span>]      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@default_y</span>
+
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'default_filter'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@default_filter</span>   <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@default_filter</span>   = [<span class="ruby-string">&quot;&quot;</span>]      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@default_filter</span>
+
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'default_feature'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@default_feature</span>  <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@default_feature</span>  = [<span class="ruby-string">&quot;None&quot;</span>]  <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@default_feature</span>
+
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'date_name'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@date_name</span>        <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@date_name</span>        = <span class="ruby-string">'date'</span>    <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@date_name</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'find_filter?'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@find_filter</span>      <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@find_filter</span>      = <span class="ruby-keyword">false</span>     <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span>  <span class="ruby-identifier">@@find_filter</span>
+
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'exclude_tags'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@exclude_tags</span>     <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@exclude_tags</span>     = [<span class="ruby-string">''</span>]      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@exclude_tags</span>
+
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; is an invalid input&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- class_var-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- class_var-method -->
 
     
       <div id="method-i-convert_date" class="method-detail ">
@@ -337,7 +427,7 @@ href="Plot.html#method-i-convert_date">#convert_date</a>
         <span class="ruby-operator">&gt;&gt;</span><span class="ruby-constant">R_date</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">convert_date</span>(<span class="ruby-identifier">params</span>[:<span class="ruby-identifier">my_date</span>])                         <span class="ruby-comment">#</span>
 <span class="ruby-constant">Note</span><span class="ruby-operator">:</span>                                                                                 <span class="ruby-comment">#</span>
     <span class="ruby-constant">For</span> <span class="ruby-identifier">some</span> <span class="ruby-identifier">reason</span>, <span class="ruby-identifier">this</span> <span class="ruby-identifier">appears</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">erroneous</span> <span class="ruby-identifier">statement</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">some</span> <span class="ruby-identifier">editors</span>. <span class="ruby-constant">But</span>   <span class="ruby-comment">#</span>
-    <span class="ruby-identifier">it</span> <span class="ruby-identifier">still</span> <span class="ruby-identifier">works</span>, <span class="ruby-identifier">so</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">validity</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">error</span> <span class="ruby-identifier">statement</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">questionable</span>.           <span class="ruby-comment">#                                                                            #</span>
+    <span class="ruby-identifier">it</span> <span class="ruby-identifier">still</span> <span class="ruby-identifier">works</span>, <span class="ruby-identifier">so</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">validity</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">error</span> <span class="ruby-identifier">statement</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">questionable</span>.           <span class="ruby-comment">#</span>
 </pre>
 
 <p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
@@ -345,7 +435,7 @@ href="Plot.html#method-i-convert_date">#convert_date</a>
 
           
           <div class="method-source-code" id="convert_date-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 720</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 781</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">convert_date</span>(<span class="ruby-identifier">date_obj</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">date_obj</span>[<span class="ruby-string">'(1i)'</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">date_obj</span>[<span class="ruby-string">'(2i)'</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">date_obj</span>[<span class="ruby-string">'(3i)'</span>].<span class="ruby-identifier">to_i</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -401,7 +491,7 @@ href="Plot.html#method-i-date_invalid">#date_invalid</a>
 
           
           <div class="method-source-code" id="date_invalid-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 749</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 809</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">date_invalid</span>(<span class="ruby-identifier">date_obj</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-identifier">date_obj</span>[<span class="ruby-string">&quot;(1i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>, <span class="ruby-identifier">date_obj</span>[<span class="ruby-string">&quot;(2i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>, <span class="ruby-identifier">date_obj</span>[<span class="ruby-string">&quot;(3i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>]).<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -426,44 +516,46 @@ href="Plot.html#method-i-date_invalid">#date_invalid</a>
 
         <div class="method-description">
           
-          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=* <a
+          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* <a
 href="Plot.html#method-i-default_selections">#default_selections</a>
-=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
+*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#</p>
 
-<pre>Purpose:                                                                  #
-    Indicates if columns are to be filtered in db selection. The          #
-    @@find_filter variable is set above, under the &quot;Database Table &quot;      #
-    &quot;Specifications&quot; section                                              #
-Inputs:                                                                   #
-    None                                                                  #
-Outputs:                                                                  #
-    @@find_filter: boolean, true or false                                 #
-Calling:                                                                  #
-         &gt;&gt; TorF = Plot.filter_table                                      #
-Example:                                                                  #
-   In the &quot;plots_controller .. index&quot; section, this is used to aid  the   #
-      filling of the &quot;@filters&quot; variable :                                #
-         &gt;&gt; @filters = &quot;No Filter&quot; + {stuff} if Plot.filter_table         #
-   So if the table requires no column filtering, the @filters variable    #
-      will only contain:                                                  #
-         @filters --&gt; [&quot;No Filter&quot;]                                       #
-   which is used in &quot;plots/views/index.html&quot; to build filter selectors    #
-                                                                          #</pre>
+<pre>Purpose:                                                                        #
+    Indicates if columns are to be filtered in db selection. The                #
+    @@find_filter variable is set above, under the &quot;Database Table &quot;            #
+    &quot;Specifications&quot; section                                                    #
+Inputs:                                                                         #
+    None                                                                        #
+Outputs:                                                                        #
+    String/String Arrays. List of variables that you would like to be selected  #
+                          by default in the query building page. Not necessary  #
+                          but good for interaction, in case you have a          #
+                          repeating query.                                      #
+Calling:                                                                        #
+         &gt;&gt; x,y,filter,feature = @plot.default_selections()                     #
+Example:                                                                        #
+   In the &quot;plots_controller .. index&quot; section, this is used to define the       #
+   default choices for form elements:                                           #
+         &gt;&gt; @x_default, @y_default, @filter_default, @feature_default =...      #
+                                                ...@plot.default_selections()   #
+   Then, the &quot;app/views/plots/index.html.erb&quot; page will use the above defined   #
+   variables to fill in form selections upon loading of the page                #
+                                                                                #</pre>
 
-<p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
+<p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
           
 
           
           <div class="method-source-code" id="default_selections-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 180</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 243</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">default_selections</span>()
   <span class="ruby-comment"># figure out how to default to &quot; &quot;</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@default_x</span>       <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@default_x</span>       = [<span class="ruby-string">&quot;&quot;</span>]  <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@default_y</span>       <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@default_y</span>       = [<span class="ruby-string">&quot;&quot;</span>]  <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@default_filter</span>  <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@default_filter</span>  = [<span class="ruby-string">&quot;&quot;</span>]  <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@default_feature</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@default_feature</span> = [<span class="ruby-string">&quot;&quot;</span>]  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">d_x</span>       = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'default_x'</span>)
+  <span class="ruby-identifier">d_y</span>       = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'default_y'</span>)
+  <span class="ruby-identifier">d_filter</span>  = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'default_filter'</span>)
+  <span class="ruby-identifier">d_feature</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'default_feature'</span>)
 
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@default_x</span>,<span class="ruby-identifier">@@default_y</span>,<span class="ruby-identifier">@@default_filter</span>,<span class="ruby-identifier">@@default_feature</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">d_x</span>,<span class="ruby-identifier">d_y</span>,<span class="ruby-identifier">d_filter</span>,<span class="ruby-identifier">d_feature</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- default_selections-source -->
           
@@ -501,7 +593,7 @@ Inputs:                                                                         
             by Dygraphs.                                                              #
 Outputs:                                                                              #
     body_string: Dygraph string. The 'meat and potatoes' of the Dygraph plotting      #
-                 input. This string contains a list of all values to be plotted       #                                                                     #
+                 input. This string contains a list of all values to be plotted       #
 Calling:                                                                              #
         &gt;&gt; @plot.first.dygraph_body(@Tag_Values,@Plot_Values)                         #
     Returns the @Plot_Values with @Tag_Values attributes to html calling page,        #
@@ -525,7 +617,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_body-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 399</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 462</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_body</span>(<span class="ruby-identifier">tags</span>, <span class="ruby-identifier">values</span>)
   <span class="ruby-identifier">body_string</span> = <span class="ruby-string">''</span>
   <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
@@ -593,7 +685,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_head-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 357</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 420</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_head</span>(<span class="ruby-identifier">tags</span>)
   <span class="ruby-identifier">labelstring</span> = <span class="ruby-string">&quot;,'&quot;</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">tags</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
@@ -618,7 +710,7 @@ Example:                                                                        
         
         <div class="method-heading">
           <span class="method-name">dygraph_options</span><span
-            class="method-args">(graphnum="",lin_reg="false")</span>
+            class="method-args">(graphnum="", lin_reg="false")</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
         
@@ -671,10 +763,10 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_options-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 453</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_options</span>(<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>,<span class="ruby-identifier">lin_reg</span>=<span class="ruby-string">&quot;false&quot;</span>)
-    <span class="ruby-identifier">options_string</span> =
-   <span class="ruby-string">&quot;,{
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 516</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_options</span>(<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>, <span class="ruby-identifier">lin_reg</span>=<span class="ruby-string">&quot;false&quot;</span>)
+  <span class="ruby-identifier">options_string</span> =
+      <span class="ruby-string">&quot;,{
         height: 375,                                                               // Specifies the Height of the plot area
         width: 700,                                                                // Specifies the Width of the plot area
         hideOverlayOnMouseOut: false,                                              // Keeps the legend visible at all times
@@ -685,15 +777,15 @@ Example:                                                                        
         labelsSeparateLines: true,                                                 // Different lines per label for easier readability
         &quot;</span>
 
-       <span class="ruby-identifier">options_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;underlayCallback: drawLines&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;,        // MUST enable this  to show linear regression
+  <span class="ruby-identifier">options_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;underlayCallback: drawLines&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;,        // MUST enable this  to show linear regression
          &quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-operator">!</span><span class="ruby-identifier">lin_reg</span>
 
 
-        <span class="ruby-identifier">options_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;xlabel: '&lt;%=params[:x_var]%&gt;',                          // Label for the X axis
+  <span class="ruby-identifier">options_string</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;xlabel: '&lt;%=params[:x_var]%&gt;',                          // Label for the X axis
         ylabel: '&lt;%=render :inline =&gt; params[:y_var].to_s %&gt;',                     // Labels for the Y axis
         visibility: &lt;%= render :inline =&gt; @plot.first.all_checkboxes_true(params[:y_var]) %&gt;   // Initial visibility of plot lines
       } &quot;</span>
-    <span class="ruby-keyword">return</span> <span class="ruby-identifier">options_string</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">options_string</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- dygraph_options-source -->
           
@@ -703,61 +795,6 @@ Example:                                                                        
 
         
       </div><!-- dygraph_options-method -->
-
-    
-      <div id="method-i-filter_table" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">filter_table</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=* <a
-href="Plot.html#method-i-filter_table">#filter_table</a>
-=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
-
-<pre>Purpose:                                                                  #
-    Indicates if columns are to be filtered in db selection. The          #
-    @@find_filter variable is set above, under the &quot;Database Table &quot;      #
-    &quot;Specifications&quot; section                                              #
-Inputs:                                                                   #
-    None                                                                  #
-Outputs:                                                                  #
-    @@find_filter: boolean, true or false                                 #
-Calling:                                                                  #
-         &gt;&gt; TorF = Plot.filter_table                                      #
-Example:                                                                  #
-   In the &quot;plots_controller .. index&quot; section, this is used to aid  the   #
-      filling of the &quot;@filters&quot; variable :                                #
-         &gt;&gt; @filters = &quot;No Filter&quot; + {stuff} if Plot.filter_table         #
-   So if the table requires no column filtering, the @filters variable    #
-      will only contain:                                                  #
-         @filters --&gt; [&quot;No Filter&quot;]                                       #
-   which is used in &quot;plots/views/index.html&quot; to build filter selectors    #
-                                                                          #</pre>
-
-<p>&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;—&lt;*&gt;#</p>
-          
-
-          
-          <div class="method-source-code" id="filter_table-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 211</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">filter_table</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@find_filter</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@find_filter</span> = <span class="ruby-keyword">false</span> <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">return</span>  <span class="ruby-identifier">@@find_filter</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- filter_table-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- filter_table-method -->
 
     
       <div id="method-i-linear_reg" class="method-detail ">
@@ -818,7 +855,7 @@ NOTE:                                                                           
 
           
           <div class="method-source-code" id="linear_reg-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 571</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 633</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg</span>(<span class="ruby-identifier">graphnum</span> = <span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">linear_reg_str</span> =<span class="ruby-string">'// coefficients of regression for each series.
   // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
@@ -937,8 +974,7 @@ NOTE:                                                                           
     {
       for (var i = 1; i &lt; coeffs.length; i++) document.getElementById(&quot;Div_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot; + i).innerHTML = &quot;Coefficients are:&quot;;
     }
-
-'</span>
+  '</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">linear_reg_str</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- linear_reg-source -->
@@ -955,7 +991,7 @@ NOTE:                                                                           
         
         <div class="method-heading">
           <span class="method-name">linear_reg_buttons</span><span
-            class="method-args">(list,graphnum="")</span>
+            class="method-args">(list, graphnum="")</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
         
@@ -1011,14 +1047,13 @@ href="Plot.html#method-i-linear_reg_buttons">#linear_reg_buttons</a>
 
           
           <div class="method-source-code" id="linear_reg_buttons-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 518</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg_buttons</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
-
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 581</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg_buttons</span>(<span class="ruby-identifier">list</span>, <span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">button_str</span> = <span class="ruby-string">''</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
     <span class="ruby-identifier">button_str</span> <span class="ruby-operator">+=</span> <span class="ruby-string">'&lt;input type=button style=&quot;color:RGBColor(g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.getColors().['</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ii</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">']).toHex;&quot; value=&quot;Regression For --&gt; '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">list</span>[<span class="ruby-identifier">ii</span>] <span class="ruby-operator">+</span> <span class="ruby-string">'&quot;
-                                onClick=&quot;regression'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'('</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">ii</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'), coeffs_'</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">ii</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'()&quot; /&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
-    <span class="ruby-identifier">button_str</span> <span class="ruby-operator">+=</span> <span class="ruby-string">'&lt;br/&gt;&lt;div style=&quot;padding:5px; border:2px solid black&quot; id=&quot;Div_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span>  <span class="ruby-operator">+</span> (<span class="ruby-identifier">ii</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot;&gt;Coefficients are: &lt;/div&gt;&lt;br/&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+                                  onClick=&quot;regression'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'('</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">ii</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'), coeffs_'</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">ii</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'()&quot; /&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+    <span class="ruby-identifier">button_str</span> <span class="ruby-operator">+=</span> <span class="ruby-string">'&lt;br/&gt;&lt;div style=&quot;padding:5px; border:2px solid black&quot; id=&quot;Div_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">ii</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot;&gt;Coefficients are: &lt;/div&gt;&lt;br/&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">button_str</span> <span class="ruby-operator">+=</span> <span class="ruby-string">'&lt;input type=button value=&quot;Clear Lines&quot; onClick=&quot;clearLines'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'()&quot; /&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
   <span class="ruby-comment">#button_str += '&lt;/div&gt;'   + &quot;\n&quot;</span>
@@ -1072,7 +1107,7 @@ href="Plot.html#method-i-list_vars">#list_vars</a>
 
           
           <div class="method-source-code" id="list_vars-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 281</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 345</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">list_vars</span>
   <span class="ruby-identifier">atts</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>
   <span class="ruby-identifier">vars</span> = []
@@ -1128,7 +1163,7 @@ Example:                                                                  #
         &gt;&gt;params[:y_var] = ['y1','y2']                                    #
     Then inside a view:  #                                                #
         &lt;%=render :inline =&gt; @plot.first.put_checkboxes(params[:y_var])%&gt; #
-    *Note that this function returns a formated string. So in order to    #
+    *Note that this function returns a formatted string. So in order to   #
     use the string inside the view, you must use the protocol:            #
          render :inline =&gt;                                                #
                                                                           #</pre>
@@ -1138,7 +1173,7 @@ Example:                                                                  #
 
           
           <div class="method-source-code" id="put_checkboxes-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 321</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 385</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">put_checkboxes</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">boxstring</span> = <span class="ruby-string">''</span> <span class="ruby-comment">#</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
@@ -1147,7 +1182,6 @@ Example:                                                                  #
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">boxstring</span> <span class="ruby-operator">+=</span> <span class="ruby-string">'&lt;/p&gt;'</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">boxstring</span>
-
 <span class="ruby-keyword">end</span></pre>
           </div><!-- put_checkboxes-source -->
           

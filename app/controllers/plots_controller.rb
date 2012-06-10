@@ -38,7 +38,7 @@ class PlotsController < ApplicationController
     exclude_tags = @plot.class_var('exclude_tags')
 
     vars.each do |var|
-      exclude_tags += [var] unless @plots.send(var).class != String
+      exclude_tags += [var] unless @plot.send(var).class != String
     end
     exclude_tags = Array(exclude_tags) - Array(@plot.class_var('date_name'))
 
@@ -53,7 +53,7 @@ class PlotsController < ApplicationController
 
   end
 
-
+   # NOTE NOTE NOTE, @tags holds all variables, and it is assumed that the order goes [x var, y1 var, y2 var, y3 var ...]
   def plotter
 
     # If there is no :filter applied to the data, set this param to "No Filter"

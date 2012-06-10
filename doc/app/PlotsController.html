@@ -116,6 +116,20 @@
 
   <div id="description" class="description">
     
+<p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
+
+<pre>                                                                                                                  #
+This controller handles the fetching and organization of data from the database, and then routing that data       #
+  into the correct VIEW pages.                                                                                    #
+As of now, there are two pages associated with the plotting app.                                                  #
+  1. Index.html.erb. This page creates a table full of options that allows the user to select criteria used for   #
+     database querying and data collection.                                                                       #
+  2. plotter.html.erb. This page dynamically takes the users selection data criteria, and renders that data into  #
+     interactive and totally fun graph windows.                                                                   #
+                                                                                                                  #</pre>
+
+<p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
+
   </div><!-- description -->
 
   
@@ -147,23 +161,25 @@
 
         <div class="method-description">
           
-          <p>*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^ <a href="Plot.html">Plot</a>
-Controller ^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^*^#</p>
+          <p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*  index 
+*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
 
-<pre>This controller handles the fetching and organization of data from the database, and then routing that data
-  into the correct VIEW pages.
-As of now, there are two pages associated with the plotting app.
-  1. Index.html.erb. This page  Creates a table full of options that allows the user to select criteria used for
-     database querying and data collection.
-  2. plotter.html.erb. This page dynamically takes the users selection data criteria, fetches the data for plotting,
-     and</pre>
+<pre>                                                                                                                  #
+This controller handles the fetching and organization of data from the database, and then routing that data       #
+  into the correct VIEW pages.                                                                                    #
+As of now, there are two pages associated with the plotting app.                                                  #
+  1. Index.html.erb. This page creates a table full of options that allows the user to select criteria used for   #
+     database querying and data collection.                                                                       #
+  2. plotter.html.erb. This page dynamically takes the users selection data criteria, and renders that data into  #
+     interactive and totally fun graph windows.                                                                   #
+                                                                                                                  #</pre>
 
-<h1 id="method-i-index-label-%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%3D%2A%23">*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</h1>
+<p>*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#</p>
           
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/plots_controller.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/controllers/plots_controller.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-comment"># Used in the &quot;index&quot; page to activate helper popups that help in development</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:debug</span>] = <span class="ruby-keyword">true</span>
@@ -171,17 +187,24 @@ As of now, there are two pages associated with the plotting app.
   <span class="ruby-comment"># Get a single row of info from the database around which to build the user interface</span>
   <span class="ruby-ivar">@plot</span>=<span class="ruby-constant">Plot</span>.<span class="ruby-identifier">first</span>
 
+  <span class="ruby-comment"># Get a list of all variable names</span>
+  <span class="ruby-identifier">vars</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">list_vars</span>
+
   <span class="ruby-comment"># These tags are to be excluded from any interactions, as they are database utilities, strings, or</span>
   <span class="ruby-comment"># otherwise unplottable data.</span>
-  <span class="ruby-identifier">exclude_tags</span> = [<span class="ruby-string">&quot;created_at&quot;</span>,<span class="ruby-string">&quot;updated_at&quot;</span>,<span class="ruby-string">&quot;ticker&quot;</span>]
+  <span class="ruby-identifier">exclude_tags</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'exclude_tags'</span>)
 
+  <span class="ruby-identifier">vars</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">exclude_tags</span> <span class="ruby-operator">+=</span> [<span class="ruby-identifier">var</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@plots</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">var</span>).<span class="ruby-identifier">class</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">String</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">exclude_tags</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">exclude_tags</span>) <span class="ruby-operator">-</span> <span class="ruby-constant">Array</span>(<span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'date_name'</span>))
 
   <span class="ruby-comment"># Get an array of the collected data as an array of strings. This will be used throughout plotting</span>
   <span class="ruby-ivar">@tags</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">list_vars</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">exclude_tags</span>
 
   <span class="ruby-comment"># Get Filters, add a &quot;No Filter&quot; option for fast implementation of databases without need for filtering.</span>
   <span class="ruby-comment"># Ideally, this is all taken out later for such applications.</span>
-  <span class="ruby-ivar">@filters</span> = [<span class="ruby-string">&quot;No Filter&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Plot</span>.<span class="ruby-identifier">get_filter</span>(<span class="ruby-string">&quot;ticker&quot;</span>).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">dd</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dd</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">dd</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">0</span>][<span class="ruby-value">0</span>])} <span class="ruby-keyword">unless</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">filter_table</span>
+  <span class="ruby-ivar">@filters</span> = [<span class="ruby-string">&quot;No Filter&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Plot</span>.<span class="ruby-identifier">get_filter</span>(<span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'filter_name'</span>)).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">dd</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dd</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">dd</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">0</span>][<span class="ruby-value">0</span>])} <span class="ruby-keyword">unless</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'find_filter?'</span>)
 
   <span class="ruby-ivar">@x_default</span>, <span class="ruby-ivar">@y_default</span>, <span class="ruby-ivar">@filter_default</span>, <span class="ruby-ivar">@feature_default</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">default_selections</span>()
 
@@ -207,12 +230,13 @@ As of now, there are two pages associated with the plotting app.
 
         <div class="method-description">
           
-          
+          <p>NOTE NOTE NOTE, @tags holds all variables, and it is assumed that the order
+goes [x var, y1 var, y2 var, y3 var …]</p>
           
 
           
           <div class="method-source-code" id="plotter-source">
-            <pre><span class="ruby-comment"># File app/controllers/plots_controller.rb, line 39</span>
+            <pre><span class="ruby-comment"># File app/controllers/plots_controller.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">plotter</span>
 
   <span class="ruby-comment"># If there is no :filter applied to the data, set this param to &quot;No Filter&quot;</span>
@@ -246,7 +270,7 @@ As of now, there are two pages associated with the plotting app.
         <span class="ruby-ivar">@plot</span> = <span class="ruby-constant">Plot</span>.<span class="ruby-identifier">select_var</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:x_var</span>]).<span class="ruby-identifier">select_var</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:y_var</span>]).<span class="ruby-identifier">select_filter</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:filter</span>].<span class="ruby-identifier">first</span>)
       <span class="ruby-keyword">end</span>
 
-      <span class="ruby-ivar">@tags</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">list_vars</span> <span class="ruby-operator">-</span> [<span class="ruby-string">&quot;Ticker&quot;</span>] <span class="ruby-comment"># Don't want to treat &quot;Ticker&quot; as its own plotting variable, since its a string</span>
+      <span class="ruby-ivar">@tags</span> = <span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">list_vars</span> <span class="ruby-operator">-</span> <span class="ruby-constant">Array</span>(<span class="ruby-ivar">@plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'filter_name'</span>)) <span class="ruby-comment"># Don't want to treat &quot;Ticker&quot; as its own plotting variable, since its a string</span>
 
 
     <span class="ruby-keyword">else</span>  <span class="ruby-comment"># Indicates that MULTIPLE     params[:filters]     have been applied</span>

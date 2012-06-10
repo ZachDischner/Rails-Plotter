@@ -236,19 +236,43 @@ This type of database arises when your schema has column relations that are not 
 
 For example, picture a table full of stock market data (this is why one was included). The table would contain numeric
 data for various stock market symbols. Plotting one column vs another would be useless, since each column several
-relations with other columns. Again, see the schema below.
+relations with other columns. Again, see an example schema below.
 
-                ----------------------Plot----------------------
+                ---------------------------Plot---------------------------
 
-                |____x____|____y1____|____y2____|_____date_____|
-                |    1    |    1     |    1     |  Jan 1 2011  |
-                |    2    |    2     |    4     |  Jan 2 2011  |
-                |    3    |    3     |    9     |  Jan 3 2011  |
-                |    4    |    4     |    16    |  Jan 4 2011  |
-                |    5    |    5     |    25    |  Jan 5 2011  |
-                |    6    |    6     |    36    |  Jan 6 2011  |
-                |    7    |    7     |    49    |  Jan 7 2011  |
+                |____ticker____|____open____|____close____|_____date_____|
+                |     aapl     |    350     |    358      |  Jan 1 2011  |
+                |     aapl     |    360     |    361      |  Jan 2 2011  |
+                |     aapl     |    370     |    394      |  Jan 3 2011  |
+                |     goog     |    668     |    665      |  Jan 1 2011  |
+                |     goog     |    660     |    653      |  Jan 2 2011  |
+                |     goog     |    652     |    653      |  Jan 3 2011  |
+                |     goog     |    655     |    670      |  Jan 4 2011  |
                 ...
+
+If you were to try to plot either 'open' or 'close' versus 'date' (as is often done), you will end up with a conglomerate
+mess of points. There are multiple relations between 'open' and 'date', for the various tickers they apply to.
+
+If you database schema looks like this, extra logic must be employed to successfully grab and plot the data within.
+Setting   *@@find_filter = true*   in the *Database Table Specifications* section of *app/models/plot.rb* will tell
+the app to treat the database appropriately.
+
+For now, this logic results in a separate plot of 'open/close' versus 'date' for EACH plot ticker (filter) selected. For
+a filter of 'appl', the app will grab 'open/close/date', but will _filter_ those variables to only include rows where
+the 'ticker == aapl'.
+
+Underneath the hood, each *filter* selection results in its own database query, and its own instance variable being set.
+
+
+=Summary
+
+Well there you have it. Now that you've seen it in action, go connect this to your database and modify at will. Also,
+check out the *Plot.rb* and *plots_controller* and *plot_template.html.erb* files, as they are well documented and
+should give you a good idea of what is going on under the hood.
+
+
+
+
 
 
 

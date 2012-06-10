@@ -368,6 +368,88 @@ HTML page for rendering.</p>
 
 <p>*[[[HMM do I need to change how all this is going to work?]]]</p>
 
+<h1 id="label-Filter+Explanation">Filter Explanation</h1>
+
+<p>One of the more confusing aspects of this application is the “FILTER” used
+throughout. This is used to distinguish the two common database schemas I
+see this application working for. There are an infinite number of possible
+schemas and designs, but for numeric setups, these are the two forms I
+envision the database taking on.</p>
+
+<h2 id="label-Databases+not+requiring+a+%27filter%27">Databases not requiring a ‘filter’</h2>
+
+<p>This type of database arises when column relations are unique. I.E. one
+whole column can be plotted versus another whole column as a single
+relation. See the envisioned schema below:</p>
+
+<pre>----------------------Plot-----------------------
+
+ |____x____|____y1____|____y2____|_____date_____|
+ |    1    |    1     |    1     |  Jan 1 2011  |
+ |    2    |    2     |    4     |  Jan 2 2011  |
+ |    3    |    3     |    9     |  Jan 3 2011  |
+ |    4    |    4     |    16    |  Jan 4 2011  |
+ |    5    |    5     |    25    |  Jan 5 2011  |
+ |    6    |    6     |    36    |  Jan 6 2011  |
+ |    7    |    7     |    49    |  Jan 7 2011  |
+ ...</pre>
+
+<p>This is the simplest type of schema. Columns represent variables that can
+be plotted. Each column has a unique relation with the others.</p>
+
+<p>The included <strong>SQLite3</strong> database has this type of setup. Use
+*Section 2* under *Database Table Specifications* in the file
+<strong>app/models/plot.rb</strong> to see this type of schema in action.</p>
+
+<h2 id="label-Databases+requiring+a+%27filter%27">Databases requiring a ‘filter’</h2>
+
+<p>This type of database arises when your schema has column relations that are
+not unique throughout the table.</p>
+
+<p>For example, picture a table full of stock market data (this is why one was
+included). The table would contain numeric data for various stock market
+symbols. Plotting one column vs another would be useless, since each column
+several relations with other columns. Again, see an example schema below.</p>
+
+<pre>---------------------------Plot---------------------------
+
+|____ticker____|____open____|____close____|_____date_____|
+|     aapl     |    350     |    358      |  Jan 1 2011  |
+|     aapl     |    360     |    361      |  Jan 2 2011  |
+|     aapl     |    370     |    394      |  Jan 3 2011  |
+|     goog     |    668     |    665      |  Jan 1 2011  |
+|     goog     |    660     |    653      |  Jan 2 2011  |
+|     goog     |    652     |    653      |  Jan 3 2011  |
+|     goog     |    655     |    670      |  Jan 4 2011  |
+...</pre>
+
+<p>If you were to try to plot either ‘open’ or ‘close’ versus ‘date’ (as is
+often done), you will end up with a conglomerate mess of points. There are
+multiple relations between ‘open’ and ‘date’, for the various tickers they
+apply to.</p>
+
+<p>If you database schema looks like this, extra logic must be employed to
+successfully grab and plot the data within. Setting   *@@find_filter =
+true*   in the *Database Table Specifications* section of
+<strong>app/models/plot.rb</strong> will tell the app to treat the database
+appropriately.</p>
+
+<p>For now, this logic results in a separate plot of ‘open/close’ versus
+‘date’ for EACH plot ticker (filter) selected. For a filter of ‘appl’, the
+app will grab ‘open/close/date’, but will <em>filter</em> those variables
+to only include rows where the ‘ticker == aapl’.</p>
+
+<p>Underneath the hood, each <strong>filter</strong> selection results in its
+own database query, and its own instance variable being set.</p>
+
+<h1 id="label-Summary">Summary</h1>
+
+<p>Well there you have it. Now that you’ve seen it in action, go connect this
+to your database and modify at will. Also, check out the
+<strong>Plot.rb</strong> and <strong>plots_controller</strong> and
+<strong>plot_template.html.erb</strong> files, as they are well documented
+and should give you a good idea of what is going on under the hood.</p>
+
 </div>
 
 

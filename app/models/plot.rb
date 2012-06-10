@@ -45,6 +45,7 @@
 #       buttons not clicked.
 #
 #
+#
 #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
 class Plot < ActiveRecord::Base
@@ -811,16 +812,15 @@ class Plot < ActiveRecord::Base
 
 
 
- end
-
+end
 
 #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Some Additional Notes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
 #
 #
 #
-# 1.0: For this app to work, "app/assets" MUST have "dygraph-combined.js". Tricky to catch
+# 1.0  For this app to work, "app/assets" MUST have "dygraph-combined.js". Tricky to catch
 #
-# 2.0: Many of the above functions are not especially useful or smart. I just made them this way in
+# 2.0  Many of the above functions are not especially useful or smart. I just made them this way in
 #      the name of explicitness, and isolation, so that all real logic is housed in this class. Especially
 #      when you know what your datasets will look like, many of these methods can be simplified or removed. In addition
 #      isolating everything in this way will hopefully make it easier to port this design to other architectures. I have
@@ -863,3 +863,29 @@ class Plot < ActiveRecord::Base
 #
 #
 #
+
+#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Plans for the Future *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+#
+# 1.0: The next simple database schema that makes sense to me would be to have one database, and many tables. Envision
+#      multiple observers, each with their own table of observations. Essentially, this would be the same idea as having
+#      a 'filter'. Instead of having one large table, with sets of rows representing each 'filter's data points,
+#      you'd have many tables of independent data.
+#      I don't envision this being extremely difficult. I think the 'filter' idea can remain the same. But, instead of
+#      running multiple queries on the same databases for each 'filter' variable, the app could change its table-name
+#      on the fly, and just run the same query for different tables. I think:
+#        >> set_table_name "new_table"
+#      could be added to the plots_controller, or to a method inside of the model. I just don't have a database like
+#      this to test the idea yet.
+#
+# 2.0: I don't especially like the Dygraphs parsing is now. Every filter selection gets its own separate query and its
+#      own @instance variable. Then, to parse the data into Dygraphs format, each @tag is 'sent' to that variable.
+#      Its kinda a wishy washy procedure. At some point, I would like for the fetched variable to be turned into a
+#      hash, which can be sorted and worked with on the fly. The same idea of 'sending' variable names will still work,
+#      but now it will be in a hash. In addition, instead of sending @tags, sending params[:x_var] and params[:y_var]
+#      will be more robust.
+#      The hash would also allow all fetched data to be placed in a single variable, instead of the current method of
+#      populating separate @instance variables for each db query. #
+#
+#
+
+
