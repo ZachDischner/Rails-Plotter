@@ -2,17 +2,16 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/app/controllers/plots_controller.rb" line="24" />
-    <bookmark url="mock:///Rails console: Stocks" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8ea9cd3-0823-4954-a82e-53388e50a237" name="Default" comment="Commenting. Possibly added logic for first year selection. Put in method later and test please">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.generators" afterPath="$PROJECT_DIR$/.idea/.generators" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Stocks.iml" afterPath="$PROJECT_DIR$/.idea/Stocks.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/plots_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/plot.rb" afterPath="$PROJECT_DIR$/app/models/plot.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/README_FOR_APP" afterPath="$PROJECT_DIR$/doc/README_FOR_APP" />
     </list>
     <ignored path="Stocks.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,10 +37,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="plot.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plot.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="3" selection-start="8569" selection-end="8569" vertical-scroll-proportion="3.362069">
+            <state line="85" column="20" selection-start="5142" selection-end="5142" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -50,7 +49,7 @@
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="179" column="45" selection-start="9258" selection-end="9258" vertical-scroll-proportion="16.25">
+            <state line="179" column="45" selection-start="9258" selection-end="9258" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -59,16 +58,16 @@
       <file leaf-file-name="README_FOR_APP.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="414" column="47" selection-start="18882" selection-end="18882" vertical-scroll-proportion="-15.625">
+            <state line="414" column="47" selection-start="18882" selection-end="18882" vertical-scroll-proportion="-0.625">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plots_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="plots_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="38" selection-start="4603" selection-end="4603" vertical-scroll-proportion="0.0">
+            <state line="59" column="31" selection-start="4567" selection-end="4568" vertical-scroll-proportion="0.6454918">
               <folding />
             </state>
           </provider>
@@ -77,7 +76,7 @@
       <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Gemfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="60" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0">
+            <state line="13" column="10" selection-start="273" selection-end="273" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -95,7 +94,7 @@
       <file leaf-file-name="database.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/database.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="4" selection-start="0" selection-end="118" vertical-scroll-proportion="0.0">
+            <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -120,10 +119,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Rails console: Stocks" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Rails console: Stocks" root0="SKIP_HIGHLIGHTING" />
-  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
@@ -139,10 +134,10 @@
         <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html" />
         <option value="$PROJECT_DIR$/app/views/plots/index.html.erb" />
-        <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/doc/README_FOR_APP" />
         <option value="$PROJECT_DIR$/app/controllers/plots_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/plot.rb" />
+        <option value="$PROJECT_DIR$/Gemfile" />
       </list>
     </option>
   </component>
@@ -154,9 +149,9 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="25" />
-    <option name="width" value="1674" />
-    <option name="height" value="983" />
+    <option name="y" value="22" />
+    <option name="width" value="1440" />
+    <option name="height" value="874" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -203,26 +198,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="RailsProjectView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -237,22 +212,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="rails-stocks" />
+              <option name="myItemId" value="Stocks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="RailsProjectView">
+        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rails-stocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -263,14 +244,14 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="44" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="49" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="48" />
-    <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="recentsLimit" value="5" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="48" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="51" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="492" />
+    <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="488" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="492" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="51" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="49" />
     <property name="Database.TableEditor.Splitter" value="0.8999999" />
@@ -285,8 +266,8 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
     <property name="DefaultHtmlFileTemplate" value="Html" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -304,7 +285,7 @@
       <recent name="$PROJECT_DIR$/app/assets/javascripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Rake.db:seed">
+  <component name="RunManager" selected="Rails.Development: Stocks">
     <configuration default="false" name="routes" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
       <module name="Stocks" />
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
@@ -935,18 +916,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1674" height="983" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="22" width="1440" height="874" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.057549506" sideWeight="0.7062937" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12571838" sideWeight="0.7078507" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908458" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908458" sideWeight="0.49707603" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.116336636" sideWeight="0.7062937" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11781609" sideWeight="0.7078507" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3765933" sideWeight="0.06740196" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2937063" sideWeight="0.92830884" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2921493" sideWeight="0.92830884" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.49707603" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.78801167" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1074,35 +1055,9 @@
         <state line="11" column="62" selection-start="181" selection-end="181" vertical-scroll-proportion="0.20496894" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_template.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="20" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plots/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="45" selection-start="9258" selection-end="9258" vertical-scroll-proportion="16.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="60" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="414" column="47" selection-start="18882" selection-end="18882" vertical-scroll-proportion="-15.625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/database.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="4" selection-start="0" selection-end="118" vertical-scroll-proportion="0.0">
+        <state line="179" column="45" selection-start="9258" selection-end="9258" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1114,16 +1069,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/plot_template.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="38" selection-start="4603" selection-end="4603" vertical-scroll-proportion="0.0">
+        <state line="91" column="20" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc/app/doc/README_FOR_APP.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="414" column="47" selection-start="18882" selection-end="18882" vertical-scroll-proportion="-0.625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/plot.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="3" selection-start="8569" selection-end="8569" vertical-scroll-proportion="3.362069">
+        <state line="85" column="20" selection-start="5142" selection-end="5142" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="10" selection-start="273" selection-end="273" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/plots_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="31" selection-start="4567" selection-end="4568" vertical-scroll-proportion="0.6454918">
           <folding />
         </state>
       </provider>

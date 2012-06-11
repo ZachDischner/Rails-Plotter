@@ -57,8 +57,8 @@ class PlotsController < ApplicationController
 
     @x_default, @y_default, @filter_default, @feature_default = @plot.default_selections()
 
-    @start_year = Plot.first_year
-    @end_year   = Plot.last_year
+    #@start_year = Plot.first_year
+    #@end_year   = Plot.last_year
 
   end
 
