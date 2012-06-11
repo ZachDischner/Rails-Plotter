@@ -133,7 +133,12 @@ Keeping that in mind, this app was designed to make this transition especially e
 
 ==SQLite Database
 
-(need to migrate and seed?)
+The first time you run this application with this database setup, you'll need to make sure the database is constructed.
+Perform a:
+    >>rake db:migrate
+    >>rake db:seed
+This will make sure the db schema is up to date, and that it is 'seeded' with values.
+
 
 This is a database built in Rails, populated in the */db/seeds.rb*. You can easily add or change the values in this
 file, and update the database with:
@@ -146,10 +151,16 @@ Configuring the app to run on this database happens in three places:
 *Model          --> /app/models/plot.rb
 *Controller     --> /app/controllers/plots_controller.rb
 
-===Database Specs
+===Database Connection
 This is where you tell Rails how to connect to your database
 This section has been filled out for you. Look at */config/database.yml* and examine the database environment:
     sqlite_test:
+        adapter:  sqlite3
+        database: db/sqlite_test.sqlite3
+        table: plots
+        pool: 5
+        timeout: 5000
+
 Everything needed should be included there, and should connect automatically to the SQLite3 database.
 
 ===Model

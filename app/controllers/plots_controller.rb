@@ -42,6 +42,7 @@ class PlotsController < ApplicationController
     # otherwise unplottable data.
     exclude_tags = @plot.class_var('exclude_tags')
 
+    # Extra logic to not include any string type variables for plotting
     vars.each do |var|
       exclude_tags += [var] unless @plot.send(var).class != String
     end
