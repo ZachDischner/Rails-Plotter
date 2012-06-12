@@ -38,6 +38,12 @@ class PlotsController < ApplicationController
     # Get a list of all variable names
     vars = @plot.list_vars
 
+    # Get the name of the the "date" type variable
+    @date_name = @plot.class_var('date_name')
+
+    # Get the name of the "index" type variable. It should be some sort of integer range selector
+    @index_name = @plot.class_var('index_name')
+
     # These tags are to be excluded from any interactions, as they are database utilities, strings, or
     # otherwise unplottable data.
     exclude_tags = @plot.class_var('exclude_tags')
@@ -46,7 +52,7 @@ class PlotsController < ApplicationController
     vars.each do |var|
       exclude_tags += [var] unless @plot.send(var).class != String
     end
-    exclude_tags = Array(exclude_tags) - Array(@plot.class_var('date_name'))
+    exclude_tags = Array(exclude_tags) - Array(@date_name)
 
     # Get an array of the collected data as an array of strings. This will be used throughout plotting
     @tags = @plot.list_vars - exclude_tags
@@ -118,8 +124,8 @@ class PlotsController < ApplicationController
         if !Plot.first.date_invalid(params[:date_start]) && !Plot.first.date_invalid(params[:date_end])
           @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
               select_var(params[:x_var]).select_var(params[:y_var]).select_filter(params[:filter].first)
-        elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
-          @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_filter(params[:filter].first)
+        elsif !params[:index_start].blank? && !params[:index_end].blank? # If the user has input both a START and END value
+          @plot = Plot.between_index(params[:index_start], params[:index_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_filter(params[:filter].first)
         else
           @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_filter(params[:filter].first)
         end
@@ -136,8 +142,8 @@ class PlotsController < ApplicationController
           if !Plot.first.date_invalid(params[:date_start]) && !Plot.first.date_invalid(params[:date_end])
             eval("@" + p.to_s + "= Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
                 select_var(params[:x_var]).select_var(params[:y_var]).select_filter(p)"   )
-          elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
-            eval("@" + p.to_s + "= Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_filter(p)")
+          elsif !params[:index_start].blank? && !params[:index_end].blank? # If the user has input both a START and END value
+            eval("@" + p.to_s + "= Plot.between_index(params[:index_start], params[:index_end]).select_var(params[:x_var]).select_var(params[:y_var]).select_filter(p)")
           else
             eval("@" + p.to_s + "= Plot.select_var(params[:x_var]).select_var(params[:y_var]).select_filter(p)")
           end
@@ -150,8 +156,8 @@ class PlotsController < ApplicationController
       if !Plot.first.date_invalid(params[:date_start]) && !Plot.first.date_invalid(params[:date_end])
         @plot = Plot.between_dates((Plot.first.convert_date(params[:date_start])).to_s, (Plot.first.convert_date(params[:date_end])).to_s).
             select_var(params[:x_var]).select_var(params[:y_var])
-      elsif !params[:x_start].blank? && !params[:x_end].blank? # If the user has input both a START and END value
-        @plot = Plot.between_x(params[:x_start], params[:x_end]).select_var(params[:x_var]).select_var(params[:y_var])
+      elsif !params[:index_start].blank? && !params[:index_end].blank? # If the user has input both a START and END value
+        @plot = Plot.between_index(params[:index_start], params[:index_end]).select_var(params[:x_var]).select_var(params[:y_var])
       else
         @plot = Plot.select_var(params[:x_var]).select_var(params[:y_var])
       end

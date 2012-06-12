@@ -174,18 +174,18 @@ about *what* you are connecting to.
 Now, edit/examine the *Database Table Specifications* section (near the top of the file). Two subsections have
 been pre-defined. Make sure the MySQL section (1.0) is all commented out, and the SQLite3 section (2.0) is uncommented.
 It should look like this:
-      # 2.0
-      #SQLITE test development environment
-      establish_connection :sqlite_test                     # The connection specs in /config/database.yml
-      set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
-      @@find_filter = false                                 # Indicates that this database will require column filtering (No for unique columns)
-      @@default_x       = [""]                              # Default selection for X axis
-      @@default_y       = [""]                              # Default selection(s) for Y axis
-      @@default_filter  = [""]                              # Default selection(s) for FILTER selection
-      @@default_feature = [""]                              # Default selection for interaction FEATURE
-      @@date_name       = "date"                            # Name of column containing Date values
-      @@index_name      = "id"                              # Name of column containing some index value
-      @@filter_name     = "ticker"                          # Name of column containing filters
+        #2.0-SQLite Testing Environment
+        #establish_connection :sqlite_test                     # The connection specs in /config/database.yml
+        #set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
+        #@@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
+        #@@default_x       = [""]                              # Default selection for X axis
+        #@@default_y       = [""]                              # Default selection(s) for Y axis
+        #@@default_filter  = [""]                              # Default selection(s) for FILTER selection
+        #@@default_feature = [""]                              # Default selection for interaction FEATURE
+        #@@date_name       = "DataDate"                        # Name of column containing Date values
+        #@@index_name      = "id"                              # Name of column containing some index value
+        #@@filter_name     = ""                                # Name of column containing filters
+        #@@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
 
 The first two lines tell RoR which connection (of all listed in the */config/database.yml* file) to connect to, and which
 table to use in that database connection.

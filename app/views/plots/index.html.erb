@@ -128,40 +128,44 @@ Also, there is a similar helping div that floats along the right hand side of th
           </td>
           <tr>
           <tr>
-            <td>
-              <p style="background-color: #C0C0C0; max-width: 450px;height:50px;
-                      border-style:outset; border-color: #888888; border-radius: 0.5em;
-                      text-align: center;
-                      padding:10px ">
-                Select "id" Range for Plotting
-                <br>
-                <%= label(:plot, :x_start, "Start") %>
-                <%= number_field_tag(:x_start, params[:x_start],
-                                     :onmouseover => "page_info('x_start')",
-                                     :onmouseout => "page_info()",
-                                     :onchange => "params_info('x_start')") %>
+            <% if @index_name != "" then %>
+                <td>
+                  <p style="background-color: #C0C0C0; max-width: 450px;height:50px;
+                          border-style:outset; border-color: #888888; border-radius: 0.5em;
+                          text-align: center;
+                          padding:10px ">
+                    Select <%= @index_name %> Range for Plotting
+                    <br>
+                    <%= label(:plot, :index_start, "Start") %>
+                    <%= number_field_tag(:index_start, params[:index_start],
+                                         :onmouseover => "page_info('x_start')",
+                                         :onmouseout => "page_info()",
+                                         :onchange => "params_info('index_start')") %>
 
-                <%= label(:plot, :x_end, "End") %>
-                <%= number_field_tag(:x_end, params[:x_end],{
-                                     :onmouseover => "page_info('x_end')",
-                                     :onmouseout => "page_info()",
-                                     :onchange => "params_info('x_end')"}) %>
+                    <%= label(:plot, :index_end, "End") %>
+                    <%= number_field_tag(:index_end, params[:index_end], {
+                            :onmouseover => "page_info('index_end')",
+                            :onmouseout => "page_info()",
+                            :onchange => "params_info('index_end')"}) %>
 
-              </p>
-            </td>
+                  </p>
+                </td>
+
+            <% end %>
 
 
             <!--
                 Here is a radiobuttion selector, which decides if you want to view the data
                 with checkbox line selectors, or a linear regression option.
             -->
-
+            <% if @date_name != "" then %>
             <td>
 
               <!--
                 This is the block that creates a selector for  Datetime options
                 It populates a Datetime param that is used in dynamic scope selectors
               -->
+
               <p style="background-color: #C0C0C0; width: 350px;height:100px;
                       border-style:outset; border-radius: 0.5em; border-color:#888888;
                       text-align: center;
@@ -188,6 +192,7 @@ Also, there is a similar helping div that floats along the right hand side of th
               </p>
 
             </td>
+            <% end %>
           </tr>
 
           <!--
@@ -298,10 +303,7 @@ Also, there is a similar helping div that floats along the right hand side of th
                         '       </div>  ' +
                         '   </td>' +
                         '</tr>';
-//              toggle_visibility('mytable')
-//              document.getElementById('mytable').innerHTML=''
-//              document.getElementById("StatusString").innerHTML = "Processing Your Request";
-//              document.getElementById("LoadingIMG").style.display = "block"
+
           }
 
           function page_info(x) {
@@ -327,10 +329,10 @@ Also, there is a similar helping div that floats along the right hand side of th
                       case 'feature':
                           document.getElementById("helper").innerHTML = "Choose a plot feature. Renders different interaction functionality";
                           break;
-                      case 'x_start':
+                      case 'index_start':
                           document.getElementById("helper").innerHTML = "Select te starting X index for your plot range (starting row for database query)";
                           break;
-                      case 'x_end':
+                      case 'index_end':
                           document.getElementById("helper").innerHTML = "Select te ending X index for your plot range (ending row for database query)";
                           break;
                       case 'date_picker':
@@ -344,7 +346,7 @@ Also, there is a similar helping div that floats along the right hand side of th
                                                                            "being sent to app/plots/plots_controller.rb" ;
                           break;
                       case 'helper':
-                          document.getElementById("helper").innerHTML = "Simple explination of page sections. Disable by changing   params[:debug]  to  'false' in" +
+                          document.getElementById("helper").innerHTML = "Simple explanation of page sections. Disable by changing   params[:debug]  to  'false' in" +
                                                                                     "   app/controllers/plots_controller.rb [index]";
                           break;
                       default:
@@ -427,11 +429,11 @@ Also, there is a similar helping div that floats along the right hand side of th
 //            rownum = 2;
 //            cell_value = getSelectedOptions(param);
 //            break;
-//        case 'x_start':
+//        case 'index_start':
 //            rownum = 3;
 //            cell_value = getSelectedOptions(param);
 //            break;
-//        case 'x_end':
+//        case 'index_end':
 //            rownum = 4;
 //            cell_value = getSelectedOptions(param);
 //            break;

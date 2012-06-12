@@ -1,70 +1,73 @@
-#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Plot Class =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
-#
-#  Written by:
-#             Zach Dischner for personal and LASP scientific uses
-#  Updated:
-#             May 1, 2012
-#  Contact:
-#             zach.dischner@lasp.colorado.edu
-#             zach.dischner@gmail.com
-# Purpose:
-#  The Plot Class has two main tasks:
-#      1. Define methods to query your database to select appropriate data
-#      2. Take that data and dynamically generate HTML/dygraphs logic.
-#      3. Generate Javascript utils for interacting with graphs. This showcases the app's
-#           Dynamic ability to employ Javascript capabilities on the fly.
-#
-#  Plot HTML templates can be found in the   >>/app/views/layouts/plot_template.html.erb
-#  This template defines the proper methodology to implement Plot methods to generate relevant dygraphs HTML.
-#
-#  The general procedure for generating a single dygraphs plot in an HTML page is as follows:
-#          1. Appropriate a div for the plot ( "graphdiv#" )
-#          2. Create a new Javascript dygraphs element ( "g#" )
-#          3. Generate the header for the graph. This allows a legend to correlate values with variable names
-#          4. Generate the graph content, or the body of the graph. This parses database values contained in the
-#             @plot object into a string recognizable by dygraphs functions.
-#          5. Generate dygraphs option specifications for each graph.
-#          6. Generate linear regression Javascript logic and HTML if wanted.
-#          7. Generate checkbox logic and HTML elements if wanted.
-#
-#  Each of these tasks is made to be dynamic and iterative, so as to provide means to plot any generic dataset.
-#  Also note that each of these tasks is closely related with the other. Changing one will have a high probability
-#     changing the others. Javascripts, HTML, and RoR all are inter-related. BEWARE!!!
-#
-#  On that note, this IS designed to be extremely generic. Changing functionality to fit your specific application will
-#     likely make more sense eventually. Instead of the current procedure of looping through the @plot object, and
-#     "send"ing the variable names, you'll know exactly what you want your @plot variable will look like, and what
-#     from it you'll want to plot. Now, this all doesn't really look like OO programming, or a typical RoR app. Once
-#     you get a more solid base, you should modify the app to behave more like a typical RoR app, if you want to.
-#
-#
-# BUGS TO FIX:
-#     * Slight bug in linear regression rendering for multiple plot windows. Once regressions are calculated and drawn
-#       in one window, moving to another graph window and calculating a single regression results in that regression being
-#       correctly drawn, but the previously calculated regression data from the first window also gets drawn for the
-#       buttons not clicked.
-#
-#
-#
+#*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Plot Class =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+#                                                                                                                     #
+#  Written by:                                                                                                        #
+#             Zach Dischner for personal and LASP scientific uses                                                     #
+#  Updated:                                                                                                           #
+#             May 1, 2012                                                                                             #
+#  Contact:                                                                                                           #
+#             zach.dischner@lasp.colorado.edu                                                                         #
+#             zach.dischner@gmail.com                                                                                 #
+# Purpose:                                                                                                            #
+#  The Plot Class has two main tasks:                                                                                 #
+#      1. Define methods to query your database to select appropriate data                                            #
+#      2. Take that data and dynamically generate HTML/dygraphs logic.                                                #
+#      3. Generate Javascript utils for interacting with graphs. This showcases the app's                             #
+#           Dynamic ability to employ Javascript capabilities on the fly.                                             #
+#                                                                                                                     #
+#  Plot HTML templates can be found in the   >>/app/views/layouts/plot_template.html.erb                              #
+#  This template defines the proper methodology to implement Plot methods to generate relevant dygraphs HTML.         #
+#                                                                                                                     #
+#  The general procedure for generating a single dygraphs plot in an HTML page is as follows:                         #
+#          1. Appropriate a div for the plot ( "graphdiv#" )                                                          #
+#          2. Create a new Javascript dygraphs element ( "g#" )                                                       #
+#          3. Generate the header for the graph. This allows a legend to correlate values with variable names         #
+#          4. Generate the graph content, or the body of the graph. This parses database values contained in the      #
+#             @plot object into a string recognizable by dygraphs functions.                                          #
+#          5. Generate dygraphs option specifications for each graph.                                                 #
+#          6. Generate linear regression Javascript logic and HTML if wanted.                                         #
+#          7. Generate checkbox logic and HTML elements if wanted.                                                    #
+#                                                                                                                     #
+#  Each of these tasks is made to be dynamic and iterative, so as to provide means to plot any generic dataset.       #
+#  Also note that each of these tasks is closely related with the other. Changing one will have a high probability    #
+#     changing the others. Javascripts, HTML, and RoR all are inter-related. BEWARE!!!                                #
+#                                                                                                                     #
+#  On that note, this IS designed to be extremely generic. Changing functionality to fit your specific application    #
+#     will likely make more sense eventually. Instead of the current procedure of looping through the @plot object,   #
+#     and "send"ing the variable names, you'll know exactly what you want your @plot variable will look like, and what#
+#     from it you'll want to plot. Now, this all doesn't really look like OO programming, or a typical RoR app. Once  #
+#     you get a more solid base, you should modify the app to behave more like a typical RoR app, if you want to.     #
+#                                                                                                                     #
+#                                                                                                                     #
+# BUGS TO FIX:                                                                                                        #
+#     * Slight bug in linear regression rendering for multiple plot windows. Once regressions are calculated and      #
+#       drawn in one window, moving to another graph window and calculating a single regression results in that       #
+#       regression being correctly drawn, but the previously calculated regression data from the first window also    #
+#       gets drawn for the buttons not clicked.                                                                       #
+#                                                                                                                     #
+#                                                                                                                     #
+#                                                                                                                     #
 #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
 class Plot < ActiveRecord::Base
 
 
 
-  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Database Table Specifications =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* Database Table Specifications =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   # Use these sections to specify some higher level details about your database setup and schema
-  # Specify:  Connection Method
-  #           Table Name
-  #           Primary Key
-  #           Whether or not a Filter is to be applied
-  #           Several defaults for interaction.
+  # Specify:  *Connection Method                             (Mandatory if not environment default)
+  #           *Table Name                                    (Mandatory if not environment default)
+  #           *Primary Key                                   (Mandatory if not environment default)
+  #           *Whether or not a Filter is to be applied      (optional)
+  #           *Several defaults for interaction.             (optional)
+  #           *Name of "Date" column variable                (optional)
+  #           *Name of integer "X" axis column variable      (optional)
+  #           *Name of "filter" column                       (optional)
+  #           *Column names to exclude from consideration    (optional)
   #
   # I have provided two databases and their schemas here in this app
 
 
-  # 1.0
-  # MYSQL development database, use the built in Stocks database.
+  # 1.0-MYSQL development environment
   # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
   establish_connection :development                        # The connection specs in /config/database.yml
   set_table_name "stock_test"                              # Table name defined in the "CreateTestTable.txt" script
@@ -77,12 +80,11 @@ class Plot < ActiveRecord::Base
   @@date_name       = "date"                               # Name of column containing Date values
   @@index_name      = "id"                                 # Name of column containing some index value
   @@filter_name     = "ticker"                             # Name of column containing filters
-  @@exclude_tags    = ["created_at","updated_at","ticker"] # Name of columns you don't want to be considered for plotting
+  @@exclude_tags    = ["ticker"]                           # Name of columns you don't want to be considered for plotting
 
   #zZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZ
 
-  # 2.0
-  #SQLITE test development environment
+  # 2.0-SQLITE test development environment
   #establish_connection :sqlite_test                     # The connection specs in /config/database.yml
   #set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
   #@@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
@@ -117,17 +119,6 @@ class Plot < ActiveRecord::Base
   #                       should be the name of your date-type column in your database
   scope :between_dates, lambda { |start_date, end_date| where(@@date_name +" > ? AND " + @@date_name + " < ?", "#{start_date}", "#{end_date}") }
   scope :after_date, lambda { |start_date| where(@@date_name + " > ?", "%#{start_date}") }
-
-
-
-  # PUT IN METHOD INSTEAD MAYBE, SINGLE QUERY? IDK MIGHT BE TOO MUCH
-
-  #        1.1.1 FIRST_YEAR: This will dynamically get the earliest year in your database. When you know more about your
-  #                          setup, you can set this in a method instead of a scope
-  #scope :first_year, find(:first, :order => @@date_name + "ASC").send(@@date_name).to_date.year
-  #        1.1.2 LAST_YEAR: This will dynamically get the latest year in your database. When you know more about your
-  #                          setup, you can set this in a method instead of a scope
-  #scope :first_year, lambda { || find(:first, :order => @@date_name + " DESC") }
   #
   #
   #      1.2 STRING SCOPES: This is for selection of rows containing certain strings in your database, based on a column
@@ -136,13 +127,13 @@ class Plot < ActiveRecord::Base
   #                         and pass a single name ("Joe", "Sally") to the selector as an argument.
   scope :select_filter, lambda { |filtername| where(@@filter_name + " in (?)", "#{filtername}") }
   #
-  #      1.3 NUMERIC SCOPES: Change "x" to whichever numeric column you want to filter by.
-  #                     EG. "x" can be 'laps','orbits', or just some index you would want to truncate your dataset by.
+  #      1.3 NUMERIC SCOPES: "index" is whichever numeric column you want to choose data range with.
+  #                     EG. "index" can be 'laps','orbits', or just some index you would want to truncate your dataset by.
   #                         If you have y(x), but don't want to plot y for ALL values of x, use these scopes to truncate
   #                         your dataset.
-  scope :after_x, lambda { |x1| where(@@index_name + " >= ?", "#{x1}") }
-  scope :before_x, lambda { |x2| where(@@index_name + " <=?", "#{x2}") }
-  scope :between_x, lambda { |x1, x2| where(@@index_name + " BETWEEN ? and ?", "#{x1}", "#{x2}") }
+  scope :after_index, lambda { |x1| where(@@index_name + " >= ?", "#{x1}") }
+  scope :before_index, lambda { |x2| where(@@index_name + " <=?", "#{x2}") }
+  scope :between_index, lambda { |x1, x2| where(@@index_name + " BETWEEN ? and ?", "#{x1}", "#{x2}") }
   #
   # (1.5) "Filter" selection. This is the optional scope, which depends heavily on your database schema and how you want to plot.
   #         -This will get a list of distinct values in the "filter" column, which can be used in the interaction webpage to obtain
@@ -192,35 +183,41 @@ class Plot < ActiveRecord::Base
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
   def class_var(name)
     case name
-      when 'filter_name'
-        if !defined? @@filter_name      then @@filter_name      = [""]     end
+      when 'filter_name'                                                          # Name of DB 'filter' column
+        if !defined? @@filter_name      then @@filter_name      = [""]      end
         return @@filter_name
 
-      when 'default_x'
+      when 'default_x'                                                            # Default 'X' var selection
         if !defined? @@default_x        then @@default_x        = [""]      end
         return @@default_x
 
-      when 'default_y'
+      when 'default_y'                                                            # Default 'Y' var selection(s)
         if !defined? @@default_y        then @@default_y        = [""]      end
         return @@default_y
 
-      when 'default_filter'
+      when 'default_filter'                                                       # Default 'Filter' selection(s)
         if !defined? @@default_filter   then @@default_filter   = [""]      end
         return @@default_filter
 
-      when 'default_feature'
+      when 'default_feature'                                                      # Default 'Feature' selection
         if !defined? @@default_feature  then @@default_feature  = ["None"]  end
         return @@default_feature
 
-      when 'date_name'
+      when 'date_name'                                                            # Name of 'Date' type column
         if !defined? @@date_name        then @@date_name        = ""        end
         return @@date_name
-      when 'find_filter?'
-        if !defined? @@find_filter      then @@find_filter      = false     end
+
+      when 'index_name'
+        if !defined? @@index_name        then @@index_name       = ""        end   # Name of 'index' variable
+        return @@index_name
+
+      when 'find_filter?'                                                         # Indicator whether or not the DB schema
+        if !defined? @@find_filter      then @@find_filter      = false     end   # includes a 'filter' type column
         return  @@find_filter
 
-      when 'exclude_tags'
-        if !defined? @@exclude_tags     then @@exclude_tags     = ['']      end
+
+      when 'exclude_tags'                                                         # List of tags to exclude from DB
+        if !defined? @@exclude_tags     then @@exclude_tags     = ['']      end   # interaction
         return @@exclude_tags
 
       else
@@ -231,9 +228,11 @@ class Plot < ActiveRecord::Base
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* default_selections *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
   # Purpose:                                                                        #
-  #     Indicates if columns are to be filtered in db selection. The                #
-  #     @@find_filter variable is set above, under the "Database Table "            #
-  #     "Specifications" section                                                    #
+  #     Get default selections for DB interaction. Used in conjunction with:        #
+  #      "Plot.class_var", above. The defaults aren't required for the app to       #
+  #     function, but this architecture provides a means for easier customization   #
+  #     later. If not set in the "Database Table Specifications" above, the         #
+  #     this function returns blank strings.                                        #
   # Inputs:                                                                         #
   #     None                                                                        #
   # Outputs:                                                                        #
@@ -263,38 +262,33 @@ class Plot < ActiveRecord::Base
   end
 
 
-  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* filter_table =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* year_bounds *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
   # Purpose:                                                                  #
-  #     Indicates if columns are to be filtered in db selection. The          #
-  #     @@find_filter variable is set above, under the "Database Table "      #
-  #     "Specifications" section                                              #
+  #     Simply return the earliest or latest year available in the database.  #
   # Inputs:                                                                   #
-  #     None                                                                  #
+  #     condition-String. Keyed to get first/last year available              #
   # Outputs:                                                                  #
-  #     @@find_filter: boolean, true or false                                 #
+  #     Integer-Year number in standard form                                  #
   # Calling:                                                                  #
-  #          >> TorF = Plot.filter_table                                      #
+  #          >> year = Plot.year_bounds('first')                              #
   # Example:                                                                  #
-  #    In the "plots_controller .. index" section, this is used to aid  the   #
-  #       filling of the "@filters" variable :                                #
-  #          >> @filters = "No Filter" + {stuff} if Plot.filter_table         #
-  #    So if the table requires no column filtering, the @filters variable    #
-  #       will only contain:                                                  #
-  #          @filters --> ["No Filter"]                                       #
-  #    which is used in "plots/views/index.html" to build filter selectors    #
+  #    In the "plots/index.html.erb" view, this function is called within the #
+  #    "date_select" helper options to define a starting year and ending      #
+  #    year to be populated in the drop down list. Not necessary, but helpful #
+  #       <%= date_select(:date_end, params[:date_end],                       #
+  #                 :start_year  => Plot.year_bounds('first'),                #
+  #                 :end_year    => Plot.year_bounds('last'), ...             #
   #                                                                           #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-  #def filter_table
-  #  if !defined? @@find_filter then @@find_filter = false end
-  #  return  @@find_filter
-  #end
-
   def self.year_bounds(condition)
-    if condition.downcase == 'first' then
-      find(:first, :order => @@date_name + " ASC").send(@@date_name).to_date.year
-    elsif condition.downcase == 'last'
-      find(:first, :order => @@date_name + " DESC").send(@@date_name).to_date.year
+    if defined? @@date_name then
+      if condition.downcase == 'first' then
+        find(:first, :order => @@date_name + " ASC").send(@@date_name).to_date.year
+      elsif condition.downcase == 'last'
+        find(:first, :order => @@date_name + " DESC").send(@@date_name).to_date.year
+      end
     end
+
   end
 
 
@@ -826,10 +820,13 @@ class Plot < ActiveRecord::Base
   #         >>bad_date = @plot.first.date_invalid(params[:my_date])                       #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    def date_invalid(date_obj)
+  def date_invalid(date_obj)
+    if self.class_var("date_name") != "" then
       return ([date_obj["(1i)"].to_s.blank?, date_obj["(2i)"].to_s.blank?, date_obj["(3i)"].to_s.blank?]).include?(true)
+    else
+      return true
     end
-
+  end
 
 
 end
