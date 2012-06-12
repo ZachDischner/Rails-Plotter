@@ -84,18 +84,19 @@ Rails. If you’re reading this, then its likely you are trying to connect
 this app with your database. This readme assumes you have some knowledge of
 Ruby on Rails. If you don’t, online resources can be great teachers. Most
 of what you’re about to read shouldn’t require much RoR insight, and the
-demo should be comprehendible even for noobs.</p>
+demo should be comprehensible even for noobs (of which, I am one).</p>
 
 <p>This was built for the Laboratory for Atmospheric and Space Physics (LASP)
-in Boulder, Colorado. Its AIM is to enable quick visulization of database
+in Boulder, Colorado. Its AIM is to enable quick visualization of database
 numeric data, without spending months developing your own custom solutions.
 Since LASP has a diverse scientific community, using many different
 database engines and schemas, I tried to make this app as generic as I
 could, so that it may work for any of them. The goal is that this app will
 provide a startup web server for any basic *single table* database table in
 under 2 hours. Most of that time will be installing RoR dependencies. Once
-set up, you should be able to run the server for your database within 10
-minutes, with only minimal adjustments to the code itself.</p>
+everything is intalled, you should be able to run the server for your
+database within 10 minutes, with only minimal adjustments to the code
+itself.</p>
 
 <p>To date (July 1 2012), I have successfully tested this app with the
 following databases:</p>
@@ -140,7 +141,7 @@ plots. This page is found in
 <strong>/app/views/plots/plotter.html.erb</strong></p>
 
 <p>3.0 Controller: Ruby file that grabs DB data necessary to construct HTML
-pages, and handles lots of the login requried in that selection. Here,
+pages, and handles lots of the logic required in that selection. Here,
 there are only two pages. There are two methods, one for the Selector page,
 and one for the <a href="../Plot.html">Plot</a> page. This file is found in
 <strong>/app/controllers/plots_controller.rb</strong></p>
@@ -210,16 +211,16 @@ install them, you must change requirements in
 configurations for these databases are included.</p>
 
 <p>The SQLite3 database is self contained, and is located in
-<strong>/db/sqlite_test.sqlite3</strong>. It should be found and connected
-to automatically. It is a simple and small table, where each column is a
-variable which can be plotted against other columns.</p>
+<strong>/db/sqlite_test.sqlite3</strong>, and can be connected to while
+using the “sqlite_test” environment. It is a simple and small table, where
+each column is a variable which can be plotted against other columns.</p>
 
 <p>The MySQL database is populated using the text-file:
 <strong>/CreateTestTable.txt</strong></p>
 
 <p>To populate your MySQL database, simply run:</p>
 
-<pre>&gt;&gt;mysql &lt; /dir/to/app/CreateTestTable.txt</pre>
+<pre>&gt;&gt;mysql &lt; /dir/to/application/CreateTestTable.txt</pre>
 
 <p>This will build a MySQL test database and table full of stock market data.
 An important difference between the MySQL and the SQLite3 database is in
@@ -240,6 +241,14 @@ interweb is the best way to solve these errors.</p>
 
 <h2 id="label-The+All+Clear">The All Clear</h2>
 
+<p>First, either from the command line or using
+<strong>tools/bundle/install</strong> in RubyMine, run:</p>
+
+<pre>bundle install</pre>
+
+<p>to install all gems required for this app. If any fail to install, it is
+likely an issue with your environment setup.</p>
+
 <p>Basically, you’ll know everything is working correctly when you can
 successfully run the rails console, and typing:</p>
 
@@ -249,17 +258,9 @@ successfully run the rails console, and typing:</p>
 provided databases (switching between will be covered shortly), you should
 be good to go!</p>
 
-<p>Next, either from the command line or using
-<strong>tools/bundle/install</strong> in RubyMine, run:</p>
-
-<pre>bundle install</pre>
-
-<p>to install all gems required for this app. If any fail to install, it is
-likely an issue with your environment setup.</p>
-
 <h1 id="label-Take+it+for+a+Test+Drive">Take it for a Test Drive</h1>
 
-<p>Once everything is installed correctly (a never ending struggle), its time
+<p>Once everything is installed correctly (a never-ending struggle), its time
 to try it out! I’ll walk you through how to use the app for each database.
 Hopefully this will illustrate how simple it will be to connect to your own
 database. The RoR connection specifications for both can be found in
@@ -270,14 +271,23 @@ connection information for your own database.</p>
 months to setup and lots of tweaking and tinkering. Then, say you want to
 start over with an entirely different database server and a completely
 different table schema. Most of the time, this requires a lot of
-modification to your server, if not a whole new setup.</p>
+modification to your server, if not a whole new setup. At least, this is
+the case as far as I have seen.</p>
 
 <p>Keeping that in mind, this app was designed to make this transition
 especially easy, as I will illustrate below.</p>
 
 <h2 id="label-SQLite+Database">SQLite Database</h2>
 
-<p>(need to migrate and seed?)</p>
+<p>The first time you run this application with this database setup, you’ll
+need to make sure the database is constructed. Using the “sqlite_test”
+environment, perform a:</p>
+
+<pre>&gt;&gt;rake db:migrate
+&gt;&gt;rake db:seed</pre>
+
+<p>This will make sure the db schema is up to date, and that it is ‘seeded’
+with values.</p>
 
 <p>This is a database built in Rails, populated in the
 <strong>/db/seeds.rb</strong>. You can easily add or change the values in
@@ -286,18 +296,22 @@ this file, and update the database with:</p>
 <pre>&gt;&gt;rake db:seed</pre>
 
 <p>This is a small, simple database. Each column contains a single variable,
-which can be plotted against other columns. Configuring the app to run on
-this database happens in three places: *Database Specs –&gt;
-/config/database.yml *Model          –&gt; /app/models/plot.rb *Controller 
-–&gt; /app/controllers/plots_controller.rb</p>
+which can be plotted against other columns. Configuring the app to run a
+database happens in two places: *Database Specs –&gt; /config/database.yml
+*Model          –&gt; /app/models/plot.rb</p>
 
-<h3 id="label-Database+Specs">Database Specs</h3>
+<h3 id="label-Database+Connection">Database Connection</h3>
 
 <p>This is where you tell Rails how to connect to your database This section
 has been filled out for you. Look at <strong>/config/database.yml</strong>
 and examine the database environment:</p>
 
-<pre>sqlite_test:</pre>
+<pre>sqlite_test:
+    adapter:  sqlite3
+    database: db/sqlite_test.sqlite3
+    table: plots
+    pool: 5
+    timeout: 5000</pre>
 
 <p>Everything needed should be included there, and should connect
 automatically to the SQLite3 database.</p>
@@ -318,25 +332,25 @@ of the file). Two subsections have been pre-defined. Make sure the MySQL
 section (1.0) is all commented out, and the SQLite3 section (2.0) is
 uncommented. It should look like this:</p>
 
-<pre class="ruby"><span class="ruby-comment"># 2.0</span>
-<span class="ruby-comment">#SQLITE test development environment</span>
+<pre class="ruby"><span class="ruby-comment">#2.0-SQLite Testing Environment</span>
 <span class="ruby-identifier">establish_connection</span> :<span class="ruby-identifier">sqlite_test</span>                     <span class="ruby-comment"># The connection specs in /config/database.yml</span>
 <span class="ruby-identifier">set_table_name</span> <span class="ruby-string">&quot;plots&quot;</span>                                <span class="ruby-comment"># Table name defined in the &quot;CreateTestTable.txt&quot; script</span>
-<span class="ruby-identifier">@@find_filter</span> = <span class="ruby-keyword">false</span>                                 <span class="ruby-comment"># Indicates that this database will require column filtering (No for unique columns)</span>
+<span class="ruby-identifier">@@find_filter</span>     = <span class="ruby-keyword">false</span>                             <span class="ruby-comment"># Indicates that this database will require column filtering (No for unique columns)</span>
 <span class="ruby-identifier">@@default_x</span>       = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection for X axis</span>
 <span class="ruby-identifier">@@default_y</span>       = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection(s) for Y axis</span>
 <span class="ruby-identifier">@@default_filter</span>  = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection(s) for FILTER selection</span>
 <span class="ruby-identifier">@@default_feature</span> = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection for interaction FEATURE</span>
-<span class="ruby-identifier">@@date_name</span>       = <span class="ruby-string">&quot;date&quot;</span>                            <span class="ruby-comment"># Name of column containing Date values</span>
+<span class="ruby-identifier">@@date_name</span>       = <span class="ruby-string">&quot;DataDate&quot;</span>                        <span class="ruby-comment"># Name of column containing Date values</span>
 <span class="ruby-identifier">@@index_name</span>      = <span class="ruby-string">&quot;id&quot;</span>                              <span class="ruby-comment"># Name of column containing some index value</span>
-<span class="ruby-identifier">@@filter_name</span>     = <span class="ruby-string">&quot;ticker&quot;</span>                          <span class="ruby-comment"># Name of column containing filters</span>
+<span class="ruby-identifier">@@filter_name</span>     = <span class="ruby-string">&quot;&quot;</span>                                <span class="ruby-comment"># Name of column containing filters</span>
+<span class="ruby-identifier">@@exclude_tags</span>    = [<span class="ruby-string">&quot;created_at&quot;</span>,<span class="ruby-string">&quot;updated_at&quot;</span>]       <span class="ruby-comment"># Name of columns you don't want to be considered for plotting</span>
 </pre>
 
 <p>The first two lines tell RoR which connection (of all listed in the
 <strong>/config/database.yml</strong> file) to connect to, and which table
 to use in that database connection.</p>
 
-<p>The next 8 lines are optional.</p>
+<p>The next 9 lines are optional.</p>
 <ul><li>
 <p>@@find_filter is an indicator, and should be set if your column relations
 are not unique. See *Filter Explanation* below</p>
@@ -357,16 +371,21 @@ querying and data selection. By defining</p>
 </li></ul>
 
 <p>these here, you can avoid mucking around throughout the rest of the program
-and save some initial headaches</p>
+and save some initial headaches.</p>
+<ul><li>
+<p>@@exclude_tags Defines database column variabls that you do not want to be
+considered in plotting. The app will</p>
+</li></ul>
 
-<h2 id="label-New+parts%3F%3F%3F%3F%3F+Or+Scopes%3F%3F">New parts????? Or Scopes??</h2>
+<p>automatically remove String type variables, but you may define other types
+here for convenience.</p>
 
-<h3 id="label-Controller">Controller</h3>
+<p>Hooray you’re done! This is all that is required to tell RoR about your
+setup.  Run the app and check out how the server works. You can tinker with
+the @@instance_variables to change default selections, and change the style
+of the table to include/disregard index and date selectors.</p>
 
-<p>This file handles the querying of the database, and provides data to an
-HTML page for rendering.</p>
-
-<p>*[[[HMM do I need to change how all this is going to work?]]]</p>
+<h2 id="label-MySQL+Stock+Market+Database">MySQL Stock Market Database</h2>
 
 <h1 id="label-Filter+Explanation">Filter Explanation</h1>
 
@@ -441,6 +460,25 @@ to only include rows where the ‘ticker == aapl’.</p>
 
 <p>Underneath the hood, each <strong>filter</strong> selection results in its
 own database query, and its own instance variable being set.</p>
+
+<h2 id="label-One+Last+Note+on+the+Filter">One Last Note on the Filter</h2>
+
+<p>It is assumed that the ‘filter’ column in your database is a string. If it
+in fact is a numeric type, this app will require some adjustment. I believe
+the filter selection will just have to be converted to a string, with a
+string character concatenated to the beginning of that selection.</p>
+
+<p>In the controller, each filter has its own instance variable, labeled after
+that filter. So a filter selection of ‘aapl’ becomes @aapl. So if your
+selection happens to be</p>
+
+<pre>params[:filter] = '1'</pre>
+
+<p>The controller would attempt to assign</p>
+
+<pre>@1 = Plot.select_var ...</pre>
+
+<p>That wouldn’t work. Just something to keep in mind.</p>
 
 <h1 id="label-Summary">Summary</h1>
 

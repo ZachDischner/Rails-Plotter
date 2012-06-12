@@ -2,15 +2,15 @@
 Welcome to the interactive database plotting web engine, built in Ruby on Rails. If you're reading this, then its likely you are trying to
 connect this app with your database. This readme assumes you have some knowledge of Ruby on Rails. If you don't, online
 resources can be great teachers. Most of what you're about to read shouldn't require much RoR insight, and the demo
-should be comprehensible even for noobs.
+should be comprehensible even for noobs (of which, I am one).
 
 This was built for the Laboratory for Atmospheric and Space Physics (LASP) in Boulder, Colorado.
 Its AIM is to enable quick visualization of database numeric data, without spending months developing
 your own custom solutions. Since LASP has a diverse scientific community, using many different database engines and schemas, I tried
 to make this app as generic as I could, so that it may work for any of them. The goal is that this app will provide a
 startup web server for any basic *single table* database table in under 2 hours. Most of that time will be installing
-RoR dependencies. Once set up, you should be able to run the server for your database within 10 minutes, with only
-minimal adjustments to the code itself.
+RoR dependencies. Once everything is intalled, you should be able to run the server for your database within 10 minutes,
+with only minimal adjustments to the code itself.
 
 To date (July 1 2012), I have successfully tested this app with the following databases:
 * MySQL
@@ -37,7 +37,7 @@ This page is found in */app/views/plots/index.html.erb*
 plots.
 This page is found in  */app/views/plots/plotter.html.erb*
 
-3.0 Controller: Ruby file that grabs DB data necessary to construct HTML pages, and handles lots of the login required in
+3.0 Controller: Ruby file that grabs DB data necessary to construct HTML pages, and handles lots of the logic required in
 that selection. Here, there are only two pages. There are two methods, one for the Selector page, and one for the Plot
 page.
 This file is found in */app/controllers/plots_controller.rb*
@@ -89,14 +89,14 @@ Since required gems are dependant on local libraries, SQLite3 and MySQL will nee
 order for this to work. If you really don't want to install them, you must change requirements in */config/Gemfile*
 All necessary connection gems and database configurations for these databases are included.
 
-The SQLite3 database is self contained, and is located in */db/sqlite_test.sqlite3*. It should be found and connected to
-automatically. It is a simple and small table, where each column is a variable which can be plotted against other columns.
+The SQLite3 database is self contained, and is located in */db/sqlite_test.sqlite3*, and can be connected to while using
+the "sqlite_test" environment. It is a simple and small table, where each column is a variable which can be plotted against other columns.
 
 The MySQL database is populated using the text-file: */CreateTestTable.txt*
 
 To populate your MySQL database, simply run:
 
-    >>mysql < /dir/to/app/CreateTestTable.txt
+    >>mysql < /dir/to/application/CreateTestTable.txt
 
 This will build a MySQL test database and table full of stock market data. An important difference between the MySQL and
 the SQLite3 database is in the schema. Where the SQLite3 database just has numeric columns to plot against each-other, the
@@ -110,33 +110,36 @@ even when the configurations are all correct. Fixing these errors often seems li
 them. More often then not, digging through the interweb is the best way to solve these errors.
 
 ==The All Clear
+First, either from the command line or using *tools/bundle/install* in RubyMine, run:
+    bundle install
+to install all gems required for this app. If any fail to install, it is likely an issue with your environment setup.
+
 Basically, you'll know everything is working correctly when you can successfully run the rails console, and typing:
     Plot.first
 Returns the first row in your database.
 Once this works for both of the provided databases (switching between will be covered shortly), you should be good to go!
 
-Next, either from the command line or using *tools/bundle/install* in RubyMine, run:
-    bundle install
-to install all gems required for this app. If any fail to install, it is likely an issue with your environment setup.
-
 =Take it for a Test Drive
-Once everything is installed correctly (a never ending struggle), its time to try it out! I'll walk you through how to
+Once everything is installed correctly (a never-ending struggle), its time to try it out! I'll walk you through how to
 use the app for each database. Hopefully this will illustrate how simple it will be to connect to your own database. The
 RoR connection specifications for both can be found in */config/database.yml*. This is where you will put connection
 information for your own database.
 
 Normally, creating a web server designed to plot data from a database takes months to setup and lots of tweaking and
 tinkering. Then, say you want to start over with an entirely different database server and a completely different table
-schema. Most of the time, this requires a lot of modification to your server, if not a whole new setup.
+schema. Most of the time, this requires a lot of modification to your server, if not a whole new setup. At least, this
+is the case as far as I have seen.
 
 Keeping that in mind, this app was designed to make this transition especially easy, as I will illustrate below.
 
 ==SQLite Database
 
 The first time you run this application with this database setup, you'll need to make sure the database is constructed.
-Perform a:
+Using the "sqlite_test" environment, perform a:
+
     >>rake db:migrate
     >>rake db:seed
+
 This will make sure the db schema is up to date, and that it is 'seeded' with values.
 
 
@@ -146,10 +149,9 @@ file, and update the database with:
     >>rake db:seed
 
 This is a small, simple database. Each column contains a single variable, which can be plotted against other columns.
-Configuring the app to run on this database happens in three places:
+Configuring the app to run a database happens in two places:
 *Database Specs --> /config/database.yml
 *Model          --> /app/models/plot.rb
-*Controller     --> /app/controllers/plots_controller.rb
 
 ===Database Connection
 This is where you tell Rails how to connect to your database
@@ -175,22 +177,22 @@ Now, edit/examine the *Database Table Specifications* section (near the top of t
 been pre-defined. Make sure the MySQL section (1.0) is all commented out, and the SQLite3 section (2.0) is uncommented.
 It should look like this:
         #2.0-SQLite Testing Environment
-        #establish_connection :sqlite_test                     # The connection specs in /config/database.yml
-        #set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
-        #@@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
-        #@@default_x       = [""]                              # Default selection for X axis
-        #@@default_y       = [""]                              # Default selection(s) for Y axis
-        #@@default_filter  = [""]                              # Default selection(s) for FILTER selection
-        #@@default_feature = [""]                              # Default selection for interaction FEATURE
-        #@@date_name       = "DataDate"                        # Name of column containing Date values
-        #@@index_name      = "id"                              # Name of column containing some index value
-        #@@filter_name     = ""                                # Name of column containing filters
-        #@@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
+        establish_connection :sqlite_test                     # The connection specs in /config/database.yml
+        set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
+        @@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
+        @@default_x       = [""]                              # Default selection for X axis
+        @@default_y       = [""]                              # Default selection(s) for Y axis
+        @@default_filter  = [""]                              # Default selection(s) for FILTER selection
+        @@default_feature = [""]                              # Default selection for interaction FEATURE
+        @@date_name       = "DataDate"                        # Name of column containing Date values
+        @@index_name      = "id"                              # Name of column containing some index value
+        @@filter_name     = ""                                # Name of column containing filters
+        @@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
 
 The first two lines tell RoR which connection (of all listed in the */config/database.yml* file) to connect to, and which
 table to use in that database connection.
 
-The next 8 lines are optional.
+The next 9 lines are optional.
 
 * @@find_filter is an indicator, and should be set if your column relations are not unique. See *Filter Explanation* below
 for a better description of this. If not set, there will be no filter applied automatically.
@@ -198,14 +200,15 @@ for a better description of this. If not set, there will be no filter applied au
 by default in the HTML page where you choose plot options. Now, they are blank, if undefined, this program will set them
 to [""] automatically.
 * @@*_name gives the column name of some pertinent variables to be used in db querying and data selection. By defining
-these here, you can avoid mucking around throughout the rest of the program and save some initial headaches
+these here, you can avoid mucking around throughout the rest of the program and save some initial headaches.
+* @@exclude_tags Defines database column variabls that you do not want to be considered in plotting. The app will
+automatically remove String type variables, but you may define other types here for convenience.
 
-==New parts????? Or Scopes??
+Hooray you're done! This is all that is required to tell RoR about your setup.  Run the app and check out how the server
+works. You can tinker with the @@instance_variables to change default selections, and change the style of the table to
+include/disregard index and date selectors.
 
-===Controller
-This file handles the querying of the database, and provides data to an HTML page for rendering.
-
-*[[[HMM do I need to change how all this is going to work?]]]
+==MySQL Stock Market Database
 
 
 
