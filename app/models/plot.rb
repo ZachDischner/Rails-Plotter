@@ -66,34 +66,34 @@ class Plot < ActiveRecord::Base
   # 1.0
   # MYSQL development database, use the built in Stocks database.
   # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
-  #establish_connection :development                        # The connection specs in /config/database.yml
-  #set_table_name "stock_test"                              # Table name defined in the "CreateTestTable.txt" script
-  #set_primary_key :id                                      # Table's primary key
-  #@@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
-  #@@default_x       = ["date"]                             # Default selection for X axis
-  #@@default_y       = ["open","close","adjclose"]          # Default selection(s) for Y axis
-  #@@default_filter  = ["aapl","arwr","goog","dow"]         # Default selection(s) for FILTER selection
-  #@@default_feature = ["Both"]                             # Default selection for interaction FEATURE
-  #@@date_name       = "date"                               # Name of column containing Date values
-  #@@index_name      = "id"                                 # Name of column containing some index value
-  #@@filter_name     = "ticker"                             # Name of column containing filters
-  #@@exclude_tags    = ["created_at","updated_at","ticker"] # Name of columns you don't want to be considered for plotting
+  establish_connection :development                        # The connection specs in /config/database.yml
+  set_table_name "stock_test"                              # Table name defined in the "CreateTestTable.txt" script
+  set_primary_key :id                                      # Table's primary key
+  @@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
+  @@default_x       = ["date"]                             # Default selection for X axis
+  @@default_y       = ["open","close","adjclose"]          # Default selection(s) for Y axis
+  @@default_filter  = ["aapl","arwr","goog","dow"]         # Default selection(s) for FILTER selection
+  @@default_feature = ["Both"]                             # Default selection for interaction FEATURE
+  @@date_name       = "date"                               # Name of column containing Date values
+  @@index_name      = "id"                                 # Name of column containing some index value
+  @@filter_name     = "ticker"                             # Name of column containing filters
+  @@exclude_tags    = ["created_at","updated_at","ticker"] # Name of columns you don't want to be considered for plotting
 
   #zZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZ
 
   # 2.0
   #SQLITE test development environment
-  establish_connection :sqlite_test                     # The connection specs in /config/database.yml
-  set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
-  @@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
-  @@default_x       = [""]                              # Default selection for X axis
-  @@default_y       = [""]                              # Default selection(s) for Y axis
-  @@default_filter  = [""]                              # Default selection(s) for FILTER selection
-  @@default_feature = [""]                              # Default selection for interaction FEATURE
-  @@date_name       = "DataDate"                        # Name of column containing Date values
-  @@index_name      = "id"                              # Name of column containing some index value
-  @@filter_name     = ""                                # Name of column containing filters
-  @@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
+  #establish_connection :sqlite_test                     # The connection specs in /config/database.yml
+  #set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
+  #@@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
+  #@@default_x       = [""]                              # Default selection for X axis
+  #@@default_y       = [""]                              # Default selection(s) for Y axis
+  #@@default_filter  = [""]                              # Default selection(s) for FILTER selection
+  #@@default_feature = [""]                              # Default selection for interaction FEATURE
+  #@@date_name       = "DataDate"                        # Name of column containing Date values
+  #@@index_name      = "id"                              # Name of column containing some index value
+  #@@filter_name     = ""                                # Name of column containing filters
+  #@@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
 
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
@@ -127,7 +127,7 @@ class Plot < ActiveRecord::Base
   #scope :first_year, find(:first, :order => @@date_name + "ASC").send(@@date_name).to_date.year
   #        1.1.2 LAST_YEAR: This will dynamically get the latest year in your database. When you know more about your
   #                          setup, you can set this in a method instead of a scope
-  #scope :first_year, find(:first, :order => @@date_name + "DESC").send(@@date_name).to_date.year
+  #scope :first_year, lambda { || find(:first, :order => @@date_name + " DESC") }
   #
   #
   #      1.2 STRING SCOPES: This is for selection of rows containing certain strings in your database, based on a column
@@ -288,6 +288,14 @@ class Plot < ActiveRecord::Base
   #  if !defined? @@find_filter then @@find_filter = false end
   #  return  @@find_filter
   #end
+
+  def self.year_bounds(condition)
+    if condition.downcase == 'first' then
+      find(:first, :order => @@date_name + " ASC").send(@@date_name).to_date.year
+    elsif condition.downcase == 'last'
+      find(:first, :order => @@date_name + " DESC").send(@@date_name).to_date.year
+    end
+  end
 
 
   ##############################################################################################################################

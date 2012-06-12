@@ -165,24 +165,24 @@ Also, there is a similar helping div that floats along the right hand side of th
               <p style="background-color: #C0C0C0; width: 350px;height:100px;
                       border-style:outset; border-radius: 0.5em; border-color:#888888;
                       text-align: center;
-                      padding:10px">
+                      padding:10px" onmouseout="params_info('date_end')" onmouseover="page_info('date_picker')" >
                 Select DATE Range for Plotting
                 <br>
                 <%= label(:plot, :date_start, "Start") %>
-                <%= date_select(:date_start, params[:date_start], {:include_blank => true},
-                                :start_year => @start_year,
-                                :onmouseover => "page_info('date_start')",
-                                :onmouseout => "page_info()",
-                                :onchange => "params_info('date_start')")  %>
+                <%= date_select(:date_start, params[:date_start],
+                                :start_year  => Plot.year_bounds('first'),
+                                :end_year    => Plot.year_bounds('last'),
+                                :prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' },
+                                )  %>
                 <br>
 
                 <br>
                 <%= label(:plot, :date_end, "End") %>
-                <%= date_select(:date_end, params[:date_end], {:include_blank => true},
-                                :end_year => @end_year,
-                                :onmouseover => "page_info('date_end')",
-                                :onmouseout => "page_info()",
-                                :onchange => "params_info('date_end')") %>
+                <%= date_select(:date_end, params[:date_end],
+                                :start_year  => Plot.year_bounds('first'),
+                                :end_year    => Plot.year_bounds('last'),
+                                :prompt      => { :day => 'Select day', :month => 'Select month', :year => 'Select year' },
+                                ) %>
                 <br>
 
               </p>
@@ -236,7 +236,7 @@ Also, there is a similar helping div that floats along the right hand side of th
       <% if params[:debug] %>
       <div id="helperDIV" style="background-color:#87cefa;border:3px outset gray; border-radius:10px; width:auto;max-width:250px;
               padding-left:8px; padding-right:8px; display:block; top:25%; left:10px; position:fixed; text-align:center"
-              onmouseover="page_info('helper')">
+              onmouseover="page_info('helper')" onmouseout="page_info()">
         <table>
           <tr>
             <td>
@@ -333,11 +333,8 @@ Also, there is a similar helping div that floats along the right hand side of th
                       case 'x_end':
                           document.getElementById("helper").innerHTML = "Select te ending X index for your plot range (ending row for database query)";
                           break;
-                      case 'date_start':
-                          document.getElementById("helper").innerHTML = "Select the starting date for the plot range (starting row for database query)";
-                          break;
-                      case 'date_end':
-                          document.getElementById("helper").innerHTML = "Select the ending date for the plot range (ending row for database query)";
+                      case 'date_picker':
+                          document.getElementById("helper").innerHTML = "Select the starting/ending date for the plot range (starting/ending row for database query)";
                           break;
                       case 'submit':
                           document.getElementById("helper").innerHTML = "Click to begin the plotting experience!";
