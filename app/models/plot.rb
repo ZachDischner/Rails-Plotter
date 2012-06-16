@@ -77,7 +77,7 @@ class Plot < ActiveRecord::Base
   @@default_y       = ["open","close","adjclose"]          # Default selection(s) for Y axis
   @@default_filter  = ["aapl","arwr","goog","dow"]         # Default selection(s) for FILTER selection
   @@default_feature = ["Both"]                             # Default selection for interaction FEATURE
-  @@date_name       = "date"                               # Name of column containing Date values
+  @@date_name       = "date"                               # Name of column containing Date values. Set to "" if you wish not to include
   @@index_name      = "id"                                 # Name of column containing some index value
   @@filter_name     = "ticker"                             # Name of column containing filters
   @@exclude_tags    = ["ticker"]                           # Name of columns you don't want to be considered for plotting
@@ -92,7 +92,7 @@ class Plot < ActiveRecord::Base
   #@@default_y       = [""]                              # Default selection(s) for Y axis
   #@@default_filter  = [""]                              # Default selection(s) for FILTER selection
   #@@default_feature = [""]                              # Default selection for interaction FEATURE
-  #@@date_name       = "DataDate"                        # Name of column containing Date values
+  #@@date_name       = "DataDate"                        # Name of column containing Date values. Set to "" if you wish not to include
   #@@index_name      = "id"                              # Name of column containing some index value
   #@@filter_name     = ""                                # Name of column containing filters
   #@@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
@@ -184,44 +184,44 @@ class Plot < ActiveRecord::Base
   def class_var(name)
     case name
       when 'filter_name'                                                          # Name of DB 'filter' column
-        if !defined? @@filter_name      then @@filter_name      = [""]      end
+        if !defined? @@filter_name      then @@filter_name      = [""]                       end
         return @@filter_name
 
       when 'default_x'                                                            # Default 'X' var selection
-        if !defined? @@default_x        then @@default_x        = [""]      end
+        if !defined? @@default_x        then @@default_x        = [""]                       end
         return @@default_x
 
       when 'default_y'                                                            # Default 'Y' var selection(s)
-        if !defined? @@default_y        then @@default_y        = [""]      end
+        if !defined? @@default_y        then @@default_y        = [""]                       end
         return @@default_y
 
       when 'default_filter'                                                       # Default 'Filter' selection(s)
-        if !defined? @@default_filter   then @@default_filter   = [""]      end
+        if !defined? @@default_filter   then @@default_filter   = [""]                       end
         return @@default_filter
 
       when 'default_feature'                                                      # Default 'Feature' selection
-        if !defined? @@default_feature  then @@default_feature  = ["None"]  end
+        if !defined? @@default_feature  then @@default_feature  = ["None"]                   end
         return @@default_feature
 
       when 'date_name'                                                            # Name of 'Date' type column
-        if !defined? @@date_name        then @@date_name        = ""        end
+        if !defined? @@date_name        then @@date_name        = self.find_date_name        end
         return @@date_name
 
-      when 'index_name'
-        if !defined? @@index_name        then @@index_name       = ""        end   # Name of 'index' variable
+      when 'index_name'                                                           # Name of 'index' variable
+        if !defined? @@index_name        then @@index_name       = ""                        end
         return @@index_name
 
       when 'find_filter?'                                                         # Indicator whether or not the DB schema
-        if !defined? @@find_filter      then @@find_filter      = false     end   # includes a 'filter' type column
+        if !defined? @@find_filter      then @@find_filter      = false                      end   # includes a 'filter' type column
         return  @@find_filter
 
 
-      when 'exclude_tags'                                                         # List of tags to exclude from DB
-        if !defined? @@exclude_tags     then @@exclude_tags     = ['']      end   # interaction
-        return @@exclude_tags
-
+      when 'exclude_tags'                                                         # List of tags to exclude from plotting
+        if !defined? @@exclude_tags     then @@exclude_tags     = ['']                       end
+        return @@exclude_tags                                                     # Note, these can still be used in logic,
+                                                                                  # just not as variables in plotting.
       else
-        return name.to_s + " is an invalid input"
+        return name.to_s + " is NOT a valid input"
     end
   end
 
@@ -291,6 +291,48 @@ class Plot < ActiveRecord::Base
 
   end
 
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=* find_date_name =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                  #
+  #     Try to determine whether the database has a date type column. Very    #
+  #     crude, just tries to see if the column name matches 'date'.           #
+  #     Basically, if the programmer does as they are supposed to, and tells  #
+  #     RoR what the @@date_name is, even if there is no date (""), this      #
+  #     method will never be used. It is just here in case of negligence.     #
+  # Inputs:                                                                   #
+  #     None                                                                  #
+  # Outputs:                                                                  #
+  #     date_name-The name of Rails' best guess at what variable is a date    #
+  #               type in you database.     '                                 #
+  # Calling:                                                                  #
+  #          >> date_name = Plot.first.find_date_name                         #
+  # Example:                                                                  #
+  #    When searching for the @@date_name class variable, if it is undefined  #
+  #    try this function to determine if there is a 'date' named column in    #
+  #    your database. See the   {Plot.class_var} section above                #
+  #       >>if !defined? @@date_name then @@date_name =                       #
+  #                                       Plot.first.find_date_name           #
+  #                                                                           #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+  def find_date_name()
+    date_name = ""
+    vars = self.list_vars() - self.class_var('exclude_tags')
+
+    # Will not work very well if you have multiple fields with "*date*" in
+    # the name. It will just choose the last one.
+    vars.each do |var|
+      if !var.match("[Dd]ate").nil? or self.send(var).class.in? [Date,ActiveSupport::TimeWithZone] then
+        date_name = var
+      end
+    end
+
+
+
+  return date_name
+
+  end
+
+
+
 
   ##############################################################################################################################
   #>>>>>>>>>>>>>>>>>>> Everything Below this line shouldn't be changed unless you know what you're doing  <<<<<<<<<<<<<<<<<<<<<#
@@ -338,73 +380,67 @@ class Plot < ActiveRecord::Base
   end
 
 
-    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= list_vars =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
-    # Purpose:                                                                  #
-    #     Return an array of attribute names as strings.                        #
-    # Inputs:                                                                   #
-    #     None                                                                  #
-    # Outputs:                                                                  #
-    #     vars: Array of strings containing collected object attributes         #
-    # Calling:                                                                  #
-    #          >> my_varnames = @plot.list_vars                                 #
-    # Example:                                                                  #
-    #    If you have an instantiation with variables like:                      #
-    #          >> @plot.x @plot.y @plot.z                                       #
-    #    You can get a list of all attributes by calling:                       #
-    #          >> @plot.first.list_vars                                         #
-    #    which returns an array consisting of:                                  #
-    #          =>["x","y","z"]                                                  #
-    #                                                                           #
-    #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    def list_vars
-      atts = self.attributes
-      vars = []
-      atts.each { |att| vars.concat([att[0]]) }
-      return vars
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* convert_date  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                              #
+  #     Converts the dates selected using a RoR date selector drop down into a date       #
+  #     format that can be used to query a Database.                                      #
+  #     This can be easily modified/duplicated to work for DATETIME type objects. The     #
+  #      general form is the same, just add a few more components to the logic below      #
+  # Inputs:                                                                               #
+  #     date_obj: A date hash, populated from drop-down menus in a view, which contains a #
+  #          Year, Month, and Day element. These elements are stored in the               #
+  #          ['(1i)','(2i)','(3i)'] keys. Expects the results from a RoR                  #
+  #          "date_select" helper                                                         #
+  # Outputs:                                                                              #
+  #     RoR Date object which can be used to query the database.                          #
+  # Calling:                                                                              #
+  #         >> @plot.first.convert_date(date_hash)                                        #
+  # Example:                                                                              #
+  #     From the "date_select" helper, a date hash will be populated to look like:        #
+  #         >>params[:my_date]={'(1i)'=>2012,'(2i)' => 6, '(3i)' => 24}                   #
+  #     To convert this hash into a Ruby "Date" class, just pass it through this function.#
+  #         >>R_date = @plot.first.convert_date(params[:my_date])                         #
+  # Note:                                                                                 #
+  #     For some reason, this appears to be an erroneous statement in some editors. But   #
+  #     it still works, so the validity of the error statement is questionable.           #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+
+  def convert_date(date_obj)
+    return Date.new(date_obj['(1i)'].to_i, date_obj['(2i)'].to_i, date_obj['(3i)'].to_i)
+  end
+
+
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* date_invalid  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+  # Purpose:                                                                              #
+  #     Performs a check on a date object, to see whether or not any component of it is   #
+  #     blank.                                                                            #
+  #     This can be easily modified/duplicated to work for DATETIME type objects. The     #
+  #      general form is the same, just add a few more components to the logic below      #
+  # Inputs:                                                                               #
+  #     date_obj: A date hash, populated from drop-down menus in a view, which contains a #
+  #          Year, Month, and Day element. These elements are stored in the               #
+  #          ['(1i)','(2i)','(3i)'] keys. Expects the results from a RoR                  #
+  #          "date_select" helper                                                         #
+  # Outputs:                                                                              #
+  #     Boolean True/False indicator. Returns true if the date is invalid                 #
+  # Calling:                                                                              #
+  #         >> @plot.first.date_invalid(date_hash)                                        #
+  # Example:                                                                              #
+  #     From the "date_select" helper, a date hash will be populated to look like:        #
+  #         >>params[:my_date]={'(1i)'=>2012,'(2i)' => 6, '(3i)' => 24}                   #
+  #     To see if this is a valid date selection, run:                                    #
+  #         >>bad_date = @plot.first.date_invalid(params[:my_date])                       #
+  #                                                                                       #
+  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+  def date_invalid(date_obj)
+    if self.class_var("date_name") != "" then
+      return ([date_obj["(1i)"].to_s.blank?, date_obj["(2i)"].to_s.blank?, date_obj["(3i)"].to_s.blank?]).include?(true)
+    else
+      return true
     end
+  end
 
- 
-
-
-    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= put_checkboxes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
-    # Purpose:                                                                  #
-    #     Dynamically generate HTML for checkboxes. These will provide the      #
-    #     user with a quick way to toggle multiple plot sets on the current     #
-    #     chart.                                                                #
-    #     *Note that this is HTML, that is tied to DYGRAPHS functionality.      #
-    #     Modify appropriately                                                  #
-    # Inputs:                                                                   #
-    #     list-an array of strings tied to the Y axis variables for each plot   #
-    #          window.                                                          #
-    #     {graphnum}-Optional input, ties the checkbox to a single window. This #
-    #                way,for plots with multiple windows, a checkbox only turns #
-    #                on/off lines for that window                               #
-    # Outputs:                                                                  #
-    #    boxstring: String. HTML formatted string tying HTML checkboxes to      #
-    #               individual plot lines.                                      #
-    # Calling:                                                                  #
-    #         >> @plot.first.put_checkboxes(y_vars)                             #
-    #     This dynamically makes HTML that activates a check box for each of    #
-    #     the y_var strings.                                                    #
-    # Example:                                                                  #
-    #     If the Y variables of a plot are contained within an array as:        #
-    #         >>params[:y_var] = ['y1','y2']                                    #
-    #     Then inside a view:  #                                                #
-    #         <%=render :inline => @plot.first.put_checkboxes(params[:y_var])%> #
-    #     *Note that this function returns a formatted string. So in order to   #
-    #     use the string inside the view, you must use the protocol:            #
-    #          render :inline =>                                                #
-    #                                                                           #
-    #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-    def put_checkboxes(list,graphnum="")
-      boxstring = '' #
-      for ii in 0..(list.length-1)
-        boxstring += "<input type=checkbox id='" + ii.to_s + "' checked onClick='change"+graphnum.to_s+"(this)'> \n"
-        boxstring += "<label for='" + ii.to_s + "'>" + list[ii] + " </label>" + "<br/>" unless (ii == list.length)
-      end
-      boxstring += '</p>'
-      return boxstring
-    end
 
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* dygraph_head  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
@@ -552,57 +588,74 @@ class Plot < ActiveRecord::Base
   end
 
 
-  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= linear_reg_buttons  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
-  # Purpose:                                                                              #
-  #     This function returns HTML formatted strings that, when rendered in a view, will  #
-  #       1. create a button linked to each line in the corresponding plot window.        #
-  #       2. create a DIV linked to each line in the corresponding plot window            #
-  #     Clicking the button will generate and plot a linear regression for its            #
-  #       associated dataset, and print the coefficients of that regression inside the    #
-  #       newly created DIV. Both are rendered live to call other Javascript functions    #
-  #       that handle these two actions.                                                  #
-  #     Note that the "graphnum" variable must be the same for all applicable functions.  #
-  #     HTML elements, Javascript operations and internal calculations depend on this     #
-  #     variable being constant throughout.                                               #
-  # Inputs:                                                                               #
-  #     list-String. Array of variable names that will be tied to Linear Regression       #
-  #          generation buttons                                                           #
-  #     graphnum (optional)-Integer. The particular graph window that the buttons will be #
-  #                         connected to                                                  #
-  #                         Again, "graphnum" should mirror the  Dygraphs instantiation   #
-  #                         of "graphdivX" inside the view. See the plot_template.html    #
-  #                         page for more information.                                    #
-  # Outputs:                                                                              #
-  #     button_str- String. HTML  formatted string that, when rendered, will create       #
-  #                 buttons in an HTML page that activate linear regression functionality #
-  # Calling:                                                                              #
-  #     >>@plot.first.linear_reg_buttons(my_list,graph_number)                            #
-  # Example:                                                                              #
-  #      Given a list of variables being plotted, the HTML for a button for each of       #
-  #      those variables will be created and returned as a single string.                 #
-  #         >> params[:y_var] = ['y1','y2','y3']                                          #
-  #         >> button_code = @plot.first.linear_reg_buttons(params[:y_var])               #
-  #      For plots with multiple graph windows, the appropriate window must also be       #
-  #      into this function's calling                                                     #
-  #      In practice, this code must then be rendered live in the VIEW it is being called #
-  #      in                                                                               #
-  #         >> render :inline => button_code                                              #
-  #      Now each button is tied to a single line in the appropriate graph window, and    #
-  #      is set to activate javascript functions that will analyze that line, report      #
-  #      its coefficients, and draw the newly created linear fit.                         #
-  #                                                                                       #
-  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-  def linear_reg_buttons(list, graphnum="")
-    button_str = ''
-    for ii in 0..list.length-1
-      button_str += '<input type=button style="color:RGBColor(g' + graphnum.to_s + '.getColors().[' + ii.to_s + ']).toHex;" value="Regression For --> ' + list[ii] + '"
-                                    onClick="regression' + graphnum.to_s + '(' + (ii + 1).to_s + '), coeffs_' + (ii+1).to_s + '()" />' + "\n"
-      button_str += '<br/><div style="padding:5px; border:2px solid black" id="Div_' + graphnum.to_s + (ii+1).to_s + '">Coefficients are: </div><br/>' + "\n"
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= list_vars =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+    # Purpose:                                                                  #
+    #     Return an array of attribute names as strings.                        #
+    # Inputs:                                                                   #
+    #     None                                                                  #
+    # Outputs:                                                                  #
+    #     vars: Array of strings containing collected object attributes         #
+    # Calling:                                                                  #
+    #          >> my_varnames = @plot.list_vars                                 #
+    # Example:                                                                  #
+    #    If you have an instantiation with variables like:                      #
+    #          >> @plot.x @plot.y @plot.z                                       #
+    #    You can get a list of all attributes by calling:                       #
+    #          >> @plot.first.list_vars                                         #
+    #    which returns an array consisting of:                                  #
+    #          =>["x","y","z"]                                                  #
+    #                                                                           #
+    #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+    def list_vars
+      atts = self.attributes
+      vars = []
+      atts.each { |att| vars.concat([att[0]]) }
+      return vars
     end
-    button_str += '<input type=button value="Clear Lines" onClick="clearLines' + graphnum.to_s + '()" />' + "\n"
-    #button_str += '</div>'   + "\n"
-    return button_str
-  end
+
+ 
+
+
+    #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= put_checkboxes =*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
+    # Purpose:                                                                  #
+    #     Dynamically generate HTML for checkboxes. These will provide the      #
+    #     user with a quick way to toggle multiple plot sets on the current     #
+    #     chart.                                                                #
+    #     *Note that this is HTML, that is tied to DYGRAPHS functionality.      #
+    #     Modify appropriately                                                  #
+    # Inputs:                                                                   #
+    #     list-an array of strings tied to the Y axis variables for each plot   #
+    #          window.                                                          #
+    #     {graphnum}-Optional input, ties the checkbox to a single window. This #
+    #                way,for plots with multiple windows, a checkbox only turns #
+    #                on/off lines for that window                               #
+    # Outputs:                                                                  #
+    #    boxstring: String. HTML formatted string tying HTML checkboxes to      #
+    #               individual plot lines.                                      #
+    # Calling:                                                                  #
+    #         >> @plot.first.put_checkboxes(y_vars)                             #
+    #     This dynamically makes HTML that activates a check box for each of    #
+    #     the y_var strings.                                                    #
+    # Example:                                                                  #
+    #     If the Y variables of a plot are contained within an array as:        #
+    #         >>params[:y_var] = ['y1','y2']                                    #
+    #     Then inside a view:  #                                                #
+    #         <%=render :inline => @plot.first.put_checkboxes(params[:y_var])%> #
+    #     *Note that this function returns a formatted string. So in order to   #
+    #     use the string inside the view, you must use the protocol:            #
+    #          render :inline =>                                                #
+    #                                                                           #
+    #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
+    def put_checkboxes(list,graphnum="")
+      boxstring = '' #
+      for ii in 0..(list.length-1)
+        boxstring += "<input type=checkbox id='" + ii.to_s + "' checked onClick='change"+graphnum.to_s+"(this)'> \n"
+        boxstring += "<label for='" + ii.to_s + "'>" + list[ii] + " </label>" + "<br/>" unless (ii == list.length)
+      end
+      boxstring += '</p>'
+      return boxstring
+    end
 
 
   #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= linear_reg  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
@@ -644,8 +697,8 @@ class Plot < ActiveRecord::Base
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
-    def linear_reg(graphnum = "")
-      linear_reg_str ='// coefficients of regression for each series.
+  def linear_reg(graphnum = "")
+    linear_reg_str ='// coefficients of regression for each series.
       // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
       // only. The regression line is y = 1 + 2 * x.
       var coeffs = [ null, null, null ];
@@ -763,70 +816,65 @@ class Plot < ActiveRecord::Base
           for (var i = 1; i < coeffs.length; i++) document.getElementById("Div_' + graphnum.to_s + '" + i).innerHTML = "Coefficients are:";
         }
       '
-      return linear_reg_str
-    end
+    return linear_reg_str
+  end
 
 
-  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* convert_date  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
+
+
+
+  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= linear_reg_buttons  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=#
   # Purpose:                                                                              #
-  #     Converts the dates selected using a RoR date selector drop down into a date       #
-  #     format that can be used to query a Database.                                      #
-  #     This can be easily modified/duplicated to work for DATETIME type objects. The     #
-  #      general form is the same, just add a few more components to the logic below      #
+  #     This function returns HTML formatted strings that, when rendered in a view, will  #
+  #       1. create a button linked to each line in the corresponding plot window.        #
+  #       2. create a DIV linked to each line in the corresponding plot window            #
+  #     Clicking the button will generate and plot a linear regression for its            #
+  #       associated dataset, and print the coefficients of that regression inside the    #
+  #       newly created DIV. Both are rendered live to call other Javascript functions    #
+  #       that handle these two actions.                                                  #
+  #     Note that the "graphnum" variable must be the same for all applicable functions.  #
+  #     HTML elements, Javascript operations and internal calculations depend on this     #
+  #     variable being constant throughout.                                               #
   # Inputs:                                                                               #
-  #     date_obj: A date hash, populated from drop-down menus in a view, which contains a #
-  #          Year, Month, and Day element. These elements are stored in the               #
-  #          ['(1i)','(2i)','(3i)'] keys. Expects the results from a RoR                  #
-  #          "date_select" helper                                                         #
+  #     list-String. Array of variable names that will be tied to Linear Regression       #
+  #          generation buttons                                                           #
+  #     graphnum (optional)-Integer. The particular graph window that the buttons will be #
+  #                         connected to                                                  #
+  #                         Again, "graphnum" should mirror the  Dygraphs instantiation   #
+  #                         of "graphdivX" inside the view. See the plot_template.html    #
+  #                         page for more information.                                    #
   # Outputs:                                                                              #
-  #     RoR Date object which can be used to query the database.                          #
+  #     button_str- String. HTML  formatted string that, when rendered, will create       #
+  #                 buttons in an HTML page that activate linear regression functionality #
   # Calling:                                                                              #
-  #         >> @plot.first.convert_date(date_hash)                                        #
+  #     >>@plot.first.linear_reg_buttons(my_list,graph_number)                            #
   # Example:                                                                              #
-  #     From the "date_select" helper, a date hash will be populated to look like:        #
-  #         >>params[:my_date]={'(1i)'=>2012,'(2i)' => 6, '(3i)' => 24}                   #
-  #     To convert this hash into a Ruby "Date" class, just pass it through this function.#
-  #         >>R_date = @plot.first.convert_date(params[:my_date])                         #
-  # Note:                                                                                 #
-  #     For some reason, this appears to be an erroneous statement in some editors. But   #
-  #     it still works, so the validity of the error statement is questionable.           #
-  #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-
-    def convert_date(date_obj)
-      return Date.new(date_obj['(1i)'].to_i, date_obj['(2i)'].to_i, date_obj['(3i)'].to_i)
-    end
-
-
-
-  #*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* date_invalid  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*#
-  # Purpose:                                                                              #
-  #     Performs a check on a date object, to see whether or not any component of it is   #
-  #     blank.                                                                            #
-  #     This can be easily modified/duplicated to work for DATETIME type objects. The     #
-  #      general form is the same, just add a few more components to the logic below      #
-  # Inputs:                                                                               #
-  #     date_obj: A date hash, populated from drop-down menus in a view, which contains a #
-  #          Year, Month, and Day element. These elements are stored in the               #
-  #          ['(1i)','(2i)','(3i)'] keys. Expects the results from a RoR                  #
-  #          "date_select" helper                                                         #
-  # Outputs:                                                                              #
-  #     Boolean True/False indicator. Returns true if the date is invalid                 #
-  # Calling:                                                                              #
-  #         >> @plot.first.date_invalid(date_hash)                                        #
-  # Example:                                                                              #
-  #     From the "date_select" helper, a date hash will be populated to look like:        #
-  #         >>params[:my_date]={'(1i)'=>2012,'(2i)' => 6, '(3i)' => 24}                   #
-  #     To see if this is a valid date selection, run:                                    #
-  #         >>bad_date = @plot.first.date_invalid(params[:my_date])                       #
+  #      Given a list of variables being plotted, the HTML for a button for each of       #
+  #      those variables will be created and returned as a single string.                 #
+  #         >> params[:y_var] = ['y1','y2','y3']                                          #
+  #         >> button_code = @plot.first.linear_reg_buttons(params[:y_var])               #
+  #      For plots with multiple graph windows, the appropriate window must also be       #
+  #      into this function's calling                                                     #
+  #      In practice, this code must then be rendered live in the VIEW it is being called #
+  #      in                                                                               #
+  #         >> render :inline => button_code                                              #
+  #      Now each button is tied to a single line in the appropriate graph window, and    #
+  #      is set to activate javascript functions that will analyze that line, report      #
+  #      its coefficients, and draw the newly created linear fit.                         #
   #                                                                                       #
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
-  def date_invalid(date_obj)
-    if self.class_var("date_name") != "" then
-      return ([date_obj["(1i)"].to_s.blank?, date_obj["(2i)"].to_s.blank?, date_obj["(3i)"].to_s.blank?]).include?(true)
-    else
-      return true
+  def linear_reg_buttons(list, graphnum="")
+    button_str = ''
+    for ii in 0..list.length-1
+      button_str += '<input type=button style="color:RGBColor(g' + graphnum.to_s + '.getColors().[' + ii.to_s + ']).toHex;" value="Regression For --> ' + list[ii] + '"
+                                    onClick="regression' + graphnum.to_s + '(' + (ii + 1).to_s + '), coeffs_' + (ii+1).to_s + '()" />' + "\n"
+      button_str += '<br/><div style="padding:5px; border:2px solid black" id="Div_' + graphnum.to_s + (ii+1).to_s + '">Coefficients are: </div><br/>' + "\n"
     end
+    button_str += '<input type=button value="Clear Lines" onClick="clearLines' + graphnum.to_s + '()" />' + "\n"
+    #button_str += '</div>'   + "\n"
+    return button_str
   end
+
 
 
 end

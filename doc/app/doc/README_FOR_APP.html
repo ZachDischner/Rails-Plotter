@@ -159,8 +159,8 @@ app should be portable to other project platforms, such as Django.</p>
 <h1 id="label-Setup">Setup</h1>
 
 <p>The best way to get started is to load up a demo and try it out. BEWARE,
-The hardest thing is getting Ruby/Ruby on Rails and RoR + Databases to work
-cohesively.</p>
+The hardest thing is getting Ruby/Ruby on Rails and RoR + Databases
+installed and working cohesively.</p>
 
 <h2 id="label-Environment">Environment</h2>
 
@@ -207,13 +207,14 @@ that will create a MySQL database and table. Since required gems are
 dependant on local libraries, SQLite3 and MySQL will need to be installed
 on your machine in order for this to work. If you really don’t want to
 install them, you must change requirements in
-<strong>/config/Gemfile</strong> All necessary connection gems and database
-configurations for these databases are included.</p>
+<strong>/config/Gemfile</strong>. All necessary connection gems and
+database configurations for these databases are included.</p>
 
 <p>The SQLite3 database is self contained, and is located in
 <strong>/db/sqlite_test.sqlite3</strong>, and can be connected to while
-using the “sqlite_test” environment. It is a simple and small table, where
-each column is a variable which can be plotted against other columns.</p>
+using the “sqlite_test” environment under
+<strong>/config/database.yml</strong>. It is a simple and small table,
+where each column is a variable which can be plotted against other columns.</p>
 
 <p>The MySQL database is populated using the text-file:
 <strong>/CreateTestTable.txt</strong></p>
@@ -225,10 +226,10 @@ each column is a variable which can be plotted against other columns.</p>
 <p>This will build a MySQL test database and table full of stock market data.
 An important difference between the MySQL and the SQLite3 database is in
 the schema. Where the SQLite3 database just has numeric columns to plot
-against each-other, the MySQL database has a column of strings, which will
-be used to filter the rows within columns to plot. This is because for a
-database full of stock market stats, you will have lots of the same
-variables *(open, close, volume, ect)* for a variety of stock market
+against each-other, the MySQL database also contains a column of strings,
+which will be used to filter the rows within columns to plot. This is
+because for a database full of stock market stats, you will have lots of
+the same variables (open, close, volume, ect) for a variety of stock market
 symbols. The difference may seem moot, but it really represents a totally
 different approach to data fetching and plotting. The two databases
 together will show how this app can handle both with ease.</p>
@@ -277,7 +278,14 @@ the case as far as I have seen.</p>
 <p>Keeping that in mind, this app was designed to make this transition
 especially easy, as I will illustrate below.</p>
 
-<h2 id="label-SQLite+Database">SQLite Database</h2>
+<h2 id="label-1.0+SQLite+Database">1.0 SQLite Database</h2>
+
+<p>This is probably as simple a schema as there will be. Each column contains
+a single variable, which can be plotted against other columns. There is a
+<strong>Date</strong> type column, as well as a continuos
+<strong>Index</strong> type column. Both are defined below, in the
+<strong>Model</strong> section. The database design and population was all
+performed in Rails using an SQLite database.</p>
 
 <p>The first time you run this application with this database setup, you’ll
 need to make sure the database is constructed. Using the “sqlite_test”
@@ -295,16 +303,18 @@ this file, and update the database with:</p>
 
 <pre>&gt;&gt;rake db:seed</pre>
 
-<p>This is a small, simple database. Each column contains a single variable,
-which can be plotted against other columns. Configuring the app to run a
-database happens in two places: *Database Specs –&gt; /config/database.yml
-*Model          –&gt; /app/models/plot.rb</p>
+<p>Configuring the app to run a database happens in two places:</p>
+<ul><li>
+<p>Database Specs –&gt; /config/database.yml</p>
+</li><li>
+<p>Model          –&gt; /app/models/plot.rb</p>
+</li></ul>
 
 <h3 id="label-Database+Connection">Database Connection</h3>
 
-<p>This is where you tell Rails how to connect to your database This section
-has been filled out for you. Look at <strong>/config/database.yml</strong>
-and examine the database environment:</p>
+<p>This is where you tell Rails <strong>how</strong> to connect to your
+database This section has been filled out for you. Look at
+<strong>/config/database.yml</strong> and examine the database environment:</p>
 
 <pre>sqlite_test:
     adapter:  sqlite3
@@ -340,7 +350,7 @@ uncommented. It should look like this:</p>
 <span class="ruby-identifier">@@default_y</span>       = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection(s) for Y axis</span>
 <span class="ruby-identifier">@@default_filter</span>  = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection(s) for FILTER selection</span>
 <span class="ruby-identifier">@@default_feature</span> = [<span class="ruby-string">&quot;&quot;</span>]                              <span class="ruby-comment"># Default selection for interaction FEATURE</span>
-<span class="ruby-identifier">@@date_name</span>       = <span class="ruby-string">&quot;DataDate&quot;</span>                        <span class="ruby-comment"># Name of column containing Date values</span>
+<span class="ruby-identifier">@@date_name</span>       = <span class="ruby-string">&quot;DataDate&quot;</span>                        <span class="ruby-comment"># Name of column containing Date values. Set to &quot;&quot; if you wish not to include</span>
 <span class="ruby-identifier">@@index_name</span>      = <span class="ruby-string">&quot;id&quot;</span>                              <span class="ruby-comment"># Name of column containing some index value</span>
 <span class="ruby-identifier">@@filter_name</span>     = <span class="ruby-string">&quot;&quot;</span>                                <span class="ruby-comment"># Name of column containing filters</span>
 <span class="ruby-identifier">@@exclude_tags</span>    = [<span class="ruby-string">&quot;created_at&quot;</span>,<span class="ruby-string">&quot;updated_at&quot;</span>]       <span class="ruby-comment"># Name of columns you don't want to be considered for plotting</span>
@@ -373,7 +383,7 @@ querying and data selection. By defining</p>
 <p>these here, you can avoid mucking around throughout the rest of the program
 and save some initial headaches.</p>
 <ul><li>
-<p>@@exclude_tags Defines database column variabls that you do not want to be
+<p>@@exclude_tags Defines database column variables that you do not want to be
 considered in plotting. The app will</p>
 </li></ul>
 
@@ -385,15 +395,122 @@ setup.  Run the app and check out how the server works. You can tinker with
 the @@instance_variables to change default selections, and change the style
 of the table to include/disregard index and date selectors.</p>
 
-<h2 id="label-MySQL+Stock+Market+Database">MySQL Stock Market Database</h2>
+<h2 id="label-2.0+MySQL+Stock+Market+Database">2.0 MySQL Stock Market Database</h2>
+
+<p>This is the second simplest database schema I can think of. It is what
+could be considered a typical table full of stock market data. Its columns
+consist of market statistics, including price measurements, a
+<strong>Date</strong> type column corresponding to each statistic
+measurement date, and a column full of stock tickers that match statistics
+and dates to their pertinent company symbol. Inclusion of the ‘ticker’
+column requires extra logic, as described below in the
+<strong>Filter</strong> <strong>Explination</strong> section, below.</p>
+
+<p>The important thing about this database, besides the fact that it has a
+whole new, and more complicated schema, is the fact that it was built
+entirely outside of Rails. The data was gathered, processed, and parsed
+into SQL statements using MATLAB. Recall, to populate the database and
+table, just run from a command prompt:</p>
+
+<pre>&gt;&gt;mysql &lt; /dir/to/application/CreateTestTable.txt</pre>
+
+<p>Of course, this assumes you have MySQL installed on your machine.</p>
+
+<p>As with the SQLite3 database discussed above, there are only two places
+that you must specify DB/Table information</p>
+
+<h3 id="label-Database+Connection">Database Connection</h3>
+
+<p>This is where you tell Rails <strong>how</strong> to connect to your
+database This section has been filled out for you. Look at
+<strong>/config/database.yml</strong> and examine the database environment:</p>
+
+<pre>development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: test
+  pool: 5
+  host: localhost</pre>
+
+<p>Everything needed should be included there, and Rails should be able to now
+connect to the MySQL database. If using RubyMine (per my recommendation)
+you can look at the <strong>Data</strong> <strong>Sources</strong> window
+and ensure that Rails has correctly found this database. On your machine,
+if you have configured differet ports or users and passwords for your MySQL
+server, those changes need to be added here. Google is a great help for
+doing this if you don’t know how to do so.</p>
+
+<h3 id="label-Model">Model</h3>
+
+<p>Recall, this is where the majority of all application logic is housed. In
+the *Database Specs* section, you told Rails <strong>how</strong> to
+connect to your database. Here, you must give a few specifics about
+<strong>what</strong> you are connecting to.</p>
+
+<p>Now, edit/examine the *Database Table Specifications* section (near the top
+of the file). To tell the application to now connect to the MySQL database,
+ensure that the MySQL section (1.0) is all uncommented, and the SQLite3
+section (2.0) is commented out. It should look like this:</p>
+
+<pre class="ruby"><span class="ruby-comment"># 1.0-MYSQL development environment</span>
+<span class="ruby-identifier">establish_connection</span> :<span class="ruby-identifier">development</span>                        <span class="ruby-comment"># The connection specs in /config/database.yml</span>
+<span class="ruby-identifier">set_table_name</span> <span class="ruby-string">&quot;stock_test&quot;</span>                              <span class="ruby-comment"># Table name defined in the &quot;CreateTestTable.txt&quot; script</span>
+<span class="ruby-identifier">set_primary_key</span> :<span class="ruby-identifier">id</span>                                      <span class="ruby-comment"># Table's primary key</span>
+<span class="ruby-identifier">@@find_filter</span>     = <span class="ruby-keyword">true</span>                                 <span class="ruby-comment"># Indicates that this database will require column filtering (No for unique columns)</span>
+<span class="ruby-identifier">@@default_x</span>       = [<span class="ruby-string">&quot;date&quot;</span>]                             <span class="ruby-comment"># Default selection for X axis</span>
+<span class="ruby-identifier">@@default_y</span>       = [<span class="ruby-string">&quot;open&quot;</span>,<span class="ruby-string">&quot;close&quot;</span>,<span class="ruby-string">&quot;adjclose&quot;</span>]          <span class="ruby-comment"># Default selection(s) for Y axis</span>
+<span class="ruby-identifier">@@default_filter</span>  = [<span class="ruby-string">&quot;aapl&quot;</span>,<span class="ruby-string">&quot;arwr&quot;</span>,<span class="ruby-string">&quot;goog&quot;</span>,<span class="ruby-string">&quot;dow&quot;</span>]         <span class="ruby-comment"># Default selection(s) for FILTER selection</span>
+<span class="ruby-identifier">@@default_feature</span> = [<span class="ruby-string">&quot;Both&quot;</span>]                             <span class="ruby-comment"># Default selection for interaction FEATURE</span>
+<span class="ruby-identifier">@@date_name</span>       = <span class="ruby-string">&quot;date&quot;</span>                               <span class="ruby-comment"># Name of column containing Date values</span>
+<span class="ruby-identifier">@@index_name</span>      = <span class="ruby-string">&quot;id&quot;</span>                                 <span class="ruby-comment"># Name of column containing some index value</span>
+<span class="ruby-identifier">@@filter_name</span>     = <span class="ruby-string">&quot;ticker&quot;</span>                             <span class="ruby-comment"># Name of column containing filters</span>
+<span class="ruby-identifier">@@exclude_tags</span>    = [<span class="ruby-string">&quot;ticker&quot;</span>]                           <span class="ruby-comment"># Name of columns you don't want to be considered for plotting</span>
+</pre>
+
+<p>Again, the first thing this section does is specify which environment to
+connect to, the name of the table to be used, and the primary key used for
+this table. All of these specs are <strong>required</strong></p>
+
+<p>Most important is the next spec, *@@find_filter*. As mentioned previously,
+this database schema will require extra logic to plot correctly. Setting</p>
+
+<pre>@@find_filter   = true</pre>
+
+<p>will tell the application to treat this set of data accordingly.</p>
+
+<p>The rest of the specifications are all optional. They <strong>dont</strong>
+<strong>even</strong> <strong>need</strong> <strong>to</strong>
+<strong>be</strong> <strong>defined!</strong>. This app will function
+regardless. But giving it some additional insight into your database design
+will help extend the application to better fit your needs.</p>
+
+<p>Play around with the class variables listed above. Try commenting some out,
+and changing others’ contents. You will notice that some, such as the
+*@@default** variables, have little bearing on how everything works. Just
+on the user’s interaction. But removing the *@@index_name* or *@@date_name*
+variables, the user’s interface changes, as the app no longer knows if
+these items are available.</p>
+
+<p>Removing the *@@find_filter* variable will have the biggest effect on the
+app’s functionality. It still functions, but the plots it produces are of
+little use.</p>
+
+<p>And that’s it! In case you missed it, the app just switched between to
+completely different database systems, using different schemas, different
+variables, and different sized data sets, all in a matter of minutes. All
+modification of this code happens in about 20 lines. This is true for
+<strong>SQLite</strong>, <strong>MySQL</strong>, and
+<strong>PostgreSQL</strong> database, and should be true for many more
+systems, including NoSQL setups such as <strong>MongoDB</strong></p>
 
 <h1 id="label-Filter+Explanation">Filter Explanation</h1>
 
-<p>One of the more confusing aspects of this application is the “FILTER” used
-throughout. This is used to distinguish the two common database schemas I
-see this application working for. There are an infinite number of possible
-schemas and designs, but for numeric setups, these are the two forms I
-envision the database taking on.</p>
+<p>One of the more confusing aspects of this application is the *“FILTER”*
+used throughout. This is used to distinguish the two common database
+schemas I see this application working for. There are an infinite number of
+possible schemas and designs, but for numeric setups, these are the two
+forms I envision the database taking on.</p>
 
 <h2 id="label-Databases+not+requiring+a+%27filter%27">Databases not requiring a ‘filter’</h2>
 
@@ -448,8 +565,12 @@ multiple relations between ‘open’ and ‘date’, for the various tickers th
 apply to.</p>
 
 <p>If you database schema looks like this, extra logic must be employed to
-successfully grab and plot the data within. Setting   *@@find_filter =
-true*   in the *Database Table Specifications* section of
+successfully grab and plot the data within. Setting</p>
+
+<pre>@@find_filter = true</pre>
+
+<p>in the <strong>Database</strong> <strong>Table</strong>
+<strong>Specifications</strong> section of
 <strong>app/models/plot.rb</strong> will tell the app to treat the database
 appropriately.</p>
 

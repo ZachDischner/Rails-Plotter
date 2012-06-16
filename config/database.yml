@@ -1,3 +1,12 @@
+# SQLite test environment for debugging.
+#
+# To use, make sure the appropriate section in
+# plot.rb ... Database Table Specificataions secion
+# is uncommented
+#
+# Ensure the SQLite3 gem is in your Gemfile
+#   gem 'sqlite3'
+
 sqlite_test:
     adapter:  sqlite3
     database: db/sqlite_test.sqlite3
