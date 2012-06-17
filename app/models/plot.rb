@@ -69,33 +69,33 @@ class Plot < ActiveRecord::Base
 
   # 1.0-MYSQL development environment
   # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
-  establish_connection :development                        # The connection specs in /config/database.yml
-  set_table_name "stock_test"                              # Table name defined in the "CreateTestTable.txt" script
-  set_primary_key :id                                      # Table's primary key
-  @@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
-  @@default_x       = ["date"]                             # Default selection for X axis
-  @@default_y       = ["open","close","adjclose"]          # Default selection(s) for Y axis
-  @@default_filter  = ["aapl","arwr","goog","dow"]         # Default selection(s) for FILTER selection
-  @@default_feature = ["Both"]                             # Default selection for interaction FEATURE
-  @@date_name       = "date"                               # Name of column containing Date values. Set to "" if you wish not to include
-  @@index_name      = "id"                                 # Name of column containing some index value
-  @@filter_name     = "ticker"                             # Name of column containing filters
-  @@exclude_tags    = ["ticker"]                           # Name of columns you don't want to be considered for plotting
+  #establish_connection :development                        # The connection specs in /config/database.yml
+  #set_table_name "stock_test"                              # Table name defined in the "CreateTestTable.txt" script
+  #set_primary_key :id                                      # Table's primary key
+  #@@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
+  #@@default_x       = ["date"]                             # Default selection for X axis
+  #@@default_y       = ["open","close","adjclose"]          # Default selection(s) for Y axis
+  #@@default_filter  = ["aapl","arwr","goog","dow"]         # Default selection(s) for FILTER selection
+  #@@default_feature = ["Both"]                             # Default selection for interaction FEATURE
+  #@@date_name       = "date"                               # Name of column containing Date values. Set to "" if you wish not to include
+  #@@index_name      = "id"                                 # Name of column containing some index value
+  #@@filter_name     = "ticker"                             # Name of column containing filters
+  #@@exclude_tags    = ["ticker"]                           # Name of columns you don't want to be considered for plotting
 
   #zZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZ
 
   # 2.0-SQLITE test development environment
-  #establish_connection :sqlite_test                     # The connection specs in /config/database.yml
-  #set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
-  #@@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
-  #@@default_x       = [""]                              # Default selection for X axis
-  #@@default_y       = [""]                              # Default selection(s) for Y axis
-  #@@default_filter  = [""]                              # Default selection(s) for FILTER selection
-  #@@default_feature = [""]                              # Default selection for interaction FEATURE
-  #@@date_name       = "DataDate"                        # Name of column containing Date values. Set to "" if you wish not to include
-  #@@index_name      = "id"                              # Name of column containing some index value
-  #@@filter_name     = ""                                # Name of column containing filters
-  #@@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
+  establish_connection :sqlite_test                     # The connection specs in /config/database.yml
+  set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
+  @@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
+  @@default_x       = [""]                              # Default selection for X axis
+  @@default_y       = [""]                              # Default selection(s) for Y axis
+  @@default_filter  = [""]                              # Default selection(s) for FILTER selection
+  @@default_feature = [""]                              # Default selection for interaction FEATURE
+  @@date_name       = "DataDate"                        # Name of column containing Date values. Set to "" if you wish not to include
+  @@index_name      = "id"                              # Name of column containing some index value
+  @@filter_name     = ""                                # Name of column containing filters
+  @@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
 
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 

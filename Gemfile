@@ -6,11 +6,16 @@ require "sqlite3"
 # Gem needed to connect to SQLite3 database
 gem 'sqlite3'
 
+# Gem needed to connect to MySQL database
+#gem 'mysql2'
+
+# Gem needed to connect to PostgreSQL database
+#gem 'pg'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-# Gem needed to connect to MySQL database
-gem 'mysql2'
+
 
 gem 'calendar_date_select'   # Doesn't Work
 
