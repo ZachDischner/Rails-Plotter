@@ -303,7 +303,7 @@ off initially</pre>
 
           
           <div class="method-source-code" id="all_checkboxes_false-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 367</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 378</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all_checkboxes_false</span>(<span class="ruby-identifier">list</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-string">&quot;false&quot;</span>]*(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -360,7 +360,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="all_checkboxes_true-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 357</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 368</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all_checkboxes_true</span>(<span class="ruby-identifier">list</span>)
   <span class="ruby-keyword">return</span> ([<span class="ruby-string">&quot;true&quot;</span>]*(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -443,8 +443,8 @@ href="Plot.html#method-i-class_var">#class_var</a>
       <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@date_name</span>        <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@date_name</span>        = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_date_name</span>        <span class="ruby-keyword">end</span>
       <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@date_name</span>
 
-    <span class="ruby-keyword">when</span> <span class="ruby-string">'index_name'</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@index_name</span>        <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@index_name</span>       = <span class="ruby-string">&quot;&quot;</span>                        <span class="ruby-keyword">end</span>   <span class="ruby-comment"># Name of 'index' variable</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'index_name'</span>                                                           <span class="ruby-comment"># Name of 'index' variable</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@index_name</span>        <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@index_name</span>       = <span class="ruby-string">&quot;&quot;</span>                        <span class="ruby-keyword">end</span>
       <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@index_name</span>
 
     <span class="ruby-keyword">when</span> <span class="ruby-string">'find_filter?'</span>                                                         <span class="ruby-comment"># Indicator whether or not the DB schema</span>
@@ -452,10 +452,10 @@ href="Plot.html#method-i-class_var">#class_var</a>
       <span class="ruby-keyword">return</span>  <span class="ruby-identifier">@@find_filter</span>
 
 
-    <span class="ruby-keyword">when</span> <span class="ruby-string">'exclude_tags'</span>                                                         <span class="ruby-comment"># List of tags to exclude from DB</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@exclude_tags</span>     <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@exclude_tags</span>     = [<span class="ruby-string">''</span>]                       <span class="ruby-keyword">end</span>   <span class="ruby-comment"># interaction</span>
-      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@exclude_tags</span>
-
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'exclude_tags'</span>                                                         <span class="ruby-comment"># List of tags to exclude from plotting</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@exclude_tags</span>     <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@exclude_tags</span>     = [<span class="ruby-string">''</span>]                       <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">@@exclude_tags</span>                                                     <span class="ruby-comment"># Note, these can still be used in logic,</span>
+                                                                                <span class="ruby-comment"># just not as variables in plotting.</span>
     <span class="ruby-keyword">else</span>
       <span class="ruby-keyword">return</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; is NOT a valid input&quot;</span>
   <span class="ruby-keyword">end</span>
@@ -514,7 +514,7 @@ href="Plot.html#method-i-convert_date">#convert_date</a>
 
           
           <div class="method-source-code" id="convert_date-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 826</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 408</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">convert_date</span>(<span class="ruby-identifier">date_obj</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">date_obj</span>[<span class="ruby-string">'(1i)'</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">date_obj</span>[<span class="ruby-string">'(2i)'</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">date_obj</span>[<span class="ruby-string">'(3i)'</span>].<span class="ruby-identifier">to_i</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -570,7 +570,7 @@ href="Plot.html#method-i-date_invalid">#date_invalid</a>
 
           
           <div class="method-source-code" id="date_invalid-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 854</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 436</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">date_invalid</span>(<span class="ruby-identifier">date_obj</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">&quot;date_name&quot;</span>) <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">then</span>
     <span class="ruby-keyword">return</span> ([<span class="ruby-identifier">date_obj</span>[<span class="ruby-string">&quot;(1i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>, <span class="ruby-identifier">date_obj</span>[<span class="ruby-string">&quot;(2i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>, <span class="ruby-identifier">date_obj</span>[<span class="ruby-string">&quot;(3i)&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">blank?</span>]).<span class="ruby-identifier">include?</span>(<span class="ruby-keyword">true</span>)
@@ -702,7 +702,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_body-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 507</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 512</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_body</span>(<span class="ruby-identifier">tags</span>, <span class="ruby-identifier">values</span>)
   <span class="ruby-identifier">body_string</span> = <span class="ruby-string">''</span>
   <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
@@ -770,7 +770,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_head-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 465</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 470</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_head</span>(<span class="ruby-identifier">tags</span>)
   <span class="ruby-identifier">labelstring</span> = <span class="ruby-string">&quot;,'&quot;</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">tags</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
@@ -848,7 +848,7 @@ Example:                                                                        
 
           
           <div class="method-source-code" id="dygraph_options-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 561</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 566</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dygraph_options</span>(<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>, <span class="ruby-identifier">lin_reg</span>=<span class="ruby-string">&quot;false&quot;</span>)
   <span class="ruby-identifier">options_string</span> =
       <span class="ruby-string">&quot;,{
@@ -899,7 +899,10 @@ href="Plot.html#method-i-find_date_name">#find_date_name</a>
 
 <pre class="ruby"><span class="ruby-constant">Purpose</span><span class="ruby-operator">:</span>                                                                  <span class="ruby-comment">#</span>
     <span class="ruby-constant">Try</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">determine</span> <span class="ruby-identifier">whether</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">database</span> <span class="ruby-identifier">has</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">date</span> <span class="ruby-identifier">type</span> <span class="ruby-identifier">column</span>. <span class="ruby-constant">Very</span>    <span class="ruby-comment">#</span>
-    <span class="ruby-identifier">crude</span>, <span class="ruby-identifier">just</span> <span class="ruby-identifier">tries</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">see</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">name</span> <span class="ruby-identifier">matches</span> <span class="ruby-string">'date'</span>.                  <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">crude</span>, <span class="ruby-identifier">just</span> <span class="ruby-identifier">tries</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">see</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">column</span> <span class="ruby-identifier">name</span> <span class="ruby-identifier">matches</span> <span class="ruby-string">'date'</span>.           <span class="ruby-comment">#</span>
+    <span class="ruby-constant">Basically</span>, <span class="ruby-keyword">if</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">programmer</span> <span class="ruby-identifier">does</span> <span class="ruby-identifier">as</span> <span class="ruby-identifier">they</span> <span class="ruby-identifier">are</span> <span class="ruby-identifier">supposed</span> <span class="ruby-identifier">to</span>, <span class="ruby-keyword">and</span> <span class="ruby-identifier">tells</span>  <span class="ruby-comment">#</span>
+    <span class="ruby-constant">RoR</span> <span class="ruby-identifier">what</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">@@date_name</span> <span class="ruby-identifier">is</span>, <span class="ruby-identifier">even</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">there</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">no</span> <span class="ruby-identifier">date</span> (<span class="ruby-string">&quot;&quot;</span>), <span class="ruby-identifier">this</span>      <span class="ruby-comment">#</span>
+    <span class="ruby-identifier">method</span> <span class="ruby-identifier">will</span> <span class="ruby-identifier">never</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">used</span>. <span class="ruby-constant">It</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">just</span> <span class="ruby-identifier">here</span> <span class="ruby-keyword">in</span> <span class="ruby-keyword">case</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">negligence</span>.     <span class="ruby-comment">#</span>
 <span class="ruby-constant">Inputs</span><span class="ruby-operator">:</span>                                                                   <span class="ruby-comment">#</span>
     <span class="ruby-constant">None</span>                                                                  <span class="ruby-comment">#</span>
 <span class="ruby-constant">Outputs</span><span class="ruby-operator">:</span>                                                                  <span class="ruby-comment">#</span>
@@ -910,7 +913,7 @@ href="Plot.html#method-i-find_date_name">#find_date_name</a>
 <span class="ruby-constant">Example</span><span class="ruby-operator">:</span>                                                                  <span class="ruby-comment">#</span>
    <span class="ruby-constant">When</span> <span class="ruby-identifier">searching</span> <span class="ruby-keyword">for</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">@@date_name</span> <span class="ruby-keyword">class</span> <span class="ruby-identifier">variable</span>, <span class="ruby-keyword">if</span> <span class="ruby-identifier">it</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">undefined</span>  <span class="ruby-comment">#</span>
    <span class="ruby-identifier">try</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">function</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">determine</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">there</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">a</span> <span class="ruby-string">'date'</span> <span class="ruby-identifier">named</span> <span class="ruby-identifier">column</span> <span class="ruby-keyword">in</span>    <span class="ruby-comment">#</span>
-   <span class="ruby-identifier">your</span> <span class="ruby-identifier">database</span>.                                                         <span class="ruby-comment">#</span>
+   <span class="ruby-identifier">your</span> <span class="ruby-identifier">database</span>. <span class="ruby-constant">See</span> <span class="ruby-identifier">the</span>   {<span class="ruby-constant">Plot</span>.<span class="ruby-identifier">class_var</span>} <span class="ruby-identifier">section</span> <span class="ruby-identifier">above</span>                <span class="ruby-comment">#</span>
       <span class="ruby-operator">&gt;&gt;</span><span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span> <span class="ruby-identifier">@@date_name</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">@@date_name</span> =                       <span class="ruby-comment">#</span>
                                       <span class="ruby-constant">Plot</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">find_date_name</span>           <span class="ruby-comment">#</span>
                                                                           <span class="ruby-comment">#</span>
@@ -921,13 +924,21 @@ href="Plot.html#method-i-find_date_name">#find_date_name</a>
 
           
           <div class="method-source-code" id="find_date_name-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 313</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 316</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_date_name</span>()
   <span class="ruby-identifier">date_name</span> = <span class="ruby-string">&quot;&quot;</span>
   <span class="ruby-identifier">vars</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">list_vars</span>() <span class="ruby-operator">-</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class_var</span>(<span class="ruby-string">'exclude_tags'</span>)
+
+  <span class="ruby-comment"># Will not work very well if you have multiple fields with &quot;*date*&quot; in</span>
+  <span class="ruby-comment"># the name. It will just choose the last one.</span>
   <span class="ruby-identifier">vars</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">var</span>.<span class="ruby-identifier">match</span>(<span class="ruby-string">&quot;[Dd]ate&quot;</span>).<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">date_name</span> = <span class="ruby-identifier">var</span> <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">var</span>.<span class="ruby-identifier">match</span>(<span class="ruby-string">&quot;[Dd]ate&quot;</span>).<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">var</span>).<span class="ruby-identifier">class</span>.<span class="ruby-identifier">in?</span> [<span class="ruby-constant">Date</span>,<span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">TimeWithZone</span>] <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">date_name</span> = <span class="ruby-identifier">var</span>
     <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+
+
 <span class="ruby-keyword">return</span> <span class="ruby-identifier">date_name</span>
 
 <span class="ruby-keyword">end</span></pre>
@@ -999,126 +1010,126 @@ NOTE:                                                                           
 
           
           <div class="method-source-code" id="linear_reg-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 678</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 700</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg</span>(<span class="ruby-identifier">graphnum</span> = <span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">linear_reg_str</span> =<span class="ruby-string">'// coefficients of regression for each series.
-  // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
-  // only. The regression line is y = 1 + 2 * x.
-  var coeffs = [ null, null, null ];
-  function regression'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(series) {
-    // Only run the regression over visible points.
-    var range = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.xAxisRange();
+    // if coeffs = [ null, [1, 2], null ] then we draw a regression for series 1
+    // only. The regression line is y = 1 + 2 * x.
+    var coeffs = [ null, null, null ];
+    function regression'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(series) {
+      // Only run the regression over visible points.
+      var range = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.xAxisRange();
 
-    var sum_xy = 0.0, sum_x = 0.0, sum_y = 0.0, sum_x2 = 0.0, num = 0;
-    for (var i = 0; i &lt; g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.numRows(); i++) {
-      var x = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.getValue(i, 0);
-      if (x &lt; range[0] || x &gt; range[1]) continue;
+      var sum_xy = 0.0, sum_x = 0.0, sum_y = 0.0, sum_x2 = 0.0, num = 0;
+      for (var i = 0; i &lt; g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.numRows(); i++) {
+        var x = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.getValue(i, 0);
+        if (x &lt; range[0] || x &gt; range[1]) continue;
 
-      var y = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.getValue(i, series);
-      if (y == null) continue;
-      if (y.length == 2) {
-        // using fractions
-        y = y[0] / y[1];
+        var y = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.getValue(i, series);
+        if (y == null) continue;
+        if (y.length == 2) {
+          // using fractions
+          y = y[0] / y[1];
+        }
+
+        num++;
+        sum_x += x;
+        sum_y += y;
+        sum_xy += x * y;
+        sum_x2 += x * x;
       }
 
-      num++;
-      sum_x += x;
-      sum_y += y;
-      sum_xy += x * y;
-      sum_x2 += x * x;
+      var a = (sum_xy - sum_x * sum_y / num) / (sum_x2 - sum_x * sum_x / num);
+      var b = (sum_y - a * sum_x) / num;
+
+      coeffs[series] = [b, a];
+      if (typeof(console) != '</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">'undefined'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">') {
+        console.log(&quot;coeffs(&quot; + series + &quot;): [&quot; + b + &quot;, &quot; + a + &quot;]&quot;);
+      }
+
+      g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.updateOptions({});  // forces a redraw.
+
+      // Every time the regressions are calculated, call the printing function
+      //    that will output the coefficients of the given linear regression to
+      //    the HTML page. This function is tied to existing &lt;div&gt; spaces in the
+      //    HTML page.
+      print_Coeffs'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(series);
+
     }
 
-    var a = (sum_xy - sum_x * sum_y / num) / (sum_x2 - sum_x * sum_x / num);
-    var b = (sum_y - a * sum_x) / num;
-
-    coeffs[series] = [b, a];
-    if (typeof(console) != '</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">'undefined'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">') {
-      console.log(&quot;coeffs(&quot; + series + &quot;): [&quot; + b + &quot;, &quot; + a + &quot;]&quot;);
-    }
-
-    g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.updateOptions({});  // forces a redraw.
-
-    // Every time the regressions are calculated, call the printing function
-    //    that will output the coefficients of the given linear regression to
-    //    the HTML page. This function is tied to existing &lt;div&gt; spaces in the
-    //    HTML page.
-    print_Coeffs'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(series);
-
-  }
-
-  function clearLines'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'()
-  {
-    for (var i = 0; i &lt; coeffs.length; i++)
+    function clearLines'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'()
     {
-      coeffs[i] = null;
-    }
-    g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.updateOptions({});
-    clear_Coeffs'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'()
+      for (var i = 0; i &lt; coeffs.length; i++)
+      {
+        coeffs[i] = null;
+      }
+      g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.updateOptions({});
+      clear_Coeffs'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'()
 
-  }
-
-
-  function drawLines'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(ctx, area, layout) {
-    if (typeof(g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">') == '</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">'undefined'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">') return;  // wont be set on the initial draw.
-
-    var range = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.xAxisRange();
-    for (var i = 0; i &lt; coeffs.length; i++) {
-      if (!coeffs[i]) continue;
-      var a = coeffs[i][1];
-      var b = coeffs[i][0];
-
-      var x1 = range[0];
-      var y1 = a * x1 + b;
-      var x2 = range[1];
-      var y2 = a * x2 + b;
-
-      var p1 = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.toDomCoords(x1, y1);
-      var p2 = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.toDomCoords(x2, y2);
-
-      var c = new RGBColor(g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.getColors()[i - 1]);
-      c.r = Math.floor(255 - 0.5 * (255 - c.r));
-      c.g = Math.floor(255 - 0.5 * (255 - c.g));
-      c.b = Math.floor(255 - 0.5 * (255 - c.b));
-      var color = c.toHex();
-      ctx.save();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 1.0;
-      ctx.beginPath();
-      ctx.moveTo(p1[0], p1[1]);
-      ctx.lineTo(p2[0], p2[1]);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.restore();
-    }
-  }
-
-
-  // Here is my function to format and return Linear Regression Coefficients
-  //    It places a formatted string of coefficients in the appropriately named
-  //    &lt;div&gt;. Dynamic naming of each line series space as &lt;div_0&gt; , &lt;div_1&gt;
-  //    etc is required for this to work. That way, each time a regression is
-  //    calculated for a series (0,1,2...), the matching coefficient calculation
-  //    will be put in the like-named divs. A similar function is also below to
-  //    clear the appropriate coefficient strings when the linear regressions
-  //    themselves are cleared.
-
-  // IMPORTANT!!! TO PRINT COEFFICIENTS, THIS FUNCTION MULTIPLY BY -1,
-  // THAT IS DUE TO THE PARTICULAR DATABASE ORDER BEING USED WHERE &quot;NEWER&quot;
-  // SETS HAVE LOWER IDs. THIS IS COMPLETELY DATABASE DEPENDANT.
-
- function print_Coeffs'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(ii)
-    {
-      var reg = coeffs[ii];
-      var reg_str = &quot;Coefficients are : &lt;br&gt;&quot;
-      reg_str += &quot;y =  [&quot; + -1*Math.round(reg[0]*1000)/1000 + &quot;] x  + [&quot; + -1*Math.round(reg[1]*1000)/1000 + &quot;] &lt;/br&gt;&quot;
-      document.getElementById(&quot;Div_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot; + ii).innerHTML = reg_str;
     }
 
-  function clear_Coeffs'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(ii)
-    {
-      for (var i = 1; i &lt; coeffs.length; i++) document.getElementById(&quot;Div_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot; + i).innerHTML = &quot;Coefficients are:&quot;;
+
+    function drawLines'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(ctx, area, layout) {
+      if (typeof(g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">') == '</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">'undefined'</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;'&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">') return;  // wont be set on the initial draw.
+
+      var range = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.xAxisRange();
+      for (var i = 0; i &lt; coeffs.length; i++) {
+        if (!coeffs[i]) continue;
+        var a = coeffs[i][1];
+        var b = coeffs[i][0];
+
+        var x1 = range[0];
+        var y1 = a * x1 + b;
+        var x2 = range[1];
+        var y2 = a * x2 + b;
+
+        var p1 = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.toDomCoords(x1, y1);
+        var p2 = g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.toDomCoords(x2, y2);
+
+        var c = new RGBColor(g'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.getColors()[i - 1]);
+        c.r = Math.floor(255 - 0.5 * (255 - c.r));
+        c.g = Math.floor(255 - 0.5 * (255 - c.g));
+        c.b = Math.floor(255 - 0.5 * (255 - c.b));
+        var color = c.toHex();
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.0;
+        ctx.beginPath();
+        ctx.moveTo(p1[0], p1[1]);
+        ctx.lineTo(p2[0], p2[1]);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+      }
     }
-  '</span>
+
+
+    // Here is my function to format and return Linear Regression Coefficients
+    //    It places a formatted string of coefficients in the appropriately named
+    //    &lt;div&gt;. Dynamic naming of each line series space as &lt;div_0&gt; , &lt;div_1&gt;
+    //    etc is required for this to work. That way, each time a regression is
+    //    calculated for a series (0,1,2...), the matching coefficient calculation
+    //    will be put in the like-named divs. A similar function is also below to
+    //    clear the appropriate coefficient strings when the linear regressions
+    //    themselves are cleared.
+
+    // IMPORTANT!!! TO PRINT COEFFICIENTS, THIS FUNCTION MULTIPLY BY -1,
+    // THAT IS DUE TO THE PARTICULAR DATABASE ORDER BEING USED WHERE &quot;NEWER&quot;
+    // SETS HAVE LOWER IDs. THIS IS COMPLETELY DATABASE DEPENDANT.
+
+   function print_Coeffs'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(ii)
+      {
+        var reg = coeffs[ii];
+        var reg_str = &quot;Coefficients are : &lt;br&gt;&quot;
+        reg_str += &quot;y =  [&quot; + -1*Math.round(reg[0]*1000)/1000 + &quot;] x  + [&quot; + -1*Math.round(reg[1]*1000)/1000 + &quot;] &lt;/br&gt;&quot;
+        document.getElementById(&quot;Div_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot; + ii).innerHTML = reg_str;
+      }
+
+    function clear_Coeffs'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'(ii)
+      {
+        for (var i = 1; i &lt; coeffs.length; i++) document.getElementById(&quot;Div_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">graphnum</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot; + i).innerHTML = &quot;Coefficients are:&quot;;
+      }
+    '</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">linear_reg_str</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- linear_reg-source -->
@@ -1191,7 +1202,7 @@ href="Plot.html#method-i-linear_reg_buttons">#linear_reg_buttons</a>
 
           
           <div class="method-source-code" id="linear_reg_buttons-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 626</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 866</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">linear_reg_buttons</span>(<span class="ruby-identifier">list</span>, <span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">button_str</span> = <span class="ruby-string">''</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
@@ -1251,7 +1262,7 @@ href="Plot.html#method-i-list_vars">#list_vars</a>
 
           
           <div class="method-source-code" id="list_vars-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 390</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 610</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">list_vars</span>
   <span class="ruby-identifier">atts</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>
   <span class="ruby-identifier">vars</span> = []
@@ -1317,7 +1328,7 @@ Example:                                                                  #
 
           
           <div class="method-source-code" id="put_checkboxes-source">
-            <pre><span class="ruby-comment"># File app/models/plot.rb, line 430</span>
+            <pre><span class="ruby-comment"># File app/models/plot.rb, line 650</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">put_checkboxes</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">graphnum</span>=<span class="ruby-string">&quot;&quot;</span>)
   <span class="ruby-identifier">boxstring</span> = <span class="ruby-string">''</span> <span class="ruby-comment">#</span>
   <span class="ruby-keyword">for</span> <span class="ruby-identifier">ii</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
