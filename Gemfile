@@ -1,25 +1,28 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.2'
-require "sqlite3"
+gem 'rails', '3.2.3'
+#require "sqlite3"
 
 # Gem needed to connect to SQLite3 database
 gem 'sqlite3'
 
 # Gem needed to connect to MySQL database
-#gem 'mysql2'
+gem 'mysql2'
 
 # Gem needed to connect to PostgreSQL database
 #gem 'pg'
 
 # Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+#gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-
+gem 'rake','0.9.3.beta.1'
 
 gem 'calendar_date_select'   # Doesn't Work
 
-gem 'rake','0.9.3.beta.1'
+
+# For publishing... ?
+#http://www.modrails.com/install.html
+gem 'passenger'
 
 
 # Gems used only for assets and not required

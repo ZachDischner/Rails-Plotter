@@ -38,6 +38,8 @@ Also, there is a similar helping div that floats along the right hand side of th
 
 -->
 
+<%= javascript_include_tag :defaults %>
+
 <style type="text/css" xmlns="http://www.w3.org/1999/html">
     body {
         background: url("images/Stats.jpeg")no-repeat center center fixed;
@@ -46,6 +48,7 @@ Also, there is a similar helping div that floats along the right hand side of th
         -o-background-size: cover;
         background-size: cover;
         opacity:0.9;
+        font-family:Consolas;
     }
 </style>
 <br>
@@ -169,7 +172,7 @@ Also, there is a similar helping div that floats along the right hand side of th
                 It populates a Datetime param that is used in dynamic scope selectors
               -->
 
-              <p style="background-color: #C0C0C0; width: 350px;height:100px;
+              <p style="background-color: #C0C0C0; width: auto;height:100px;
                       border-style:outset; border-radius: 0.5em; border-color:#888888;
                       text-align: center;
                       padding:10px" onmouseout="params_info('date_end')" onmouseover="page_info('date_picker')" >
@@ -202,7 +205,6 @@ Also, there is a similar helping div that floats along the right hand side of th
           This Section allows the user to pick a feature for the plot. Now just a linear regression,
           line checkboxes, a combination of both, or none at all.
           -->
-          <tr>
             <td colspan=3 align=center>
 
               <% features = ["None","Both","Linear Regression","Checkboxes"] %>
@@ -243,7 +245,7 @@ Also, there is a similar helping div that floats along the right hand side of th
 
       <% if params[:debug] %>
       <div id="helperDIV" style="background-color:#87cefa;border:3px outset gray; border-radius:10px; width:auto;max-width:250px;
-              padding-left:8px; padding-right:8px; display:block; top:25%; left:10px; position:fixed; text-align:center"
+              padding-left:6px; padding-right:5px; display:block; top:25%; left:8px; position:fixed; text-align:center"
               onmouseover="page_info('helper')" onmouseout="page_info()">
         <table>
           <tr>
@@ -350,7 +352,7 @@ Also, there is a similar helping div that floats along the right hand side of th
                           break;
                       case 'helper':
                           document.getElementById("helper").innerHTML = "Simple explanation of page sections. Disable by changing   params[:debug]  to  'false' in" +
-                                                                                    "   app/controllers/plots_controller.rb [index]";
+                                                                                    " controllers/plots_controller.rb [index]";
                           break;
                       default:
                           document.getElementById("helper").innerHTML = "Hover over a form area for help";

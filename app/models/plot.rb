@@ -39,10 +39,19 @@
 #                                                                                                                     #
 #                                                                                                                     #
 # BUGS TO FIX:                                                                                                        #
-#     * Slight bug in linear regression rendering for multiple plot windows. Once regressions are calculated and      #
-#       drawn in one window, moving to another graph window and calculating a single regression results in that       #
-#       regression being correctly drawn, but the previously calculated regression data from the first window also    #
-#       gets drawn for the buttons not clicked.                                                                       #
+#     1. Slight bug in linear regression rendering for multiple plot windows. Once regressions are calculated and     #
+#        drawn in one window, moving to another graph window and calculating a single regression results in that      #
+#        regression being correctly drawn, but the previously calculated regression data from the first window also   #
+#        gets drawn for the buttons not clicked.                                                                      #
+#                                                                                                                     #
+#     2. Tying Linear Regressions and Checkboxes are un-aware of each other. When "both" features are used, Linear    #
+#        regression calculations try to work with plot elements that do not exist, and problems happen. Not too       #
+#        important, but irritating. A fix might require dynamic re-rendering of the Linear Regression calculations,   #
+#        or a smarter way of setting up the architecture.                                                             #
+#                                                                                                                     #
+#     3. For some reason, opening the web page in Chrome makes makes the Dygraph plot area become mis-aligned in the  #
+#        table. Everything should be compatible, but this behavior persists nontheless. Most baffling, if you         #
+#        "Inspect Element" in the page, everything becomes aligned alright. I don't even know how to address this     #                                                           #
 #                                                                                                                     #
 #                                                                                                                     #
 #                                                                                                                     #
@@ -69,33 +78,33 @@ class Plot < ActiveRecord::Base
 
   # 1.0-MYSQL development environment
   # recall, to populate, run:    bash$ mysql < {app_dir}/CreateTestTable.txt
-  #establish_connection :development                        # The connection specs in /config/database.yml
-  #set_table_name "stock_test"                              # Table name defined in the "CreateTestTable.txt" script
-  #set_primary_key :id                                      # Table's primary key
-  #@@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
-  #@@default_x       = ["date"]                             # Default selection for X axis
-  #@@default_y       = ["open","close","adjclose"]          # Default selection(s) for Y axis
-  #@@default_filter  = ["aapl","arwr","goog","dow"]         # Default selection(s) for FILTER selection
-  #@@default_feature = ["Both"]                             # Default selection for interaction FEATURE
-  #@@date_name       = "date"                               # Name of column containing Date values. Set to "" if you wish not to include
-  #@@index_name      = "id"                                 # Name of column containing some index value
-  #@@filter_name     = "ticker"                             # Name of column containing filters
-  #@@exclude_tags    = ["ticker"]                           # Name of columns you don't want to be considered for plotting
+  establish_connection :development                       # The connection specs in /config/database.yml
+  self.table_name   = "stock_test"                         # Table name defined in the "CreateTestTable.txt" script
+  self.primary_key  = "id"                                 # Table's primary key
+  @@find_filter     = true                                 # Indicates that this database will require column filtering (No for unique columns)
+  @@default_x       = ["date"]                             # Default selection for X axis
+  @@default_y       = ["open","close","adjclose"]          # Default selection(s) for Y axis
+  @@default_filter  = ["aapl","arwr","goog","dow"]         # Default selection(s) for FILTER selection
+  @@default_feature = ["Both"]                             # Default selection for interaction FEATURE
+  @@date_name       = "date"                               # Name of column containing Date values. Set to "" if you wish not to include
+  @@index_name      = "id"                                 # Name of column containing some index value
+  @@filter_name     = "ticker"                             # Name of column containing filters
+  @@exclude_tags    = ["ticker"]                           # Name of columns you don't want to be considered for plotting
 
   #zZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZzZ
 
   # 2.0-SQLITE test development environment
-  establish_connection :sqlite_test                     # The connection specs in /config/database.yml
-  set_table_name "plots"                                # Table name defined in the "CreateTestTable.txt" script
-  @@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
-  @@default_x       = [""]                              # Default selection for X axis
-  @@default_y       = [""]                              # Default selection(s) for Y axis
-  @@default_filter  = [""]                              # Default selection(s) for FILTER selection
-  @@default_feature = [""]                              # Default selection for interaction FEATURE
-  @@date_name       = "DataDate"                        # Name of column containing Date values. Set to "" if you wish not to include
-  @@index_name      = "id"                              # Name of column containing some index value
-  @@filter_name     = ""                                # Name of column containing filters
-  @@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
+  #establish_connection :sqlite_test                     # The connection specs in /config/database.yml
+  #self.table_name   = "plots"                           # Table name defined in the "CreateTestTable.txt" script
+  #@@find_filter     = false                             # Indicates that this database will require column filtering (No for unique columns)
+  #@@default_x       = [""]                              # Default selection for X axis
+  #@@default_y       = [""]                              # Default selection(s) for Y axis
+  #@@default_filter  = [""]                              # Default selection(s) for FILTER selection
+  #@@default_feature = [""]                              # Default selection for interaction FEATURE
+  #@@date_name       = "DataDate"                        # Name of column containing Date values. Set to "" if you wish not to include
+  #@@index_name      = "id"                              # Name of column containing some index value
+  #@@filter_name     = ""                                # Name of column containing filters
+  #@@exclude_tags    = ["created_at","updated_at"]       # Name of columns you don't want to be considered for plotting
 
   #<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>---<*>#
 
