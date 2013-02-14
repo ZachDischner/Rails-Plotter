@@ -9,8 +9,17 @@ connect this app with your database. This readme assumes you have some knowledge
 resources can be great teachers. Most of what you're about to read shouldn't require much RoR insight, and the demo
 should be comprehensible even for noobs (of which, I am one).
 
+The app dynamically creates two pages, based on database input. 
+
+1. A Selector page:
+
 ![My image](https://raw.github.com/ZachDischner/Rails-Plotter/master/doc/Selector.png)
+
+2. A Plot page:
+
 ![My image2](https://raw.github.com/ZachDischner/Rails-Plotter/master/doc/Plotter.png)
+
+Both are created and automatically filled based on database definitions and app defaults. This readme walks you through how to adjust and change these defaults 
 
 This was built for the Laboratory for Atmospheric and Space Physics (LASP) in Boulder, Colorado.
 Its AIM is to enable quick visualization of database numeric data, without spending months developing
