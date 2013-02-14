@@ -9,6 +9,9 @@ connect this app with your database. This readme assumes you have some knowledge
 resources can be great teachers. Most of what you're about to read shouldn't require much RoR insight, and the demo
 should be comprehensible even for noobs (of which, I am one).
 
+![My image](username.github.com/Rails-Plotter/doc/Selector.png)
+![My image](username.github.com/Rails-Plotter/doc/Plotter.png)
+
 This was built for the Laboratory for Atmospheric and Space Physics (LASP) in Boulder, Colorado.
 Its AIM is to enable quick visualization of database numeric data, without spending months developing
 your own custom solutions. Since LASP has a diverse scientific community, using many different database engines and schemas, I tried
