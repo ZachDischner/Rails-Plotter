@@ -9,7 +9,7 @@ connect this app with your database. This readme assumes you have some knowledge
 resources can be great teachers. Most of what you're about to read shouldn't require much RoR insight, and the demo
 should be comprehensible even for noobs (of which, I am one).
 
-![My image](https://github.com/ZachDischner/Rails-Plotter/doc/Selector.png)
+![My image](https://github.com/ZachDischner/Rails-Plotter/tree/master/doc/Selector.png)
 ![My image](https://github.com/ZachDischner/Rails-Plotter/doc/Plotter.png)
 
 This was built for the Laboratory for Atmospheric and Space Physics (LASP) in Boulder, Colorado.
