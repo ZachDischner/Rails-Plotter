@@ -15,7 +15,7 @@ gem 'mysql2'
 # Bundle edge Rails instead:
 #gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'rake','0.9.3.beta.1'
+gem 'rake','12.3.3'
 
 gem 'calendar_date_select'   # Doesn't Work
 
